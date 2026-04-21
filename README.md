@@ -41,6 +41,8 @@ Zero-day-like means heldout synthetic scenario evaluation on independently gener
 
 - **TTM**: real TinyTimeMixer extension benchmark at 60s only; extension-only, not canonical.
 - **LoRA**: experimental tiny-LLM explanation/classification branch; weak evidence and not detector benchmark evidence.
+- **LSTM autoencoder**: real sequence-reconstruction detector branch added as an extension; weak benchmark evidence and not canonical.
+- **AOI**: implemented only as an experimental repo-specific Alert Overlap Index, not a standard detector metric claim.
 
 ## Repository Structure
 
@@ -162,10 +164,10 @@ The tiny sample parquet is only for structure inspection and smoke testing. It i
 
 - No real-world zero-day robustness claim.
 - No human-like root-cause analysis claim.
-- No AOI detector metric claim.
+- No standard AOI detector-metric claim; the repo includes only an experimental Alert Overlap Index computed from prediction artifacts.
 - No field edge-deployment claim.
 - No claim that TTM or LoRA replaces the canonical detector.
-- The repo autoencoder is an MLP autoencoder; no LSTM autoencoder detector is implemented.
+- The original repo autoencoder is an MLP autoencoder; the LSTM autoencoder is a later extension branch and remains weak/secondary.
 
 ## Citation / Acknowledgement
 

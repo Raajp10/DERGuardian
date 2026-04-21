@@ -1,5 +1,16 @@
 # Extension Branches
 
+## LSTM Autoencoder Extension
+
+The LSTM autoencoder is now implemented as a real detector-side extension. It trains on benign canonical residual windows, scores reconstruction error on canonical test windows, and also scores available heldout synthetic residual replay inputs.
+
+Important interpretation:
+
+- This branch is distinct from the original MLP `autoencoder` rows.
+- It is weak in this pass and remains extension-only.
+- Best canonical-test extension result: 300s F1 `0.1340`.
+- Source files: `phase1_models/train_lstm_autoencoder.py`, `artifacts/extensions/phase1_lstm_autoencoder_results.csv`, and `docs/reports/phase1_lstm_autoencoder_eval_report.md`.
+
 ## TTM Extension
 
 TTM is a detector-side extension benchmark at 60s only. It remains extension-only and does not replace Transformer @ 60s as canonical winner.
@@ -20,3 +31,11 @@ LoRA is an experimental explanation/classification branch. The repo evidence is 
 | lora_finetuned  | aux_in_domain_holdout        |              16 |            0.5625 |                0 |                       0      |                0.25   |            1 |          3401.77  |            3430.61  |         3833.82  |              1.33 |                      294.9  |
 | lora_finetuned  | validation_generator_heldout |              29 |            0      |                0 |                       0.0805 |                0.1724 |            1 |          3507.08  |            3538.3   |         3730.89  |              1.33 |                      294.9  |
 | lora_finetuned  | test_generator_heldout       |              47 |            0.234  |                0 |                       0      |                0.4255 |            1 |          3507.03  |            3551.45  |         3779.76  |              1.33 |                      294.9  |
+
+## AOI Extension Metric
+
+AOI is implemented only as an experimental repo-specific **Alert Overlap Index**:
+
+`AOI = TP_windows / (TP_windows + FP_windows + FN_windows)`
+
+It is computed from real prediction artifacts in `artifacts/extensions/aoi_results.csv`. It should not be described as a standard DER detector metric unless future work establishes that external definition.

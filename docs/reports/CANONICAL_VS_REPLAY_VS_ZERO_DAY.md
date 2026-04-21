@@ -54,3 +54,11 @@
 ## Interpretation
 
 If the best model changes across contexts, that is reported as context-specific behavior. It does not replace the frozen canonical benchmark selection.
+
+## New Extension Added In Scientific Completion Pass
+
+- `lstm_autoencoder` is now implemented as a real LSTM sequence-reconstruction detector branch.
+- Its results are reported in `artifacts/extensions/phase1_lstm_autoencoder_results.csv` and `docs/reports/phase1_lstm_autoencoder_eval_report.md`.
+- It is **not** part of the frozen canonical model-selection path and does **not** replace Transformer @ 60s.
+- Best canonical-test extension row in this pass was 300s with F1 `0.1340`, so the branch is scientifically present but weak.
+- Heldout synthetic scoring exists for available residual replay inputs and remains extension-only.

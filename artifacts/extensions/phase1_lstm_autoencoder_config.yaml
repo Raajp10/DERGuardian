@@ -1,0 +1,29 @@
+context: extension_only_lstm_autoencoder
+canonical_benchmark_preserved: transformer @ 60s
+input_contract: canonical residual_windows.parquet feature columns; replay features
+  missing in heldout artifacts are filled with neutral zero values before standardization
+window_labels:
+- 5s
+- 10s
+- 60s
+- 300s
+feature_count: 64
+seq_len_by_window:
+  5s: 12
+  10s: 12
+  60s: 12
+  300s: 4
+epochs: 4
+batch_size: 128
+learning_rate: 0.001
+hidden_dim: 48
+latent_dim: 16
+seed: 42
+max_sequences:
+  train: 5000
+  val: 2500
+  test: 3500
+  heldout: 3500
+threshold_selection: validation_f1_sweep_if_labels_exist_else_train_normal_99th_percentile
+output_note: Extension evidence only; not used to replace the frozen canonical benchmark
+  winner.
