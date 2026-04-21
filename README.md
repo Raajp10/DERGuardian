@@ -152,43 +152,6 @@ The public repository is designed to stay lightweight. Large generated outputs, 
 
 The tiny sample parquet is only for structure inspection and smoke testing. It is not a replacement for the full generated experiment outputs.
 
-## GitHub Push Workflow
-
-For maintainers with write access:
-
-```bash
-git add .
-git commit -m "DERGuardian public"
-git remote add origin https://github.com/Raajp10/DERGuardian.git
-git branch -M main
-git push -u origin main
-```
-
-After the first push:
-
-```bash
-git add .
-git commit -m "update"
-git push
-```
-
-View results in:
-
-- `docs/reports/CANONICAL_VS_REPLAY_VS_ZERO_DAY.md`
-- `docs/reports/phase1_window_model_comparison_full.md`
-- `docs/reports/zero_day_model_window_results_full.md`
-- `docs/reports/EXTENSION_BRANCHES.md`
-- `FINAL_PUBLISHABLE_REPO_DECISION.md`
-
-For a full professor-facing evidence pass, start with:
-
-- `GITHUB_READY_SUMMARY.md`
-- `docs/reports/PROFESSOR_READY_METHOD_SUMMARY.md`
-- `docs/REPOSITORY_STRUCTURE_GUIDE.md`
-- `docs/PYTHON_CODE_NAVIGATION.md`
-- `docs/reports/CANONICAL_VS_REPLAY_VS_ZERO_DAY.md`
-- `docs/reports/internal_audits/FINAL_PERFECTION_CHECKLIST.md`
-
 ## Reproducibility Notes
 
 - Original canonical artifacts are preserved in `outputs/window_size_study/`.
