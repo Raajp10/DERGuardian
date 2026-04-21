@@ -158,7 +158,7 @@ For maintainers with write access:
 
 ```bash
 git add .
-git commit -m "Final DERGuardian public release (PhD-level clean)"
+git commit -m "DERGuardian public"
 git remote add origin https://github.com/Raajp10/DERGuardian.git
 git branch -M main
 git push -u origin main
