@@ -1,0 +1,45 @@
+{
+  "alert_id": "ieee123-der-site-01-threshold_baseline-20250601T020001Z-7f3c9a91",
+  "timestamp_utc": "2025-06-01T02:00:01Z",
+  "site_id": "ieee123-der-site-01",
+  "packet_source": "edge::ieee123-der-site-01::threshold_baseline",
+  "model_name": "threshold_baseline",
+  "model_profile": "threshold_baseline",
+  "score": 0.821337,
+  "threshold": 0.021936,
+  "severity": "critical",
+  "modality": "aligned_residual",
+  "asset_id": "bess48",
+  "affected_assets": ["bess48"],
+  "top_features": [
+    {
+      "feature": "delta__bess_bess48_p_kw__mean",
+      "signal": "bess_bess48_p_kw",
+      "aggregation": "mean",
+      "contribution": 8.447112,
+      "window_value": 382.241991,
+      "reference_value": 0.013512,
+      "residual": 382.228479
+    },
+    {
+      "feature": "delta__bess_bess48_soc__last",
+      "signal": "bess_bess48_soc",
+      "aggregation": "last",
+      "contribution": 6.202117,
+      "window_value": 0.431991,
+      "reference_value": 0.582104,
+      "residual": -0.150113
+    }
+  ],
+  "window_start_utc": "2025-06-01T01:55:01Z",
+  "window_end_utc": "2025-06-01T02:00:01Z",
+  "local_context_path": "outputs/deployment_runtime/edge/ieee123-der-site-01/local_buffer/contexts/ieee123-der-site-01-threshold_baseline-20250601T020001Z-7f3c9a91.json",
+  "buffer_id": "ieee123-der-site-01-threshold_baseline-20250601T020001Z-7f3c9a91",
+  "explanation_packet_path": null,
+  "metadata": {
+    "dataset_kind": "attacked",
+    "deployment_role": "primary_operational",
+    "window_seconds": 300,
+    "step_seconds": 60
+  }
+}

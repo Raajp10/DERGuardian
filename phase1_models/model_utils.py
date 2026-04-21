@@ -1,3 +1,11 @@
+"""Phase 1 detector training and evaluation support for DERGuardian.
+
+This module implements model utils logic for residual-window model training,
+inference, packaging, metrics, or reporting. It supports the frozen benchmark
+path and related audits while keeping benchmark selection separate from replay,
+heldout synthetic zero-day-like, and extension contexts.
+"""
+
 from __future__ import annotations
 
 from dataclasses import dataclass
@@ -35,6 +43,8 @@ MODEL_DISPLAY_NAMES = {
 
 @dataclass(slots=True)
 class ModelPaths:
+    """Structured object used by the Phase 1 detector modeling workflow."""
+
     model_name: str
     model_dir: Path
     artifact_dir: Path
@@ -46,6 +56,11 @@ def ensure_model_paths(
     model_root: str = LEGACY_MODEL_ROOT,
     artifact_root: str = LEGACY_ARTIFACT_ROOT,
 ) -> ModelPaths:
+    """Handle ensure model paths within the Phase 1 detector modeling workflow.
+
+        Arguments and returned values follow the explicit type hints and are used by the surrounding pipeline contracts.
+        """
+
     root = Path(project_root) if project_root is not None else ROOT
     model_dir = root / "outputs" / model_root / model_name
     artifact_dir = root / "outputs" / "reports" / artifact_root / model_name
@@ -55,27 +70,52 @@ def ensure_model_paths(
 
 
 def write_json(payload: dict | list, path: Path) -> None:
+    """Write json for the Phase 1 detector modeling workflow.
+
+        Arguments and returned values follow the explicit type hints and are used by the surrounding pipeline contracts.
+        """
+
     path.parent.mkdir(parents=True, exist_ok=True)
     path.write_text(json.dumps(payload, indent=2, default=_json_default), encoding="utf-8")
 
 
 def write_pickle(payload: object, path: Path) -> None:
+    """Write pickle for the Phase 1 detector modeling workflow.
+
+        Arguments and returned values follow the explicit type hints and are used by the surrounding pipeline contracts.
+        """
+
     path.parent.mkdir(parents=True, exist_ok=True)
     with path.open("wb") as handle:
         pickle.dump(payload, handle)
 
 
 def write_torch_state(model: torch.nn.Module, path: Path) -> None:
+    """Write torch state for the Phase 1 detector modeling workflow.
+
+        Arguments and returned values follow the explicit type hints and are used by the surrounding pipeline contracts.
+        """
+
     path.parent.mkdir(parents=True, exist_ok=True)
     torch.save(model.state_dict(), path)
 
 
 def write_predictions(frame: pd.DataFrame, path: Path) -> None:
+    """Write predictions for the Phase 1 detector modeling workflow.
+
+        Arguments and returned values follow the explicit type hints and are used by the surrounding pipeline contracts.
+        """
+
     path.parent.mkdir(parents=True, exist_ok=True)
     frame.to_parquet(path, index=False)
 
 
 def parameter_count(model: object) -> int:
+    """Handle parameter count within the Phase 1 detector modeling workflow.
+
+        Arguments and returned values follow the explicit type hints and are used by the surrounding pipeline contracts.
+        """
+
     if hasattr(model, "parameters"):
         return int(sum(parameter.numel() for parameter in model.parameters()))
     if hasattr(model, "estimators_"):
@@ -88,15 +128,30 @@ def parameter_count(model: object) -> int:
 
 
 def memory_estimate_mb(model: object) -> float:
+    """Handle memory estimate mb within the Phase 1 detector modeling workflow.
+
+        Arguments and returned values follow the explicit type hints and are used by the surrounding pipeline contracts.
+        """
+
     return float(parameter_count(model) * 4 / (1024.0 ** 2))
 
 
 def display_model_name(model_name: object) -> str:
+    """Handle display model name within the Phase 1 detector modeling workflow.
+
+        Arguments and returned values follow the explicit type hints and are used by the surrounding pipeline contracts.
+        """
+
     key = str(model_name)
     return MODEL_DISPLAY_NAMES.get(key, key.replace("_", " ").title())
 
 
 def apply_model_display_names(frame: pd.DataFrame, columns: tuple[str, ...] = ("model_name",)) -> pd.DataFrame:
+    """Handle apply model display names within the Phase 1 detector modeling workflow.
+
+        Arguments and returned values follow the explicit type hints and are used by the surrounding pipeline contracts.
+        """
+
     formatted = frame.copy()
     for column in columns:
         if column in formatted.columns:

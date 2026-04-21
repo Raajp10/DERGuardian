@@ -1,3 +1,10 @@
+"""Phase 1 context and fusion helper for DERGuardian.
+
+This module builds or consumes structured context artifacts around normal-system
+behavior, feature evidence, and detector outputs. It supports explanation and
+fusion workflows but is not the canonical detector-selection mechanism.
+"""
+
 from __future__ import annotations
 
 from pathlib import Path
@@ -39,10 +46,20 @@ BESS_ASSETS = ("bess48", "bess108")
 
 
 def canonical_context_summary_path(root: Path, artifact_root_name: str = CANONICAL_ARTIFACT_ROOT) -> Path:
+    """Handle canonical context summary path within the Phase 1 context and fusion support workflow.
+
+        Arguments and returned values follow the explicit type hints and are used by the surrounding pipeline contracts.
+        """
+
     return root / "outputs" / "reports" / artifact_root_name / "phase1_context_summaries.jsonl"
 
 
 def canonical_context_table_path(root: Path, artifact_root_name: str = CANONICAL_ARTIFACT_ROOT) -> Path:
+    """Handle canonical context table path within the Phase 1 context and fusion support workflow.
+
+        Arguments and returned values follow the explicit type hints and are used by the surrounding pipeline contracts.
+        """
+
     return root / "outputs" / "reports" / artifact_root_name / "phase1_context_summaries.parquet"
 
 
@@ -52,6 +69,11 @@ def load_context_sources(
     attacked_windows_path: Path | None = None,
     clean_windows_path: Path | None = None,
 ) -> tuple[pd.DataFrame, pd.DataFrame, pd.DataFrame]:
+    """Load context sources for the Phase 1 context and fusion support workflow.
+
+        Arguments and returned values follow the explicit type hints and are used by the surrounding pipeline contracts.
+        """
+
     residual = read_dataframe(residual_path or canonical_residual_artifact_path(root)).copy()
     attacked = read_dataframe(attacked_windows_path or (root / "outputs" / "attacked" / "merged_windows.parquet")).copy()
     clean = read_dataframe(clean_windows_path or (root / "outputs" / "windows" / "merged_windows_clean.parquet")).copy()
@@ -70,6 +92,11 @@ def build_context_summaries(
     clean_windows: pd.DataFrame,
     top_k: int = 8,
 ) -> tuple[list[dict[str, Any]], pd.DataFrame]:
+    """Build context summaries for the Phase 1 context and fusion support workflow.
+
+        Arguments and returned values follow the explicit type hints and are used by the surrounding pipeline contracts.
+        """
+
     attacked_lookup = attacked_windows.set_index("window_start_utc", drop=False)
     clean_lookup = clean_windows.set_index("window_start_utc", drop=False)
     summaries: list[dict[str, Any]] = []
@@ -153,6 +180,11 @@ def persist_context_summaries(
     flat_frame: pd.DataFrame,
     artifact_root_name: str = CANONICAL_ARTIFACT_ROOT,
 ) -> tuple[Path, Path]:
+    """Handle persist context summaries within the Phase 1 context and fusion support workflow.
+
+        Arguments and returned values follow the explicit type hints and are used by the surrounding pipeline contracts.
+        """
+
     jsonl_path = canonical_context_summary_path(root, artifact_root_name=artifact_root_name)
     table_path = canonical_context_table_path(root, artifact_root_name=artifact_root_name)
     write_jsonl(summaries, jsonl_path)
@@ -165,6 +197,11 @@ def build_and_persist_context_summaries(
     top_k: int = 8,
     artifact_root_name: str = CANONICAL_ARTIFACT_ROOT,
 ) -> tuple[list[dict[str, Any]], pd.DataFrame, tuple[Path, Path]]:
+    """Build and persist context summaries for the Phase 1 context and fusion support workflow.
+
+        Arguments and returned values follow the explicit type hints and are used by the surrounding pipeline contracts.
+        """
+
     residual, attacked, clean = load_context_sources(root)
     summaries, flat_frame = build_context_summaries(
         residual_df=residual,
@@ -177,6 +214,11 @@ def build_and_persist_context_summaries(
 
 
 def compute_top_deviating_signals(attacked_row: pd.Series, clean_row: pd.Series, top_k: int = 8) -> list[dict[str, Any]]:
+    """Compute top deviating signals for the Phase 1 context and fusion support workflow.
+
+        Arguments and returned values follow the explicit type hints and are used by the surrounding pipeline contracts.
+        """
+
     records: list[dict[str, Any]] = []
     numeric_columns = [
         column
@@ -219,6 +261,11 @@ def compute_top_deviating_signals(attacked_row: pd.Series, clean_row: pd.Series,
 
 
 def split_window_feature_name(column: str) -> tuple[str, str]:
+    """Handle split window feature name within the Phase 1 context and fusion support workflow.
+
+        Arguments and returned values follow the explicit type hints and are used by the surrounding pipeline contracts.
+        """
+
     if "__" not in column:
         return column, "value"
     signal, aggregation = column.rsplit("__", 1)
@@ -226,6 +273,11 @@ def split_window_feature_name(column: str) -> tuple[str, str]:
 
 
 def map_signal_to_asset_component(signal: str) -> dict[str, str]:
+    """Handle map signal to asset component within the Phase 1 context and fusion support workflow.
+
+        Arguments and returned values follow the explicit type hints and are used by the surrounding pipeline contracts.
+        """
+
     parts = signal.split("_")
     if signal.startswith("pv_") and len(parts) >= 2:
         return {"asset_id": parts[1], "component_type": "pv", "signal_group": parts[0]}
@@ -249,6 +301,11 @@ def map_signal_to_asset_component(signal: str) -> dict[str, str]:
 
 
 def build_environment_context(attacked_row: pd.Series, clean_row: pd.Series) -> dict[str, Any]:
+    """Build environment context for the Phase 1 context and fusion support workflow.
+
+        Arguments and returned values follow the explicit type hints and are used by the surrounding pipeline contracts.
+        """
+
     fields = {
         "irradiance_wm2": "env_irradiance_wm2__last",
         "temperature_c": "env_temperature_c__last",
@@ -265,6 +322,11 @@ def build_environment_context(attacked_row: pd.Series, clean_row: pd.Series) -> 
 
 
 def build_feeder_context(attacked_row: pd.Series, clean_row: pd.Series) -> dict[str, Any]:
+    """Build feeder context for the Phase 1 context and fusion support workflow.
+
+        Arguments and returned values follow the explicit type hints and are used by the surrounding pipeline contracts.
+        """
+
     payload: dict[str, Any] = {}
     for column in [
         "feeder_p_kw_total__last",
@@ -283,6 +345,11 @@ def build_feeder_context(attacked_row: pd.Series, clean_row: pd.Series) -> dict[
 
 
 def build_voltage_context(attacked_row: pd.Series, clean_row: pd.Series) -> dict[str, Any]:
+    """Build voltage context for the Phase 1 context and fusion support workflow.
+
+        Arguments and returned values follow the explicit type hints and are used by the surrounding pipeline contracts.
+        """
+
     count_column = "derived_voltage_violation_count__last"
     flag_column = "derived_voltage_violation_flag__last"
     voltage_candidates = []
@@ -311,6 +378,11 @@ def build_voltage_context(attacked_row: pd.Series, clean_row: pd.Series) -> dict
 
 
 def build_der_dispatch_consistency(attacked_row: pd.Series, clean_row: pd.Series) -> dict[str, Any]:
+    """Build der dispatch consistency for the Phase 1 context and fusion support workflow.
+
+        Arguments and returned values follow the explicit type hints and are used by the surrounding pipeline contracts.
+        """
+
     pv_records: list[dict[str, Any]] = []
     bess_records: list[dict[str, Any]] = []
     for asset in PV_ASSETS:
@@ -375,6 +447,11 @@ def build_der_dispatch_consistency(attacked_row: pd.Series, clean_row: pd.Series
 
 
 def build_soc_consistency(attacked_row: pd.Series, clean_row: pd.Series) -> dict[str, Any]:
+    """Build soc consistency for the Phase 1 context and fusion support workflow.
+
+        Arguments and returned values follow the explicit type hints and are used by the surrounding pipeline contracts.
+        """
+
     records: list[dict[str, Any]] = []
     for asset in BESS_ASSETS:
         soc_col = f"bess_{asset}_soc__last"
@@ -414,6 +491,11 @@ def build_summary_statistics(
     der_dispatch_context: dict[str, Any],
     soc_context: dict[str, Any],
 ) -> dict[str, Any]:
+    """Build summary statistics for the Phase 1 context and fusion support workflow.
+
+        Arguments and returned values follow the explicit type hints and are used by the surrounding pipeline contracts.
+        """
+
     relative_changes = [abs(float(item.get("relative_change", 0.0))) for item in top_deviations]
     changed_channel_count = int(sum(value >= 0.02 for value in relative_changes))
     changed_voltage_channel_count = int(sum(1 for item in top_deviations if "_v_pu_" in str(item.get("feature", ""))))
@@ -438,6 +520,11 @@ def compose_compact_summary(
     der_dispatch_context: dict[str, Any],
     soc_context: dict[str, Any],
 ) -> str:
+    """Handle compose compact summary within the Phase 1 context and fusion support workflow.
+
+        Arguments and returned values follow the explicit type hints and are used by the surrounding pipeline contracts.
+        """
+
     asset_text = ", ".join(mapped_assets[:3]) if mapped_assets else "feeder context"
     top_signals = ", ".join(item["signal"] for item in top_deviations[:3]) if top_deviations else "no strong deltas"
     notes: list[str] = [f"Primary deviations concentrate around {asset_text}.", f"Top changed signals: {top_signals}."]
@@ -455,6 +542,11 @@ def compose_compact_summary(
 
 
 def infer_feeder_operating_band(feeder_p_kw_total: float) -> str:
+    """Handle infer feeder operating band within the Phase 1 context and fusion support workflow.
+
+        Arguments and returned values follow the explicit type hints and are used by the surrounding pipeline contracts.
+        """
+
     abs_power = abs(feeder_p_kw_total)
     if abs_power >= 6000.0:
         return "high_load"
@@ -474,6 +566,11 @@ def _safe_float(value: object, default: float = 0.0) -> float:
 
 
 def main() -> None:
+    """Run the command-line entrypoint for the Phase 1 context and fusion support workflow.
+
+        Arguments and returned values follow the explicit type hints and are used by the surrounding pipeline contracts.
+        """
+
     parser = argparse.ArgumentParser(description="Build structured Phase 1 context summaries from aligned residual windows.")
     parser.add_argument("--project-root", default=str(ROOT))
     parser.add_argument("--top-k", type=int, default=8)

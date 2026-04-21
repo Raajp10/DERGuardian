@@ -1,3 +1,10 @@
+"""Phase 3 grounded explanation support for DERGuardian.
+
+This module implements generate explanations llm logic for post-alert explanation packets,
+family attribution, evidence grounding, or validation. It supports operator-facing
+explanation evidence and does not claim human-like root-cause analysis.
+"""
+
 from __future__ import annotations
 
 from pathlib import Path
@@ -23,6 +30,11 @@ from phase3_explanations.validate_explanations import validate_explanation
 
 
 def extract_json_from_text(text: str) -> Any:
+    """Handle extract json from text within the Phase 3 grounded explanation workflow.
+
+        Arguments and returned values follow the explicit type hints and are used by the surrounding pipeline contracts.
+        """
+
     stripped = text.strip()
     try:
         return json.loads(stripped)
@@ -38,6 +50,11 @@ def extract_json_from_text(text: str) -> Any:
 
 
 def render_prompt_user(packet: dict[str, Any], schema: dict[str, Any], template_text: str) -> str:
+    """Handle render prompt user within the Phase 3 grounded explanation workflow.
+
+        Arguments and returned values follow the explicit type hints and are used by the surrounding pipeline contracts.
+        """
+
     return (
         template_text.replace("__PACKET_JSON__", json.dumps(packet, indent=2))
         .replace("__SCHEMA_JSON__", json.dumps(schema, indent=2))
@@ -45,6 +62,11 @@ def render_prompt_user(packet: dict[str, Any], schema: dict[str, Any], template_
 
 
 def build_confidence_note(packet: dict[str, Any], family: dict[str, Any]) -> str:
+    """Build confidence note for the Phase 3 grounded explanation workflow.
+
+        Arguments and returned values follow the explicit type hints and are used by the surrounding pipeline contracts.
+        """
+
     score = float(family.get("score", 0.0))
     has_cyber = bool(packet.get("cyber_evidence"))
     has_physical = bool(packet.get("physical_evidence"))
@@ -56,6 +78,11 @@ def build_confidence_note(packet: dict[str, Any], family: dict[str, Any]) -> str
 
 
 def build_limitations(packet: dict[str, Any], family: dict[str, Any]) -> list[str]:
+    """Build limitations for the Phase 3 grounded explanation workflow.
+
+        Arguments and returned values follow the explicit type hints and are used by the surrounding pipeline contracts.
+        """
+
     limitations = []
     if not packet.get("cyber_evidence"):
         limitations.append("Cyber evidence is limited in the alert window and its configured lookback period.")
@@ -88,6 +115,11 @@ def _alert_status_language(packet: dict[str, Any]) -> tuple[str, str]:
 
 
 def grounded_draft_explanation(packet: dict[str, Any]) -> dict[str, Any]:
+    """Handle grounded draft explanation within the Phase 3 grounded explanation workflow.
+
+        Arguments and returned values follow the explicit type hints and are used by the surrounding pipeline contracts.
+        """
+
     candidates = packet.get("candidate_families", [])
     family = candidates[0] if candidates else {"label": "unknown_anomaly", "score": 0.3, "confidence": "low", "reasoning": []}
     top_physical = packet.get("physical_evidence", [])[:3]
@@ -136,6 +168,11 @@ def grounded_draft_explanation(packet: dict[str, Any]) -> dict[str, Any]:
 
 
 def render_incident_summary_markdown(packet: dict[str, Any], explanation: dict[str, Any]) -> str:
+    """Handle render incident summary markdown within the Phase 3 grounded explanation workflow.
+
+        Arguments and returned values follow the explicit type hints and are used by the surrounding pipeline contracts.
+        """
+
     heading = "Incident Summary" if bool(packet.get("predicted_alert", False)) else "Window Review"
     reason_heading = "Why Flagged" if bool(packet.get("predicted_alert", False)) else "Why Reviewed"
     lines = [
@@ -180,6 +217,11 @@ def render_incident_summary_markdown(packet: dict[str, Any], explanation: dict[s
 
 
 def main() -> None:
+    """Run the command-line entrypoint for the Phase 3 grounded explanation workflow.
+
+        Arguments and returned values follow the explicit type hints and are used by the surrounding pipeline contracts.
+        """
+
     parser = argparse.ArgumentParser(description="Export prompt packages, ingest LLM output, or generate grounded draft explanations.")
     parser.add_argument("--packet", required=True)
     parser.add_argument("--schema", default=str(PACKAGE_ROOT / "explanation_schema.json"))

@@ -1,3 +1,10 @@
+"""Phase 3 grounded explanation support for DERGuardian.
+
+This module implements validate explanations logic for post-alert explanation packets,
+family attribution, evidence grounding, or validation. It supports operator-facing
+explanation evidence and does not claim human-like root-cause analysis.
+"""
+
 from __future__ import annotations
 
 from pathlib import Path
@@ -34,6 +41,11 @@ ABSOLUTE_CERTAINTY_TERMS = (
 
 
 def validate_explanation(packet: dict[str, Any], explanation: dict[str, Any], schema: dict[str, Any]) -> dict[str, Any]:
+    """Validate explanation for the Phase 3 grounded explanation workflow.
+
+        Arguments and returned values follow the explicit type hints and are used by the surrounding pipeline contracts.
+        """
+
     errors: list[str] = []
     warnings: list[str] = []
 
@@ -126,6 +138,11 @@ def validate_explanation(packet: dict[str, Any], explanation: dict[str, Any], sc
 
 
 def main() -> None:
+    """Run the command-line entrypoint for the Phase 3 grounded explanation workflow.
+
+        Arguments and returned values follow the explicit type hints and are used by the surrounding pipeline contracts.
+        """
+
     parser = argparse.ArgumentParser(description="Validate a structured explanation against the explanation contract.")
     parser.add_argument("--packet", required=True)
     parser.add_argument("--explanation", required=True)

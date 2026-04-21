@@ -1,3 +1,9 @@
+"""Test coverage for DERGuardian test phase2 remediation behavior.
+
+These tests exercise pipeline contracts, package readiness, or phase-level
+functionality without changing scientific outputs.
+"""
+
 from __future__ import annotations
 
 import json
@@ -19,6 +25,8 @@ ROOT = Path(__file__).resolve().parents[1]
 
 
 class Phase2RemediationTests(unittest.TestCase):
+    """Structured object used by the test workflow."""
+
     def _canonical_scenario_count(self) -> int:
         payload = read_json(ROOT / "phase2" / "research_attack_scenarios.json")
         return int(len(payload["scenarios"]))

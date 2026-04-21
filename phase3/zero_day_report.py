@@ -1,3 +1,10 @@
+"""Phase 3 evaluation and analysis support for DERGuardian.
+
+This module implements zero day report logic for detector evaluation, ablations,
+zero-day-like heldout synthetic analysis, latency sweeps, or final reporting.
+It keeps benchmark, replay, heldout synthetic, and extension results separated.
+"""
+
 from __future__ import annotations
 
 from pathlib import Path
@@ -15,6 +22,11 @@ from phase3.experiment_utils import to_markdown, write_phase3_report
 
 
 def build_zero_day_report(artifact_root: Path) -> Path:
+    """Build zero day report for the Phase 3 evaluation workflow.
+
+        Arguments and returned values follow the explicit type hints and are used by the surrounding pipeline contracts.
+        """
+
     summary_csv = artifact_root / "zero_day_model_summary.csv"
     per_scenario_csv = artifact_root / "zero_day_per_scenario_metrics.csv"
     latency_csv = artifact_root / "zero_day_latency_analysis.csv"
@@ -50,6 +62,11 @@ def build_zero_day_report(artifact_root: Path) -> Path:
 
 
 def main() -> None:
+    """Run the command-line entrypoint for the Phase 3 evaluation workflow.
+
+        Arguments and returned values follow the explicit type hints and are used by the surrounding pipeline contracts.
+        """
+
     parser = argparse.ArgumentParser(description="Render the Phase 3 zero-day markdown report from generated artifacts.")
     parser.add_argument("--project-root", default=str(ROOT))
     parser.add_argument("--artifact-root", default="")

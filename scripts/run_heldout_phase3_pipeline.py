@@ -1,3 +1,11 @@
+"""Repository orchestration script for DERGuardian.
+
+This script runs or rebuilds run heldout phase3 pipeline artifacts for audits, figures,
+reports, or reproducibility checks. It is release-support code and must preserve
+the separation between canonical benchmark, replay, heldout synthetic, and
+extension experiment contexts.
+"""
+
 from __future__ import annotations
 
 from dataclasses import asdict, dataclass
@@ -42,6 +50,8 @@ TIME_NOW_UTC = pd.Timestamp.now(tz="UTC").isoformat()
 
 @dataclass(slots=True)
 class BundleInventoryRow:
+    """Structured object used by the repository orchestration workflow."""
+
     generator_source: str
     json_file: str
     dataset_id: str
@@ -53,6 +63,8 @@ class BundleInventoryRow:
 
 @dataclass(slots=True)
 class HeldoutBundle:
+    """Structured object used by the repository orchestration workflow."""
+
     generator_source: str
     selected_json_path: Path
     duplicate_json_paths: list[Path]
@@ -71,6 +83,8 @@ class HeldoutBundle:
 
 @dataclass(slots=True)
 class EvaluatedBundle:
+    """Structured object used by the repository orchestration workflow."""
+
     generator_source: str
     dataset_id: str
     scenario_count: int
@@ -90,6 +104,11 @@ class EvaluatedBundle:
 
 
 def main() -> None:
+    """Run the command-line entrypoint for the repository orchestration workflow.
+
+        Arguments and returned values follow the explicit type hints and are used by the surrounding pipeline contracts.
+        """
+
     if not READY_PACKAGE_DIR.exists():
         raise FileNotFoundError(f"Saved winning Phase 1 package not found: {READY_PACKAGE_DIR}")
 
@@ -127,6 +146,11 @@ def main() -> None:
 
 
 def discover_heldout_bundles() -> tuple[list[BundleInventoryRow], list[HeldoutBundle], list[str]]:
+    """Handle discover heldout bundles within the repository orchestration workflow.
+
+        Arguments and returned values follow the explicit type hints and are used by the surrounding pipeline contracts.
+        """
+
     inventory_rows: list[BundleInventoryRow] = []
     selected_bundles: list[HeldoutBundle] = []
     validation_sections: list[str] = []
@@ -299,6 +323,11 @@ def _resolve_existing_phase2_bundle(
 
 
 def evaluate_canonical_bundle(package) -> EvaluatedBundle:
+    """Handle evaluate canonical bundle within the repository orchestration workflow.
+
+        Arguments and returned values follow the explicit type hints and are used by the surrounding pipeline contracts.
+        """
+
     labels_path = ROOT / "outputs" / "attacked" / "attack_labels.parquet"
     attacked_windows_path = ROOT / "outputs" / "window_size_study" / "60s" / "data" / "merged_windows_attacked.parquet"
     residual_windows_path = ROOT / "outputs" / "window_size_study" / "60s" / "residual_windows.parquet"
@@ -353,6 +382,11 @@ def evaluate_canonical_bundle(package) -> EvaluatedBundle:
 
 
 def evaluate_heldout_bundle(bundle: HeldoutBundle, clean_windows: pd.DataFrame, package) -> EvaluatedBundle:
+    """Handle evaluate heldout bundle within the repository orchestration workflow.
+
+        Arguments and returned values follow the explicit type hints and are used by the surrounding pipeline contracts.
+        """
+
     bundle_root = PHASE3_ROOT / bundle.generator_source
     data_root = bundle_root / "data"
     predictions_root = bundle_root / "predictions"

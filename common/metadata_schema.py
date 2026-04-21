@@ -1,3 +1,12 @@
+"""Shared utility support for DERGuardian.
+
+This module provides metadata schema helpers used across the Phase 1 data
+pipeline, Phase 2 scenario pipeline, and Phase 3 evaluation/reporting layers.
+The functions here are infrastructure code: they prepare paths, metadata,
+profiles, graphs, units, or time alignment without changing canonical detector
+outputs or benchmark decisions.
+"""
+
 from __future__ import annotations
 
 from dataclasses import asdict, dataclass, field
@@ -7,6 +16,8 @@ from typing import Any
 
 @dataclass(slots=True)
 class DatasetArtifact:
+    """Structured object used by the shared DERGuardian utility workflow."""
+
     name: str
     path: str
     rows: int | None = None
@@ -16,6 +27,8 @@ class DatasetArtifact:
 
 @dataclass(slots=True)
 class AttackLabel:
+    """Structured object used by the shared DERGuardian utility workflow."""
+
     scenario_id: str
     scenario_name: str
     attack_family: str
@@ -30,6 +43,8 @@ class AttackLabel:
 
 @dataclass(slots=True)
 class ValidationCheck:
+    """Structured object used by the shared DERGuardian utility workflow."""
+
     name: str
     status: str
     detail: str
@@ -39,6 +54,8 @@ class ValidationCheck:
 
 @dataclass(slots=True)
 class RunManifest:
+    """Structured object used by the shared DERGuardian utility workflow."""
+
     run_id: str
     scenario_id: str
     split_id: str
@@ -68,5 +85,10 @@ class RunManifest:
 
 
 def artifact_from_path(path: str | Path, rows: int | None = None, columns: int | None = None, description: str = "") -> DatasetArtifact:
+    """Handle artifact from path within the shared DERGuardian utility workflow.
+
+        Arguments and returned values follow the explicit type hints and are used by the surrounding pipeline contracts.
+        """
+
     resolved = Path(path)
     return DatasetArtifact(name=resolved.name, path=str(resolved), rows=rows, columns=columns, description=description)

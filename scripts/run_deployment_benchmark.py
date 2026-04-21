@@ -1,3 +1,11 @@
+"""Run the offline lightweight deployment benchmark for DERGuardian.
+
+The benchmark loads frozen detector packages, measures CPU inference latency,
+memory, package size, and throughput on replay windows, and writes deployment
+reports and figures. It is an offline workstation benchmark only and does not
+claim edge-hardware or field deployment evidence.
+"""
+
 from __future__ import annotations
 
 import argparse
@@ -50,6 +58,8 @@ def _safe_rel(path: Path) -> str:
 
 
 def _hardware_info() -> dict[str, Any]:
+    """Collect host hardware details for the deployment environment manifest."""
+
     cpu_name = platform.processor()
     try:
         output = subprocess.check_output(
@@ -91,6 +101,8 @@ def _library_versions() -> dict[str, str]:
 
 
 def _model_specs() -> list[dict[str, Any]]:
+    """Select frozen packages used by the offline deployment benchmark."""
+
     comparison = pd.read_csv(ROOT / "outputs" / "window_size_study" / "final_window_comparison.csv")
     wanted = [
         ("threshold_baseline", "10s", "workstation_cpu"),
@@ -121,9 +133,13 @@ def _windows_paths(window_label: str) -> list[Path]:
 
 
 def _worker(spec: dict[str, Any]) -> dict[str, Any]:
+    """Measure one model/profile pair in a fresh subprocess."""
+
     import torch
 
     if spec["profile"] == "constrained_single_thread":
+        # This approximates a constrained CPU profile; it is not a claim that
+        # the models ran on real edge DER hardware.
         torch.set_num_threads(1)
         torch.set_num_interop_threads(1)
         os.environ["OMP_NUM_THREADS"] = "1"
@@ -373,6 +389,8 @@ def _write_repro_command() -> None:
 
 
 def main() -> None:
+    """CLI entrypoint for worker mode or the full offline benchmark run."""
+
     parser = argparse.ArgumentParser(description="Run offline deployment-oriented replay benchmarks.")
     parser.add_argument("--worker-spec")
     args = parser.parse_args()

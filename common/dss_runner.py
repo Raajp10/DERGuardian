@@ -1,3 +1,12 @@
+"""Shared utility support for DERGuardian.
+
+This module provides dss runner helpers used across the Phase 1 data
+pipeline, Phase 2 scenario pipeline, and Phase 3 evaluation/reporting layers.
+The functions here are infrastructure code: they prepare paths, metadata,
+profiles, graphs, units, or time alignment without changing canonical detector
+outputs or benchmark decisions.
+"""
+
 from __future__ import annotations
 
 from dataclasses import dataclass
@@ -18,6 +27,8 @@ PHASE_LABELS = {1: "phase_a", 2: "phase_b", 3: "phase_c"}
 
 @dataclass(slots=True)
 class LoadSpec:
+    """Structured object used by the shared DERGuardian utility workflow."""
+
     name: str
     bus: str
     phases: int
@@ -28,6 +39,8 @@ class LoadSpec:
 
 @dataclass(slots=True)
 class LineSpec:
+    """Structured object used by the shared DERGuardian utility workflow."""
+
     name: str
     bus1: str
     bus2: str
@@ -37,6 +50,8 @@ class LineSpec:
 
 @dataclass(slots=True)
 class CircuitInventory:
+    """Structured object used by the shared DERGuardian utility workflow."""
+
     buses: list[str]
     bus_phase_nodes: dict[str, list[int]]
     loads: list[LoadSpec]
@@ -61,6 +76,11 @@ class CircuitInventory:
 
 
 def compile_research_circuit(paths: ProjectPaths | None = None) -> None:
+    """Handle compile research circuit within the shared DERGuardian utility workflow.
+
+        Arguments and returned values follow the explicit type hints and are used by the surrounding pipeline contracts.
+        """
+
     master_path = research_master_dss_path(paths)
     original_cwd = Path.cwd()
     dss.Basic.ClearAll()
@@ -71,6 +91,11 @@ def compile_research_circuit(paths: ProjectPaths | None = None) -> None:
 
 
 def extract_inventory(config: PipelineConfig, paths: ProjectPaths) -> CircuitInventory:
+    """Handle extract inventory within the shared DERGuardian utility workflow.
+
+        Arguments and returned values follow the explicit type hints and are used by the surrounding pipeline contracts.
+        """
+
     compile_research_circuit(paths)
     buses = list(dss.Circuit.AllBusNames())
     bus_phase_nodes: dict[str, list[int]] = {}
@@ -123,6 +148,11 @@ def extract_inventory(config: PipelineConfig, paths: ProjectPaths) -> CircuitInv
 
 
 def load_profile_specs(inventory: CircuitInventory) -> list[LoadProfileSpec]:
+    """Load profile specs for the shared DERGuardian utility workflow.
+
+        Arguments and returned values follow the explicit type hints and are used by the surrounding pipeline contracts.
+        """
+
     return [
         LoadProfileSpec(
             name=item.name,
@@ -148,6 +178,11 @@ def simulate_truth(
     split_id: str,
     override_df: pd.DataFrame | None = None,
 ) -> tuple[pd.DataFrame, pd.DataFrame]:
+    """Handle simulate truth within the shared DERGuardian utility workflow.
+
+        Arguments and returned values follow the explicit type hints and are used by the surrounding pipeline contracts.
+        """
+
     compile_research_circuit(paths)
     env = env_df.set_index("timestamp_utc")
     load_schedule = load_schedule_df.set_index("timestamp_utc")

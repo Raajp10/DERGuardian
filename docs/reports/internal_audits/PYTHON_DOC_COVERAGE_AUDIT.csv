@@ -1,0 +1,111 @@
+file_path,module_docstring_present,class_count,class_docstrings_present,function_count,function_docstrings_present,inline_comments_quality,needs_docstrings,needs_comments,notes
+common/__init__.py,True,0,n/a,0,n/a,none,False,False,package marker; module and public top-level docstrings present
+common/config.py,True,5,5/5,4,4/4,none,False,False,module and public top-level docstrings present
+common/dss_runner.py,True,3,3/3,4,4/4,none,False,False,module and public top-level docstrings present
+common/graph_builders.py,True,0,n/a,1,1/1,none,False,False,module and public top-level docstrings present
+common/io_utils.py,True,0,n/a,8,8/8,none,False,False,module and public top-level docstrings present
+common/metadata_schema.py,True,4,4/4,1,1/1,none,False,False,module and public top-level docstrings present
+common/noise_models.py,True,1,1/1,2,2/2,none,False,False,module and public top-level docstrings present
+common/time_alignment.py,True,0,n/a,6,6/6,none,False,False,module and public top-level docstrings present
+common/units_and_channel_dictionary.py,True,1,1/1,3,3/3,none,False,False,module and public top-level docstrings present
+common/weather_load_generators.py,True,1,1/1,8,8/8,none,False,False,module and public top-level docstrings present
+phase1/__init__.py,True,0,n/a,0,n/a,none,False,False,package marker; module and public top-level docstrings present
+phase1/build_clean_dataset.py,True,0,n/a,1,1/1,sparse_but_not_noisy,False,False,module and public top-level docstrings present
+phase1/build_windows.py,True,0,n/a,2,2/2,sparse_but_not_noisy,False,False,module and public top-level docstrings present
+phase1/extract_channels.py,True,0,n/a,1,1/1,none,False,False,module and public top-level docstrings present
+phase1/validate_clean_dataset.py,True,0,n/a,2,2/2,none,False,False,module and public top-level docstrings present
+phase1_models/__init__.py,True,0,n/a,0,n/a,none,False,False,package marker; module and public top-level docstrings present
+phase1_models/context/__init__.py,True,0,n/a,0,n/a,none,False,False,package marker; module and public top-level docstrings present
+phase1_models/context/phase1_context_builder.py,True,0,n/a,18,18/18,none,False,False,module and public top-level docstrings present
+phase1_models/context/phase1_fusion.py,True,1,1/1,6,6/6,none,False,False,module and public top-level docstrings present
+phase1_models/context/phase1_llm_reasoner.py,True,0,n/a,11,11/11,none,False,False,module and public top-level docstrings present
+phase1_models/dataset_loader.py,True,1,1/1,1,1/1,none,False,False,module and public top-level docstrings present
+phase1_models/evaluate_all_models.py,True,0,n/a,1,1/1,none,False,False,module and public top-level docstrings present
+phase1_models/export_model_report.py,True,0,n/a,1,1/1,none,False,False,module and public top-level docstrings present
+phase1_models/feature_builder.py,True,2,2/2,7,7/7,none,False,False,module and public top-level docstrings present
+phase1_models/generate_paper_figures.py,True,0,n/a,1,1/1,none,False,False,module and public top-level docstrings present
+phase1_models/metrics.py,True,0,n/a,4,4/4,none,False,False,module and public top-level docstrings present
+phase1_models/model_loader.py,True,1,1/1,4,4/4,sparse_but_not_noisy,False,False,module and public top-level docstrings present
+phase1_models/model_utils.py,True,1,1/1,9,9/9,none,False,False,module and public top-level docstrings present
+phase1_models/neural_models.py,True,5,5/5,0,n/a,none,False,False,module and public top-level docstrings present
+phase1_models/neural_training.py,True,0,n/a,4,4/4,none,False,False,module and public top-level docstrings present
+phase1_models/ready_package_utils.py,True,0,n/a,9,9/9,none,False,False,module and public top-level docstrings present
+phase1_models/residual_dataset.py,True,0,n/a,10,10/10,none,False,False,module and public top-level docstrings present
+phase1_models/run_full_evaluation.py,True,1,1/1,14,14/14,sparse_but_not_noisy,False,False,module and public top-level docstrings present
+phase1_models/sequence_train_utils.py,True,0,n/a,1,1/1,none,False,False,module and public top-level docstrings present
+phase1_models/thresholds.py,True,0,n/a,2,2/2,none,False,False,module and public top-level docstrings present
+phase1_models/token_timeseries_model.py,True,0,n/a,3,3/3,none,False,False,module and public top-level docstrings present
+phase1_models/train_autoencoder.py,True,0,n/a,2,2/2,none,False,False,module and public top-level docstrings present
+phase1_models/train_gru.py,True,0,n/a,1,1/1,none,False,False,module and public top-level docstrings present
+phase1_models/train_isolation_forest.py,True,0,n/a,2,2/2,none,False,False,module and public top-level docstrings present
+phase1_models/train_llm_baseline.py,True,0,n/a,2,2/2,none,False,False,module and public top-level docstrings present
+phase1_models/train_lstm.py,True,0,n/a,1,1/1,none,False,False,module and public top-level docstrings present
+phase1_models/train_threshold_baseline.py,True,0,n/a,2,2/2,none,False,False,module and public top-level docstrings present
+phase1_models/train_transformer.py,True,0,n/a,1,1/1,none,False,False,module and public top-level docstrings present
+phase2/__init__.py,True,0,n/a,0,n/a,none,False,False,package marker; module and public top-level docstrings present
+phase2/compile_injections.py,True,0,n/a,5,5/5,none,False,False,module and public top-level docstrings present
+phase2/contracts.py,True,0,n/a,1,1/1,present,False,False,module and public top-level docstrings present
+phase2/cyber_log_generator.py,True,0,n/a,2,2/2,none,False,False,module and public top-level docstrings present
+phase2/generate_attacked_dataset.py,True,0,n/a,1,1/1,sparse_but_not_noisy,False,False,module and public top-level docstrings present
+phase2/merge_physical_and_cyber.py,True,0,n/a,1,1/1,none,False,False,module and public top-level docstrings present
+phase2/reporting.py,True,0,n/a,7,7/7,sparse_but_not_noisy,False,False,module and public top-level docstrings present
+phase2/validate_attacked_dataset.py,True,0,n/a,2,2/2,sparse_but_not_noisy,False,False,module and public top-level docstrings present
+phase2/validate_scenarios.py,True,0,n/a,1,1/1,none,False,False,module and public top-level docstrings present
+phase3/__init__.py,True,0,n/a,0,n/a,none,False,False,package marker; module and public top-level docstrings present
+phase3/build_final_artifacts.py,True,0,n/a,1,1/1,none,False,False,module and public top-level docstrings present
+phase3/error_analysis.py,True,0,n/a,2,2/2,none,False,False,module and public top-level docstrings present
+phase3/experiment_utils.py,True,1,1/1,19,19/19,none,False,False,module and public top-level docstrings present
+phase3/fdi_feature_builder.py,True,0,n/a,2,2/2,none,False,False,module and public top-level docstrings present
+phase3/run_fdi_ablation.py,True,0,n/a,1,1/1,none,False,False,module and public top-level docstrings present
+phase3/run_latency_window_sweep.py,True,0,n/a,1,1/1,none,False,False,module and public top-level docstrings present
+phase3/run_modality_ablation.py,True,0,n/a,1,1/1,none,False,False,module and public top-level docstrings present
+phase3/run_sequence_model_sweep.py,True,0,n/a,1,1/1,none,False,False,module and public top-level docstrings present
+phase3/run_zero_day_evaluation.py,True,0,n/a,2,2/2,sparse_but_not_noisy,False,False,module and public top-level docstrings present
+phase3/zero_day_report.py,True,0,n/a,2,2/2,none,False,False,module and public top-level docstrings present
+phase3/zero_day_splitter.py,True,0,n/a,4,4/4,none,False,False,module and public top-level docstrings present
+phase3_explanations/__init__.py,True,0,n/a,0,n/a,none,False,False,package marker; module and public top-level docstrings present
+phase3_explanations/build_explanation_packet.py,True,0,n/a,14,14/14,sparse_but_not_noisy,False,False,module and public top-level docstrings present
+phase3_explanations/classify_attack_family.py,True,0,n/a,2,2/2,none,False,False,module and public top-level docstrings present
+phase3_explanations/generate_explanations_llm.py,True,0,n/a,7,7/7,none,False,False,module and public top-level docstrings present
+phase3_explanations/rationale_evaluator.py,True,0,n/a,7,7/7,none,False,False,module and public top-level docstrings present
+phase3_explanations/shared.py,True,0,n/a,21,21/21,none,False,False,module and public top-level docstrings present
+phase3_explanations/validate_explanations.py,True,0,n/a,2,2/2,none,False,False,module and public top-level docstrings present
+deployment_runtime/__init__.py,True,0,n/a,0,n/a,none,False,False,offline deployment-runtime code; not field edge deployment evidence; package marker; module and public top-level docstrings present
+deployment_runtime/build_alert_packet.py,True,0,n/a,3,3/3,none,False,False,offline deployment-runtime code; not field edge deployment evidence; module and public top-level docstrings present
+deployment_runtime/control_center_runtime.py,True,2,2/2,2,2/2,none,False,False,offline deployment-runtime code; not field edge deployment evidence; module and public top-level docstrings present
+deployment_runtime/demo_replay.py,True,0,n/a,6,6/6,none,False,False,offline deployment-runtime code; not field edge deployment evidence; module and public top-level docstrings present
+deployment_runtime/edge_runtime.py,True,2,2/2,2,2/2,none,False,False,offline deployment-runtime code; not field edge deployment evidence; module and public top-level docstrings present
+deployment_runtime/export_deployment_report.py,True,0,n/a,3,3/3,none,False,False,offline deployment-runtime code; not field edge deployment evidence; module and public top-level docstrings present
+deployment_runtime/gateway_runtime.py,True,2,2/2,2,2/2,none,False,False,offline deployment-runtime code; not field edge deployment evidence; module and public top-level docstrings present
+deployment_runtime/latency_budget.py,True,0,n/a,4,4/4,none,False,False,offline deployment-runtime code; not field edge deployment evidence; module and public top-level docstrings present
+deployment_runtime/load_deployed_models.py,True,5,5/5,2,2/2,none,False,False,offline deployment-runtime code; not field edge deployment evidence; module and public top-level docstrings present
+deployment_runtime/local_buffer.py,True,1,1/1,0,n/a,none,False,False,offline deployment-runtime code; not field edge deployment evidence; module and public top-level docstrings present
+deployment_runtime/runtime_common.py,True,1,1/1,20,20/20,none,False,False,offline deployment-runtime code; not field edge deployment evidence; module and public top-level docstrings present
+deployment_runtime/stream_window_builder.py,True,2,2/2,0,n/a,none,False,False,offline deployment-runtime code; not field edge deployment evidence; module and public top-level docstrings present
+scripts/build_final_audit_reports.py,True,0,n/a,1,1/1,none,False,False,orchestration/audit script; module and public top-level docstrings present
+scripts/build_master_project_release_report.py,True,0,n/a,17,17/17,present,False,False,orchestration/audit script; module and public top-level docstrings present
+scripts/build_phase1_lineage_audit.py,True,0,n/a,6,6/6,none,False,False,orchestration/audit script; module and public top-level docstrings present
+scripts/build_phase2_extensions.py,True,0,n/a,2,2/2,none,False,False,orchestration/audit script; module and public top-level docstrings present
+scripts/build_xai_and_final_reports.py,True,0,n/a,1,1/1,none,False,False,orchestration/audit script; module and public top-level docstrings present
+scripts/final_perfection_verify.py,True,0,n/a,4,4/4,none,False,False,orchestration/audit script; module and public top-level docstrings present
+scripts/final_repo_publication_cleanup.py,True,1,1/1,23,23/23,present,False,False,orchestration/audit script; module and public top-level docstrings present
+scripts/generate_final_combined_results_figure.py,True,0,n/a,1,1/1,none,False,False,orchestration/audit script; module and public top-level docstrings present
+scripts/generate_professor_graph_package.py,True,0,n/a,2,2/2,none,False,False,orchestration/audit script; module and public top-level docstrings present
+scripts/make_paper_figures.py,True,0,n/a,7,7/7,none,False,False,orchestration/audit script; module and public top-level docstrings present
+scripts/methodology_alignment_common.py,True,1,1/1,34,34/34,none,False,False,orchestration/audit script; module and public top-level docstrings present
+scripts/run_deployment_benchmark.py,True,0,n/a,1,1/1,sparse_but_not_noisy,False,False,orchestration/audit script; module and public top-level docstrings present
+scripts/run_detector_window_zero_day_audit.py,True,2,2/2,3,3/3,none,False,False,orchestration/audit script; module and public top-level docstrings present
+scripts/run_final_triple_verification.py,True,0,n/a,1,1/1,none,False,False,orchestration/audit script; module and public top-level docstrings present
+scripts/run_full_pipeline.py,True,1,1/1,5,5/5,none,False,False,orchestration/audit script; module and public top-level docstrings present
+scripts/run_heldout_phase3_pipeline.py,True,3,3/3,4,4/4,none,False,False,orchestration/audit script; module and public top-level docstrings present
+scripts/run_improved_phase3_suite.py,True,3,3/3,3,3/3,none,False,False,orchestration/audit script; module and public top-level docstrings present
+scripts/run_phase1_ttm_extension.py,True,0,n/a,12,12/12,none,False,False,orchestration/audit script; module and public top-level docstrings present
+scripts/run_phase3_lora_extension.py,True,1,1/1,1,1/1,none,False,False,orchestration/audit script; module and public top-level docstrings present
+scripts/run_repo_audit_pass01.py,True,1,1/1,50,50/50,none,False,False,orchestration/audit script; module and public top-level docstrings present
+scripts/run_second_pass_self_audit.py,True,1,1/1,8,8/8,none,False,False,orchestration/audit script; module and public top-level docstrings present
+scripts/run_window_size_study.py,True,0,n/a,29,29/29,sparse_but_not_noisy,False,False,orchestration/audit script; module and public top-level docstrings present
+tests/test_phase1_code_completion.py,True,1,1/1,0,n/a,none,False,False,module and public top-level docstrings present
+tests/test_phase1_ready_packages.py,True,1,1/1,0,n/a,none,False,False,module and public top-level docstrings present
+tests/test_phase1_upgrade_pipeline.py,True,1,1/1,0,n/a,none,False,False,module and public top-level docstrings present
+tests/test_phase2_remediation.py,True,1,1/1,0,n/a,none,False,False,module and public top-level docstrings present
+tests/test_phase3_pipeline.py,True,1,1/1,0,n/a,none,False,False,module and public top-level docstrings present

@@ -1,3 +1,11 @@
+"""Repository orchestration script for DERGuardian.
+
+This script runs or rebuilds run repo audit pass01 artifacts for audits, figures,
+reports, or reproducibility checks. It is release-support code and must preserve
+the separation between canonical benchmark, replay, heldout synthetic, and
+extension experiment contexts.
+"""
+
 from __future__ import annotations
 
 import json
@@ -120,6 +128,8 @@ PHASE2_REQUIRED_FIELDS = [
 
 @dataclass
 class VerificationResult:
+    """Structured object used by the repository orchestration workflow."""
+
     artifact_path: str
     required: bool
     exists: bool
@@ -133,16 +143,31 @@ class VerificationResult:
 
 
 def rel_path(path: Path) -> str:
+    """Handle rel path within the repository orchestration workflow.
+
+        Arguments and returned values follow the explicit type hints and are used by the surrounding pipeline contracts.
+        """
+
     return path.resolve().relative_to(ROOT.resolve()).as_posix()
 
 
 def path_from_text(value: str) -> Path:
+    """Handle path from text within the repository orchestration workflow.
+
+        Arguments and returned values follow the explicit type hints and are used by the surrounding pipeline contracts.
+        """
+
     candidate = value.strip().strip("`").strip()
     candidate = candidate.replace("\\", "/")
     return (ROOT / candidate).resolve()
 
 
 def truthy(series: pd.Series) -> pd.Series:
+    """Handle truthy within the repository orchestration workflow.
+
+        Arguments and returned values follow the explicit type hints and are used by the surrounding pipeline contracts.
+        """
+
     return (
         series.fillna(False)
         .astype(str)
@@ -153,6 +178,11 @@ def truthy(series: pd.Series) -> pd.Series:
 
 
 def parse_sequence(value: Any) -> list[str]:
+    """Handle parse sequence within the repository orchestration workflow.
+
+        Arguments and returned values follow the explicit type hints and are used by the surrounding pipeline contracts.
+        """
+
     if value is None:
         return []
     if isinstance(value, float) and math.isnan(value):
@@ -171,6 +201,11 @@ def parse_sequence(value: Any) -> list[str]:
 
 
 def normalized_entropy(values: list[str]) -> float:
+    """Handle normalized entropy within the repository orchestration workflow.
+
+        Arguments and returned values follow the explicit type hints and are used by the surrounding pipeline contracts.
+        """
+
     if not values:
         return 0.0
     series = pd.Series(values)
@@ -183,10 +218,20 @@ def normalized_entropy(values: list[str]) -> float:
 
 
 def read_text(path: Path) -> str:
+    """Read text for the repository orchestration workflow.
+
+        Arguments and returned values follow the explicit type hints and are used by the surrounding pipeline contracts.
+        """
+
     return path.read_text(encoding="utf-8", errors="ignore")
 
 
 def artifact_type(path: Path) -> str:
+    """Handle artifact type within the repository orchestration workflow.
+
+        Arguments and returned values follow the explicit type hints and are used by the surrounding pipeline contracts.
+        """
+
     suffix = path.suffix.lower()
     if suffix in FIGURE_SUFFIXES:
         return "figure"
@@ -208,6 +253,11 @@ def artifact_type(path: Path) -> str:
 
 
 def phase_for(path: Path) -> str:
+    """Handle phase for within the repository orchestration workflow.
+
+        Arguments and returned values follow the explicit type hints and are used by the surrounding pipeline contracts.
+        """
+
     lower = rel_path(path).lower()
     name = path.name.lower()
     if "phase3_lora" in lower or "phase3_lora" in name:
@@ -228,6 +278,11 @@ def phase_for(path: Path) -> str:
 
 
 def is_top_level_relevant(path: Path) -> bool:
+    """Handle is top level relevant within the repository orchestration workflow.
+
+        Arguments and returned values follow the explicit type hints and are used by the surrounding pipeline contracts.
+        """
+
     if path.parent != ROOT or not path.is_file():
         return False
     if path.suffix.lower() in EXCLUDED_SUFFIXES:
@@ -237,6 +292,11 @@ def is_top_level_relevant(path: Path) -> bool:
 
 
 def collect_relevant_files() -> list[Path]:
+    """Handle collect relevant files within the repository orchestration workflow.
+
+        Arguments and returned values follow the explicit type hints and are used by the surrounding pipeline contracts.
+        """
+
     found: dict[str, Path] = {}
     for root in RELEVANT_ROOTS:
         if not root.exists():
@@ -259,6 +319,11 @@ def collect_relevant_files() -> list[Path]:
 
 
 def write_tree(paths: list[Path]) -> None:
+    """Write tree for the repository orchestration workflow.
+
+        Arguments and returned values follow the explicit type hints and are used by the surrounding pipeline contracts.
+        """
+
     lines = ["# Relevant Repository Tree", ""]
 
     def append_tree(base: Path) -> None:
@@ -299,6 +364,11 @@ def write_tree(paths: list[Path]) -> None:
 
 
 def collect_report_texts(paths: list[Path]) -> dict[str, str]:
+    """Handle collect report texts within the repository orchestration workflow.
+
+        Arguments and returned values follow the explicit type hints and are used by the surrounding pipeline contracts.
+        """
+
     report_text = {}
     for path in paths:
         if path.exists() and path.suffix.lower() in REPORT_SUFFIXES:
@@ -307,6 +377,11 @@ def collect_report_texts(paths: list[Path]) -> dict[str, str]:
 
 
 def build_evidence_index(paths: list[Path]) -> pd.DataFrame:
+    """Build evidence index for the repository orchestration workflow.
+
+        Arguments and returned values follow the explicit type hints and are used by the surrounding pipeline contracts.
+        """
+
     report_texts = collect_report_texts(paths)
     rows = []
     for path in paths:
@@ -347,6 +422,11 @@ def build_evidence_index(paths: list[Path]) -> pd.DataFrame:
 
 
 def verify_image(path: Path) -> tuple[bool, bool, str]:
+    """Handle verify image within the repository orchestration workflow.
+
+        Arguments and returned values follow the explicit type hints and are used by the surrounding pipeline contracts.
+        """
+
     try:
         with Image.open(path) as image:
             image.load()
@@ -367,6 +447,11 @@ def verify_image(path: Path) -> tuple[bool, bool, str]:
 
 
 def verify_basic_structure(path: Path) -> tuple[bool, str]:
+    """Handle verify basic structure within the repository orchestration workflow.
+
+        Arguments and returned values follow the explicit type hints and are used by the surrounding pipeline contracts.
+        """
+
     try:
         if path.suffix.lower() == ".csv":
             frame = pd.read_csv(path)
@@ -402,6 +487,11 @@ def verify_basic_structure(path: Path) -> tuple[bool, str]:
 
 
 def load_inventory() -> pd.DataFrame:
+    """Load inventory for the repository orchestration workflow.
+
+        Arguments and returned values follow the explicit type hints and are used by the surrounding pipeline contracts.
+        """
+
     frame = pd.read_csv(ROOT / "phase2_scenario_master_inventory.csv")
     frame["repair_applied_bool"] = truthy(frame["repair_applied"])
     frame["replay_evaluated_bool"] = truthy(frame["replay_evaluated"])
@@ -410,6 +500,11 @@ def load_inventory() -> pd.DataFrame:
 
 
 def compute_phase2_asset_signal_coverage(inventory: pd.DataFrame) -> pd.DataFrame:
+    """Compute phase2 asset signal coverage for the repository orchestration workflow.
+
+        Arguments and returned values follow the explicit type hints and are used by the surrounding pipeline contracts.
+        """
+
     rows = []
     for dimension_name, column in [("asset", "affected_assets"), ("signal", "affected_signals")]:
         exploded = inventory.assign(_value=inventory[column].apply(parse_sequence)).explode("_value")
@@ -433,16 +528,31 @@ def compute_phase2_asset_signal_coverage(inventory: pd.DataFrame) -> pd.DataFram
 
 
 def parse_float(text: str, label: str) -> float | None:
+    """Handle parse float within the repository orchestration workflow.
+
+        Arguments and returned values follow the explicit type hints and are used by the surrounding pipeline contracts.
+        """
+
     match = re.search(rf"{re.escape(label)}[^0-9\-]*(-?\d+(?:\.\d+)?)", text)
     return float(match.group(1)) if match else None
 
 
 def parse_int(text: str, label: str) -> int | None:
+    """Handle parse int within the repository orchestration workflow.
+
+        Arguments and returned values follow the explicit type hints and are used by the surrounding pipeline contracts.
+        """
+
     value = parse_float(text, label)
     return int(round(value)) if value is not None else None
 
 
 def verify_freeze_report(path: Path) -> tuple[bool, bool, bool, str]:
+    """Handle verify freeze report within the repository orchestration workflow.
+
+        Arguments and returned values follow the explicit type hints and are used by the surrounding pipeline contracts.
+        """
+
     text = read_text(path)
     referenced_paths = re.findall(r"`([^`]+)`", text)
     existing_paths = []
@@ -461,6 +571,11 @@ def verify_freeze_report(path: Path) -> tuple[bool, bool, bool, str]:
 
 
 def verify_phase2_inventory(path: Path) -> tuple[bool, bool, bool, str]:
+    """Handle verify phase2 inventory within the repository orchestration workflow.
+
+        Arguments and returned values follow the explicit type hints and are used by the surrounding pipeline contracts.
+        """
+
     frame = load_inventory()
     missing = [column for column in PHASE2_REQUIRED_FIELDS if column not in frame.columns]
     accepted_values = set(frame["accepted_rejected"].dropna().astype(str).unique())
@@ -482,6 +597,11 @@ def verify_phase2_inventory(path: Path) -> tuple[bool, bool, bool, str]:
 
 
 def verify_phase2_family_distribution(path: Path) -> tuple[bool, bool, bool, str]:
+    """Handle verify phase2 family distribution within the repository orchestration workflow.
+
+        Arguments and returned values follow the explicit type hints and are used by the surrounding pipeline contracts.
+        """
+
     inventory = load_inventory()
     frame = pd.read_csv(path).sort_values("attack_family").reset_index(drop=True)
     expected_rows = []
@@ -507,6 +627,11 @@ def verify_phase2_family_distribution(path: Path) -> tuple[bool, bool, bool, str
 
 
 def verify_phase2_asset_signal(path: Path) -> tuple[bool, bool, bool, str]:
+    """Handle verify phase2 asset signal within the repository orchestration workflow.
+
+        Arguments and returned values follow the explicit type hints and are used by the surrounding pipeline contracts.
+        """
+
     inventory = load_inventory()
     frame = pd.read_csv(path).sort_values(["dimension", "name"]).reset_index(drop=True)
     expected = compute_phase2_asset_signal_coverage(inventory).sort_values(["dimension", "name"]).reset_index(drop=True)
@@ -519,6 +644,11 @@ def verify_phase2_asset_signal(path: Path) -> tuple[bool, bool, bool, str]:
 
 
 def verify_phase2_difficulty(path: Path) -> tuple[bool, bool, bool, str]:
+    """Handle verify phase2 difficulty within the repository orchestration workflow.
+
+        Arguments and returned values follow the explicit type hints and are used by the surrounding pipeline contracts.
+        """
+
     inventory = load_inventory()
     frame = pd.read_csv(path)
     required = {
@@ -560,6 +690,11 @@ def verify_phase2_difficulty(path: Path) -> tuple[bool, bool, bool, str]:
 
 
 def verify_phase2_coverage_summary(path: Path) -> tuple[bool, bool, bool, str]:
+    """Handle verify phase2 coverage summary within the repository orchestration workflow.
+
+        Arguments and returned values follow the explicit type hints and are used by the surrounding pipeline contracts.
+        """
+
     inventory = load_inventory()
     text = read_text(path)
     validated = int((inventory["accepted_rejected"] == "accepted").sum())
@@ -598,6 +733,11 @@ def verify_phase2_coverage_summary(path: Path) -> tuple[bool, bool, bool, str]:
 
 
 def verify_phase2_diversity_report(path: Path) -> tuple[bool, bool, bool, str]:
+    """Handle verify phase2 diversity report within the repository orchestration workflow.
+
+        Arguments and returned values follow the explicit type hints and are used by the surrounding pipeline contracts.
+        """
+
     inventory = load_inventory()
     accepted = inventory[inventory["accepted_rejected"] == "accepted"].copy()
     text = read_text(path)
@@ -643,6 +783,11 @@ def verify_phase2_diversity_report(path: Path) -> tuple[bool, bool, bool, str]:
 
 
 def verify_lora_manifest(path: Path) -> tuple[bool, bool, bool, str]:
+    """Handle verify lora manifest within the repository orchestration workflow.
+
+        Arguments and returned values follow the explicit type hints and are used by the surrounding pipeline contracts.
+        """
+
     manifest = json.loads(read_text(path))
     required_keys = {"branch_role", "base_model", "total_examples", "split_counts"}
     content_verified = required_keys <= set(manifest.keys()) and manifest.get("branch_role") == "experimental_extension_only"
@@ -663,6 +808,11 @@ def verify_lora_manifest(path: Path) -> tuple[bool, bool, bool, str]:
 
 
 def verify_lora_config(path: Path) -> tuple[bool, bool, bool, str]:
+    """Handle verify lora config within the repository orchestration workflow.
+
+        Arguments and returned values follow the explicit type hints and are used by the surrounding pipeline contracts.
+        """
+
     config = yaml.safe_load(read_text(path))
     required_paths = [
         config.get("base_model") == "google/flan-t5-small",
@@ -679,6 +829,11 @@ def verify_lora_config(path: Path) -> tuple[bool, bool, bool, str]:
 
 
 def verify_lora_results(path: Path) -> tuple[bool, bool, bool, str]:
+    """Handle verify lora results within the repository orchestration workflow.
+
+        Arguments and returned values follow the explicit type hints and are used by the surrounding pipeline contracts.
+        """
+
     results = pd.read_csv(path)
     expected_variants = {"base_zero_shot", "lora_finetuned"}
     expected_splits = {"aux_in_domain_holdout", "validation_generator_heldout", "test_generator_heldout"}
@@ -702,6 +857,11 @@ def verify_lora_results(path: Path) -> tuple[bool, bool, bool, str]:
 
 
 def verify_lora_eval_report(path: Path) -> tuple[bool, bool, bool, str]:
+    """Handle verify lora eval report within the repository orchestration workflow.
+
+        Arguments and returned values follow the explicit type hints and are used by the surrounding pipeline contracts.
+        """
+
     text = read_text(path)
     manifest = json.loads(read_text(ROOT / "phase3_lora_dataset_manifest.json"))
     results = pd.read_csv(ROOT / "phase3_lora_results.csv")
@@ -723,6 +883,11 @@ def verify_lora_eval_report(path: Path) -> tuple[bool, bool, bool, str]:
 
 
 def verify_lora_model_card(path: Path) -> tuple[bool, bool, bool, str]:
+    """Handle verify lora model card within the repository orchestration workflow.
+
+        Arguments and returned values follow the explicit type hints and are used by the surrounding pipeline contracts.
+        """
+
     text = read_text(path)
     manifest = json.loads(read_text(ROOT / "phase3_lora_dataset_manifest.json"))
     content_verified = (
@@ -738,6 +903,11 @@ def verify_lora_model_card(path: Path) -> tuple[bool, bool, bool, str]:
 
 
 def verify_xai_case_level(path: Path) -> tuple[bool, bool, bool, str]:
+    """Handle verify xai case level within the repository orchestration workflow.
+
+        Arguments and returned values follow the explicit type hints and are used by the surrounding pipeline contracts.
+        """
+
     frame = pd.read_csv(path)
     required = {
         "generator_source",
@@ -771,6 +941,11 @@ def verify_xai_case_level(path: Path) -> tuple[bool, bool, bool, str]:
 
 
 def verify_xai_error_taxonomy(path: Path) -> tuple[bool, bool, bool, str]:
+    """Handle verify xai error taxonomy within the repository orchestration workflow.
+
+        Arguments and returned values follow the explicit type hints and are used by the surrounding pipeline contracts.
+        """
+
     text = read_text(path)
     frame = pd.read_csv(ROOT / "xai_case_level_audit.csv")
     overall = frame["primary_error_category"].value_counts().sort_index()
@@ -786,6 +961,11 @@ def verify_xai_error_taxonomy(path: Path) -> tuple[bool, bool, bool, str]:
 
 
 def verify_xai_qualitative(path: Path) -> tuple[bool, bool, bool, str]:
+    """Handle verify xai qualitative within the repository orchestration workflow.
+
+        Arguments and returned values follow the explicit type hints and are used by the surrounding pipeline contracts.
+        """
+
     text = read_text(path)
     frame = pd.read_csv(ROOT / "xai_case_level_audit.csv")
     required_examples = [
@@ -808,6 +988,11 @@ def verify_xai_qualitative(path: Path) -> tuple[bool, bool, bool, str]:
 
 
 def verify_xai_final_report(path: Path) -> tuple[bool, bool, bool, str]:
+    """Handle verify xai final report within the repository orchestration workflow.
+
+        Arguments and returned values follow the explicit type hints and are used by the surrounding pipeline contracts.
+        """
+
     text = read_text(path)
     frame = pd.read_csv(ROOT / "xai_case_level_audit.csv")
     checks = {
@@ -830,6 +1015,11 @@ def verify_xai_final_report(path: Path) -> tuple[bool, bool, bool, str]:
 
 
 def verify_deployment_results(path: Path) -> tuple[bool, bool, bool, str]:
+    """Handle verify deployment results within the repository orchestration workflow.
+
+        Arguments and returned values follow the explicit type hints and are used by the surrounding pipeline contracts.
+        """
+
     frame = pd.read_csv(path)
     expected_models = {
         ("workstation_cpu", "threshold_baseline", "10s"),
@@ -865,6 +1055,11 @@ def verify_deployment_results(path: Path) -> tuple[bool, bool, bool, str]:
 
 
 def verify_deployment_report(path: Path) -> tuple[bool, bool, bool, str]:
+    """Handle verify deployment report within the repository orchestration workflow.
+
+        Arguments and returned values follow the explicit type hints and are used by the surrounding pipeline contracts.
+        """
+
     text = read_text(path)
     results = pd.read_csv(ROOT / "deployment_benchmark_results.csv")
     actual = results[results["profile"] == "workstation_cpu"].copy()
@@ -883,6 +1078,11 @@ def verify_deployment_report(path: Path) -> tuple[bool, bool, bool, str]:
 
 
 def verify_deployment_readiness(path: Path) -> tuple[bool, bool, bool, str]:
+    """Handle verify deployment readiness within the repository orchestration workflow.
+
+        Arguments and returned values follow the explicit type hints and are used by the surrounding pipeline contracts.
+        """
+
     text = read_text(path)
     content_verified = "No real edge device was used." in text and "offline lightweight deployment benchmark" in text.lower()
     backed = True
@@ -892,6 +1092,11 @@ def verify_deployment_readiness(path: Path) -> tuple[bool, bool, bool, str]:
 
 
 def verify_final_alignment(path: Path) -> tuple[bool, bool, bool, str]:
+    """Handle verify final alignment within the repository orchestration workflow.
+
+        Arguments and returned values follow the explicit type hints and are used by the surrounding pipeline contracts.
+        """
+
     text = read_text(path)
     audit_csv = ROOT / "diagram_box_audit.csv"
     audit_exists = audit_csv.exists()
@@ -920,6 +1125,11 @@ def verify_final_alignment(path: Path) -> tuple[bool, bool, bool, str]:
 
 
 def verify_safe_labels(path: Path) -> tuple[bool, bool, bool, str]:
+    """Handle verify safe labels within the repository orchestration workflow.
+
+        Arguments and returned values follow the explicit type hints and are used by the surrounding pipeline contracts.
+        """
+
     text = read_text(path)
     required_phrases = [
         "Model Training ML Models + Tiny LLM (LoRA)",
@@ -934,6 +1144,11 @@ def verify_safe_labels(path: Path) -> tuple[bool, bool, bool, str]:
 
 
 def verify_complete_project_status(path: Path) -> tuple[bool, bool, bool, str]:
+    """Handle verify complete project status within the repository orchestration workflow.
+
+        Arguments and returned values follow the explicit type hints and are used by the surrounding pipeline contracts.
+        """
+
     text = read_text(path)
     content_verified = (
         "transformer @ 60s" in text
@@ -948,6 +1163,11 @@ def verify_complete_project_status(path: Path) -> tuple[bool, bool, bool, str]:
 
 
 def verify_complete_results(path: Path) -> tuple[bool, bool, bool, str]:
+    """Handle verify complete results within the repository orchestration workflow.
+
+        Arguments and returned values follow the explicit type hints and are used by the surrounding pipeline contracts.
+        """
+
     text = read_text(path)
     benchmark = pd.read_csv(ROOT / "outputs" / "window_size_study" / "final_window_comparison.csv")
     canonical = benchmark[(benchmark["model_name"] == "transformer") & (benchmark["window_label"] == "60s")].iloc[0]
@@ -993,6 +1213,11 @@ def verify_complete_results(path: Path) -> tuple[bool, bool, bool, str]:
 
 
 def verify_publication_safe_claims(path: Path) -> tuple[bool, bool, bool, str]:
+    """Handle verify publication safe claims within the repository orchestration workflow.
+
+        Arguments and returned values follow the explicit type hints and are used by the surrounding pipeline contracts.
+        """
+
     text = read_text(path)
     content_verified = (
         "Safe now" in text
@@ -1008,6 +1233,11 @@ def verify_publication_safe_claims(path: Path) -> tuple[bool, bool, bool, str]:
 
 
 def verify_final_project_decision(path: Path) -> tuple[bool, bool, bool, str]:
+    """Handle verify final project decision within the repository orchestration workflow.
+
+        Arguments and returned values follow the explicit type hints and are used by the surrounding pipeline contracts.
+        """
+
     text = read_text(path)
     content_verified = (
         "Mostly" in text
@@ -1024,6 +1254,11 @@ def verify_final_project_decision(path: Path) -> tuple[bool, bool, bool, str]:
 
 
 def verify_figure(path: Path) -> tuple[bool, bool, bool, str]:
+    """Handle verify figure within the repository orchestration workflow.
+
+        Arguments and returned values follow the explicit type hints and are used by the surrounding pipeline contracts.
+        """
+
     structurally_valid, content_verified, issue = verify_image(path)
     backed = True
     numerically_consistent = True
@@ -1031,6 +1266,11 @@ def verify_figure(path: Path) -> tuple[bool, bool, bool, str]:
 
 
 def verify_required_artifact(path: Path) -> VerificationResult:
+    """Handle verify required artifact within the repository orchestration workflow.
+
+        Arguments and returned values follow the explicit type hints and are used by the surrounding pipeline contracts.
+        """
+
     exists = path.exists()
     nonempty = exists and path.stat().st_size > 0
     if not exists:
@@ -1137,6 +1377,11 @@ def verify_required_artifact(path: Path) -> VerificationResult:
 
 
 def build_verification_audit() -> pd.DataFrame:
+    """Build verification audit for the repository orchestration workflow.
+
+        Arguments and returned values follow the explicit type hints and are used by the surrounding pipeline contracts.
+        """
+
     results = [verify_required_artifact(ROOT / artifact) for artifact in REQUIRED_ARTIFACTS]
     frame = pd.DataFrame([result.__dict__ for result in results])
     frame.to_csv(VERIFICATION_AUDIT_PATH, index=False)
@@ -1144,6 +1389,11 @@ def build_verification_audit() -> pd.DataFrame:
 
 
 def detect_ttm_artifacts(paths: list[Path]) -> list[str]:
+    """Handle detect ttm artifacts within the repository orchestration workflow.
+
+        Arguments and returned values follow the explicit type hints and are used by the surrounding pipeline contracts.
+        """
+
     hits = []
     for path in paths:
         target = rel_path(path) if path.exists() else path.name
@@ -1154,6 +1404,11 @@ def detect_ttm_artifacts(paths: list[Path]) -> list[str]:
 
 
 def write_verification_gaps(audit: pd.DataFrame, paths: list[Path]) -> None:
+    """Write verification gaps for the repository orchestration workflow.
+
+        Arguments and returned values follow the explicit type hints and are used by the surrounding pipeline contracts.
+        """
+
     failed = audit[audit["pass_fail"] != "pass"].copy()
     ttm_hits = detect_ttm_artifacts(paths)
     lines = ["# Verification Gaps", ""]
@@ -1199,6 +1454,11 @@ def write_verification_gaps(audit: pd.DataFrame, paths: list[Path]) -> None:
 
 
 def main() -> None:
+    """Run the command-line entrypoint for the repository orchestration workflow.
+
+        Arguments and returned values follow the explicit type hints and are used by the surrounding pipeline contracts.
+        """
+
     relevant_paths = collect_relevant_files()
     write_tree(relevant_paths)
     build_evidence_index(relevant_paths)

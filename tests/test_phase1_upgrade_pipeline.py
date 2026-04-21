@@ -1,3 +1,9 @@
+"""Test coverage for DERGuardian test phase1 upgrade pipeline behavior.
+
+These tests exercise pipeline contracts, package readiness, or phase-level
+functionality without changing scientific outputs.
+"""
+
 from __future__ import annotations
 
 import json
@@ -13,6 +19,8 @@ MODEL_ROOT = ROOT / "outputs" / "models_full_run"
 
 
 class Phase1UpgradePipelineTests(unittest.TestCase):
+    """Structured object used by the test workflow."""
+
     def test_context_summary_artifacts_exist_and_have_expected_structure(self) -> None:
         jsonl_path = REPORT_ROOT / "phase1_context_summaries.jsonl"
         parquet_path = REPORT_ROOT / "phase1_context_summaries.parquet"

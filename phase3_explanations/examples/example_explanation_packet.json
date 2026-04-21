@@ -253,8 +253,8 @@
     }
   ],
   "detector_evidence": {
-    "prediction_source": "C:\\Users\\raajp\\Desktop\\Final_Project\\outputs\\models_full_run\\threshold_baseline\\predictions.parquet",
-    "results_source": "C:\\Users\\raajp\\Desktop\\Final_Project\\outputs\\models_full_run\\threshold_baseline\\results.json",
+    "prediction_source": "<repo>/outputs/models_full_run/threshold_baseline/predictions.parquet",
+    "results_source": "<repo>/outputs/models_full_run/threshold_baseline/results.json",
     "modality_type": "fused",
     "candidate_family_hints": [
       {

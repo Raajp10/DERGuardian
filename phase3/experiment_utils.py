@@ -1,3 +1,10 @@
+"""Phase 3 evaluation and analysis support for DERGuardian.
+
+This module implements experiment utils logic for detector evaluation, ablations,
+zero-day-like heldout synthetic analysis, latency sweeps, or final reporting.
+It keeps benchmark, replay, heldout synthetic, and extension results separated.
+"""
+
 from __future__ import annotations
 
 from dataclasses import dataclass
@@ -68,6 +75,8 @@ PHASE3_MODEL_PRIORITY = [name for name in MODEL_PRIORITY]
 
 @dataclass(slots=True)
 class PreparedWindowBundle:
+    """Structured object used by the Phase 3 evaluation workflow."""
+
     clean_windows: pd.DataFrame
     attacked_windows: pd.DataFrame
     labels_df: pd.DataFrame
@@ -99,6 +108,11 @@ def load_optional_phase2_analysis_artifacts(root: Path) -> dict[str, object]:
 
 
 def load_labels(root: Path, labels_path: Path | None = None) -> pd.DataFrame:
+    """Load labels for the Phase 3 evaluation workflow.
+
+        Arguments and returned values follow the explicit type hints and are used by the surrounding pipeline contracts.
+        """
+
     resolved = labels_path or (root / "outputs" / "attacked" / "attack_labels.parquet")
     labels = read_dataframe(resolved)
     if not labels.empty:
@@ -113,6 +127,11 @@ def prepare_window_bundle(
     attacked_windows_path: Path | None = None,
     labels_path: Path | None = None,
 ) -> PreparedWindowBundle:
+    """Handle prepare window bundle within the Phase 3 evaluation workflow.
+
+        Arguments and returned values follow the explicit type hints and are used by the surrounding pipeline contracts.
+        """
+
     clean_path = clean_windows_path or (root / "outputs" / "windows" / "merged_windows_clean.parquet")
     attacked_path = attacked_windows_path or (root / "outputs" / "attacked" / "merged_windows.parquet")
     resolved_labels_path = labels_path or (root / "outputs" / "attacked" / "attack_labels.parquet")
@@ -145,10 +164,20 @@ def prepare_window_bundle(
 
 
 def build_residual_dataframe(clean_windows: pd.DataFrame, attacked_windows: pd.DataFrame, labels_df: pd.DataFrame) -> pd.DataFrame:
+    """Build residual dataframe for the Phase 3 evaluation workflow.
+
+        Arguments and returned values follow the explicit type hints and are used by the surrounding pipeline contracts.
+        """
+
     return build_aligned_residual_dataframe(clean_windows, attacked_windows, labels_df).drop(columns=["split_name"], errors="ignore")
 
 
 def annotate_scenario_windows(frame: pd.DataFrame, labels_df: pd.DataFrame, default_scenario: str = "benign") -> pd.DataFrame:
+    """Handle annotate scenario windows within the Phase 3 evaluation workflow.
+
+        Arguments and returned values follow the explicit type hints and are used by the surrounding pipeline contracts.
+        """
+
     annotated = frame.copy()
     if "scenario_window_id" not in annotated.columns:
         annotated["scenario_window_id"] = default_scenario
@@ -169,6 +198,11 @@ def build_full_run_data(
     candidate_feature_columns: list[str],
     residual_artifact_path: Path | None = None,
 ) -> FullRunData:
+    """Build full run data for the Phase 3 evaluation workflow.
+
+        Arguments and returned values follow the explicit type hints and are used by the surrounding pipeline contracts.
+        """
+
     ranking = rank_features_by_effect_size(
         split_df[split_df["split_name"] == "train"].copy(),
         candidate_feature_columns,
@@ -183,6 +217,11 @@ def build_full_run_data(
 
 
 def infer_candidate_columns(frame: pd.DataFrame, mode: str = "residual") -> list[str]:
+    """Handle infer candidate columns within the Phase 3 evaluation workflow.
+
+        Arguments and returned values follow the explicit type hints and are used by the surrounding pipeline contracts.
+        """
+
     numeric_columns = [
         column
         for column in frame.columns
@@ -206,6 +245,11 @@ def infer_candidate_columns(frame: pd.DataFrame, mode: str = "residual") -> list
 
 
 def build_modality_frame(bundle: PreparedWindowBundle, mode: str) -> pd.DataFrame:
+    """Build modality frame for the Phase 3 evaluation workflow.
+
+        Arguments and returned values follow the explicit type hints and are used by the surrounding pipeline contracts.
+        """
+
     attacked = annotate_scenario_windows(bundle.attacked_windows.copy(), bundle.labels_df)
     if mode == "physical_only":
         selected = infer_candidate_columns(attacked, mode="physical_only")
@@ -225,6 +269,11 @@ def build_modality_frame(bundle: PreparedWindowBundle, mode: str) -> pd.DataFram
 
 
 def build_window_bundle_for_config(root: Path, window_seconds: int, step_seconds: int, output_dir: Path) -> tuple[Path, Path]:
+    """Build window bundle for config for the Phase 3 evaluation workflow.
+
+        Arguments and returned values follow the explicit type hints and are used by the surrounding pipeline contracts.
+        """
+
     output_dir.mkdir(parents=True, exist_ok=True)
     clean_output = output_dir / f"clean_windows_{window_seconds}s_{step_seconds}s.parquet"
     attacked_output = output_dir / f"attacked_windows_{window_seconds}s_{step_seconds}s.parquet"
@@ -253,6 +302,11 @@ def run_model_suite(
     include_models: list[str],
     model_settings: dict[str, dict[str, object]],
 ) -> dict[str, object]:
+    """Run model suite for the Phase 3 evaluation workflow.
+
+        Arguments and returned values follow the explicit type hints and are used by the surrounding pipeline contracts.
+        """
+
     report_root = ensure_dir(root / "outputs" / "reports" / report_root_name)
     summary_rows: list[dict[str, object]] = []
     sweep_rows: list[dict[str, object]] = []
@@ -362,6 +416,11 @@ def run_saved_phase1_package(
     package_dir: Path,
     holdout_scenario: str,
 ) -> dict[str, object]:
+    """Run saved phase1 package for the Phase 3 evaluation workflow.
+
+        Arguments and returned values follow the explicit type hints and are used by the surrounding pipeline contracts.
+        """
+
     package = load_phase1_package(package_dir)
     test_frame = full_data.split_df[full_data.split_df["split_name"] == "test"].copy().reset_index(drop=True)
     inference = run_phase1_inference(package, test_frame)
@@ -396,6 +455,11 @@ def run_saved_phase1_package(
 
 
 def summarize_latency(latency_df: pd.DataFrame, group_columns: list[str]) -> pd.DataFrame:
+    """Handle summarize latency within the Phase 3 evaluation workflow.
+
+        Arguments and returned values follow the explicit type hints and are used by the surrounding pipeline contracts.
+        """
+
     if latency_df.empty:
         return pd.DataFrame(columns=group_columns + ["mean_latency_seconds", "median_latency_seconds", "detected_scenarios", "total_scenarios"])
     frame = latency_df.copy()
@@ -414,6 +478,11 @@ def summarize_latency(latency_df: pd.DataFrame, group_columns: list[str]) -> pd.
 
 
 def mean_metric_summary(summary_df: pd.DataFrame, group_columns: list[str]) -> pd.DataFrame:
+    """Handle mean metric summary within the Phase 3 evaluation workflow.
+
+        Arguments and returned values follow the explicit type hints and are used by the surrounding pipeline contracts.
+        """
+
     if summary_df.empty:
         return pd.DataFrame()
     numeric_columns = [
@@ -429,6 +498,11 @@ def mean_metric_summary(summary_df: pd.DataFrame, group_columns: list[str]) -> p
 
 
 def write_phase3_report(path: Path, title: str, sections: list[tuple[str, str]]) -> Path:
+    """Write phase3 report for the Phase 3 evaluation workflow.
+
+        Arguments and returned values follow the explicit type hints and are used by the surrounding pipeline contracts.
+        """
+
     lines = [title, ""]
     for heading, body in sections:
         lines.append(f"## {heading}")
@@ -440,6 +514,11 @@ def write_phase3_report(path: Path, title: str, sections: list[tuple[str, str]])
 
 
 def plot_metric_bars(frame: pd.DataFrame, category_column: str, path: Path, metrics: list[str], title: str) -> Path:
+    """Handle plot metric bars within the Phase 3 evaluation workflow.
+
+        Arguments and returned values follow the explicit type hints and are used by the surrounding pipeline contracts.
+        """
+
     fig, ax = plt.subplots(figsize=(10, 4.5))
     if frame.empty:
         ax.text(0.5, 0.5, "No results available", ha="center", va="center")
@@ -459,6 +538,11 @@ def plot_metric_bars(frame: pd.DataFrame, category_column: str, path: Path, metr
 
 
 def plot_latency_tradeoff(frame: pd.DataFrame, x_column: str, y_column: str, label_column: str, path: Path, title: str) -> Path:
+    """Handle plot latency tradeoff within the Phase 3 evaluation workflow.
+
+        Arguments and returned values follow the explicit type hints and are used by the surrounding pipeline contracts.
+        """
+
     fig, ax = plt.subplots(figsize=(7, 5))
     if frame.empty:
         ax.text(0.5, 0.5, "No results available", ha="center", va="center")
@@ -483,6 +567,11 @@ def save_summary_bundle(
     report_root: Path,
     prefix: str,
 ) -> dict[str, Path]:
+    """Handle save summary bundle within the Phase 3 evaluation workflow.
+
+        Arguments and returned values follow the explicit type hints and are used by the surrounding pipeline contracts.
+        """
+
     paths = {
         "summary_csv": report_root / f"{prefix}_model_summary.csv",
         "summary_md": report_root / f"{prefix}_model_summary.md",
@@ -499,6 +588,11 @@ def save_summary_bundle(
 
 
 def clone_best_model_figures(source_report_dir: Path, destination_dir: Path, prefix: str) -> list[dict[str, str]]:
+    """Handle clone best model figures within the Phase 3 evaluation workflow.
+
+        Arguments and returned values follow the explicit type hints and are used by the surrounding pipeline contracts.
+        """
+
     copied: list[dict[str, str]] = []
     destination_dir.mkdir(parents=True, exist_ok=True)
     for figure_name in ["confusion_matrix.png", "precision_recall_curve.png", "roc_curve.png"]:
@@ -512,6 +606,11 @@ def clone_best_model_figures(source_report_dir: Path, destination_dir: Path, pre
 
 
 def to_markdown(frame: pd.DataFrame) -> str:
+    """Handle to markdown within the Phase 3 evaluation workflow.
+
+        Arguments and returned values follow the explicit type hints and are used by the surrounding pipeline contracts.
+        """
+
     return _to_markdown(frame)
 
 

@@ -1,3 +1,11 @@
+"""Validate Phase 2 attacked data against labels and the clean baseline.
+
+The checks confirm that scenario labels, cyber events, observable physical
+effects, measured-layer effects, and merged windows are internally consistent.
+Validation results support scientific auditability; they do not relabel heldout
+synthetic evidence as canonical benchmark evidence.
+"""
+
 from __future__ import annotations
 
 from pathlib import Path
@@ -27,6 +35,8 @@ def validate_attacked_layers(
     baseline_measured_df: pd.DataFrame,
     windows_df: pd.DataFrame | None = None,
 ) -> list[ValidationCheck]:
+    """Return validation checks for attacked truth, measured, cyber, and labels."""
+
     checks: list[ValidationCheck] = []
     labels = _coerce_label_frame(labels_df)
     attacked_truth = attacked_truth_df.copy()
@@ -79,6 +89,8 @@ def validate_attacked_layers(
         observable_signals = _extract_observable_signals(label)
         if not observable_signals:
             observable_signals = [signal for signal in label["affected_signals"] if signal in attacked_truth.columns or signal in attacked_measured.columns]
+        # Compare attacked data against the clean baseline over the same time
+        # span so plausibility is based on observed deltas, not labels alone.
         window_truth = attacked_truth[(attacked_truth["timestamp_utc"] >= start) & (attacked_truth["timestamp_utc"] < end)]
         base_truth_window = baseline_truth[(baseline_truth["timestamp_utc"] >= start) & (baseline_truth["timestamp_utc"] < end)]
         window_measured = attacked_measured[(attacked_measured["timestamp_utc"] >= start) & (attacked_measured["timestamp_utc"] < end)]
@@ -176,6 +188,8 @@ def _extract_observable_signals(label: pd.Series) -> list[str]:
 
 
 def _window_delta_score(attacked: pd.DataFrame, baseline: pd.DataFrame, signals: list[str]) -> float:
+    """Compute the average absolute attacked-vs-baseline signal delta."""
+
     deltas: list[float] = []
     for signal in signals:
         if signal in attacked.columns and signal in baseline.columns:
@@ -234,6 +248,8 @@ def _infer_sample_seconds(df: pd.DataFrame) -> int:
 
 
 def main() -> None:
+    """CLI entrypoint for writing attacked-layer validation JSON and Markdown."""
+
     parser = argparse.ArgumentParser(description="Validate attacked layers against labels and clean baseline.")
     parser.add_argument("--attacked-truth", required=True)
     parser.add_argument("--attacked-measured", required=True)

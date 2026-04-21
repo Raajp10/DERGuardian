@@ -1,3 +1,11 @@
+"""Repository orchestration script for DERGuardian.
+
+This script runs or rebuilds final repo publication cleanup artifacts for audits, figures,
+reports, or reproducibility checks. It is release-support code and must preserve
+the separation between canonical benchmark, replay, heldout synthetic, and
+extension experiment contexts.
+"""
+
 from __future__ import annotations
 
 from dataclasses import dataclass
@@ -15,6 +23,8 @@ ROOT = Path(__file__).resolve().parents[1]
 
 @dataclass(frozen=True)
 class ArtifactCopy:
+    """Structured object used by the repository orchestration workflow."""
+
     source: str
     target: str
     context: str
@@ -23,6 +33,11 @@ class ArtifactCopy:
 
 
 def rel(path: str | Path) -> str:
+    """Handle rel within the repository orchestration workflow.
+
+        Arguments and returned values follow the explicit type hints and are used by the surrounding pipeline contracts.
+        """
+
     path = Path(path)
     try:
         return path.relative_to(ROOT).as_posix()
@@ -31,6 +46,11 @@ def rel(path: str | Path) -> str:
 
 
 def read_csv_or_empty(path: str | Path) -> pd.DataFrame:
+    """Read csv or empty for the repository orchestration workflow.
+
+        Arguments and returned values follow the explicit type hints and are used by the surrounding pipeline contracts.
+        """
+
     path = ROOT / path
     if not path.exists():
         return pd.DataFrame()
@@ -38,12 +58,22 @@ def read_csv_or_empty(path: str | Path) -> pd.DataFrame:
 
 
 def write_text(path: str | Path, text: str) -> None:
+    """Write text for the repository orchestration workflow.
+
+        Arguments and returned values follow the explicit type hints and are used by the surrounding pipeline contracts.
+        """
+
     path = ROOT / path
     path.parent.mkdir(parents=True, exist_ok=True)
     path.write_text(text.rstrip() + "\n", encoding="utf-8")
 
 
 def write_csv(path: str | Path, rows: list[dict[str, Any]], fieldnames: list[str] | None = None) -> None:
+    """Write csv for the repository orchestration workflow.
+
+        Arguments and returned values follow the explicit type hints and are used by the surrounding pipeline contracts.
+        """
+
     path = ROOT / path
     path.parent.mkdir(parents=True, exist_ok=True)
     if fieldnames is None:
@@ -55,6 +85,11 @@ def write_csv(path: str | Path, rows: list[dict[str, Any]], fieldnames: list[str
 
 
 def copy_artifacts(copies: list[ArtifactCopy]) -> list[dict[str, Any]]:
+    """Handle copy artifacts within the repository orchestration workflow.
+
+        Arguments and returned values follow the explicit type hints and are used by the surrounding pipeline contracts.
+        """
+
     rows: list[dict[str, Any]] = []
     for item in copies:
         source = ROOT / item.source
@@ -85,6 +120,11 @@ def copy_artifacts(copies: list[ArtifactCopy]) -> list[dict[str, Any]]:
 
 
 def sanitize_text(text: str) -> str:
+    """Handle sanitize text within the repository orchestration workflow.
+
+        Arguments and returned values follow the explicit type hints and are used by the surrounding pipeline contracts.
+        """
+
     replacements = {
         str(ROOT) + "\\": "",
         str(ROOT) + "/": "",
@@ -99,6 +139,11 @@ def sanitize_text(text: str) -> str:
 
 
 def load_metrics() -> dict[str, Any]:
+    """Load metrics for the repository orchestration workflow.
+
+        Arguments and returned values follow the explicit type hints and are used by the surrounding pipeline contracts.
+        """
+
     phase1 = read_csv_or_empty("phase1_window_model_comparison_full.csv")
     zero_day = read_csv_or_empty("zero_day_model_window_results_full.csv")
     context = read_csv_or_empty("FINAL_MODEL_CONTEXT_COMPARISON.csv")
@@ -146,6 +191,11 @@ def load_metrics() -> dict[str, Any]:
 
 
 def precheck_required_files() -> list[str]:
+    """Handle precheck required files within the repository orchestration workflow.
+
+        Arguments and returned values follow the explicit type hints and are used by the surrounding pipeline contracts.
+        """
+
     return [
         "README.md",
         ".gitignore",
@@ -168,6 +218,11 @@ def precheck_required_files() -> list[str]:
 
 
 def structurally_usable(path: Path) -> tuple[bool, str]:
+    """Handle structurally usable within the repository orchestration workflow.
+
+        Arguments and returned values follow the explicit type hints and are used by the surrounding pipeline contracts.
+        """
+
     if not path.exists():
         return False, "missing"
     if path.stat().st_size == 0:
@@ -195,6 +250,11 @@ def structurally_usable(path: Path) -> tuple[bool, str]:
 
 
 def write_git_readiness_precheck() -> None:
+    """Write git readiness precheck for the repository orchestration workflow.
+
+        Arguments and returned values follow the explicit type hints and are used by the surrounding pipeline contracts.
+        """
+
     rows: list[dict[str, Any]] = []
     for item in precheck_required_files():
         path = ROOT / item
@@ -244,6 +304,11 @@ def write_git_readiness_precheck() -> None:
 
 
 def md_table(df: pd.DataFrame, max_rows: int | None = None) -> str:
+    """Handle md table within the repository orchestration workflow.
+
+        Arguments and returned values follow the explicit type hints and are used by the surrounding pipeline contracts.
+        """
+
     if df.empty:
         return "_No rows available._"
     frame = df.head(max_rows).copy() if max_rows else df.copy()
@@ -254,6 +319,11 @@ def md_table(df: pd.DataFrame, max_rows: int | None = None) -> str:
 
 
 def ensure_dirs() -> None:
+    """Handle ensure dirs within the repository orchestration workflow.
+
+        Arguments and returned values follow the explicit type hints and are used by the surrounding pipeline contracts.
+        """
+
     for path in [
         "src",
         "configs",
@@ -273,6 +343,11 @@ def ensure_dirs() -> None:
 
 
 def write_diagram_package(metrics: dict[str, Any]) -> None:
+    """Write diagram package for the repository orchestration workflow.
+
+        Arguments and returned values follow the explicit type hints and are used by the surrounding pipeline contracts.
+        """
+
     boxes = [
         {
             "phase": "Phase 1",
@@ -511,6 +586,11 @@ def write_diagram_package(metrics: dict[str, Any]) -> None:
 
 
 def selected_artifacts() -> list[ArtifactCopy]:
+    """Handle selected artifacts within the repository orchestration workflow.
+
+        Arguments and returned values follow the explicit type hints and are used by the surrounding pipeline contracts.
+        """
+
     return [
         ArtifactCopy("phase1_window_model_comparison_full.csv", "artifacts/benchmark/phase1_window_model_comparison_full.csv", "canonical_benchmark", "csv", "Full detector benchmark window/model comparison."),
         ArtifactCopy("phase1_window_model_comparison_full.md", "docs/reports/phase1_window_model_comparison_full.md", "canonical_benchmark", "md", "Readable detector benchmark report."),
@@ -535,6 +615,11 @@ def selected_artifacts() -> list[ArtifactCopy]:
 
 
 def write_repo_structure_files(artifact_rows: list[dict[str, Any]]) -> None:
+    """Write repo structure files for the repository orchestration workflow.
+
+        Arguments and returned values follow the explicit type hints and are used by the surrounding pipeline contracts.
+        """
+
     context_rows = [
         {
             "context_name": "canonical_benchmark",
@@ -703,6 +788,11 @@ def write_repo_structure_files(artifact_rows: list[dict[str, Any]]) -> None:
 
 
 def write_readme_and_docs(metrics: dict[str, Any]) -> None:
+    """Write readme and docs for the repository orchestration workflow.
+
+        Arguments and returned values follow the explicit type hints and are used by the surrounding pipeline contracts.
+        """
+
     canonical = metrics["canonical"]
     zero_best = metrics["zero_best"]
     phase2_count = len(metrics["phase2_inventory"])
@@ -910,6 +1000,11 @@ This repository is a research prototype for DER cyber-physical anomaly detection
 
 
 def write_registry_and_indexes(artifact_rows: list[dict[str, Any]], metrics: dict[str, Any]) -> None:
+    """Write registry and indexes for the repository orchestration workflow.
+
+        Arguments and returned values follow the explicit type hints and are used by the surrounding pipeline contracts.
+        """
+
     registry_rows: list[dict[str, Any]] = []
     phase1 = metrics["phase1"]
     if not phase1.empty:
@@ -995,6 +1090,11 @@ def write_registry_and_indexes(artifact_rows: list[dict[str, Any]], metrics: dic
 
 
 def write_release_files() -> None:
+    """Write release files for the repository orchestration workflow.
+
+        Arguments and returned values follow the explicit type hints and are used by the surrounding pipeline contracts.
+        """
+
     gitignore = """# Python
 __pycache__/
 *.py[cod]
@@ -1176,6 +1276,11 @@ SOFTWARE.
 
 
 def write_summaries(metrics: dict[str, Any]) -> None:
+    """Write summaries for the repository orchestration workflow.
+
+        Arguments and returned values follow the explicit type hints and are used by the surrounding pipeline contracts.
+        """
+
     canonical = metrics["canonical"]
     c_f1 = float(canonical.get("f1", 0.8181818181818182))
     git_text = (
@@ -1282,6 +1387,11 @@ def write_summaries(metrics: dict[str, Any]) -> None:
 
 
 def claim_safety_sweep() -> None:
+    """Handle claim safety sweep within the repository orchestration workflow.
+
+        Arguments and returned values follow the explicit type hints and are used by the surrounding pipeline contracts.
+        """
+
     files = [
         "README.md",
         "FINAL_PHASE123_DIAGRAM_SPEC.md",
@@ -1382,6 +1492,11 @@ def claim_safety_sweep() -> None:
 
 
 def write_publishability_status() -> None:
+    """Write publishability status for the repository orchestration workflow.
+
+        Arguments and returned values follow the explicit type hints and are used by the surrounding pipeline contracts.
+        """
+
     required = [
         "GIT_READINESS_PRECHECK.md",
         "GIT_READINESS_PRECHECK.csv",
@@ -1508,6 +1623,11 @@ def write_publishability_status() -> None:
 
 
 def sanitize_publication_markdown() -> None:
+    """Handle sanitize publication markdown within the repository orchestration workflow.
+
+        Arguments and returned values follow the explicit type hints and are used by the surrounding pipeline contracts.
+        """
+
     targets = [
         ROOT / "README.md",
         ROOT / "GITHUB_READY_SUMMARY.md",
@@ -1523,6 +1643,11 @@ def sanitize_publication_markdown() -> None:
 
 
 def main() -> None:
+    """Run the command-line entrypoint for the repository orchestration workflow.
+
+        Arguments and returned values follow the explicit type hints and are used by the surrounding pipeline contracts.
+        """
+
     ensure_dirs()
     write_git_readiness_precheck()
     metrics = load_metrics()

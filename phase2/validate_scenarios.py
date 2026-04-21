@@ -1,3 +1,11 @@
+"""Phase 2 scenario and attacked-dataset support for DERGuardian.
+
+This module implements validate scenarios logic for schema-bound synthetic attack
+scenarios, injection compilation, cyber logs, labels, validation, or reporting.
+Generated scenarios are heldout synthetic evidence and are not claimed as
+real-world zero-day proof.
+"""
+
 from __future__ import annotations
 
 from pathlib import Path
@@ -18,6 +26,11 @@ from phase2.contracts import CANONICAL_TARGET_COMPONENTS
 
 
 def main() -> None:
+    """Run the command-line entrypoint for the Phase 2 scenario and attacked-dataset workflow.
+
+        Arguments and returned values follow the explicit type hints and are used by the surrounding pipeline contracts.
+        """
+
     parser = argparse.ArgumentParser(description="Validate canonical Phase 2 scenario JSON against the executable schema, measured-layer channel inventory, and clean-dataset bounds.")
     parser.add_argument("--scenarios", required=True)
     parser.add_argument("--schema", default=str(ROOT / "phase2" / "scenario_schema.json"))

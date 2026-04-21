@@ -1,3 +1,12 @@
+"""Shared utility support for DERGuardian.
+
+This module provides config helpers used across the Phase 1 data
+pipeline, Phase 2 scenario pipeline, and Phase 3 evaluation/reporting layers.
+The functions here are infrastructure code: they prepare paths, metadata,
+profiles, graphs, units, or time alignment without changing canonical detector
+outputs or benchmark decisions.
+"""
+
 from __future__ import annotations
 
 from dataclasses import asdict, dataclass, field
@@ -12,6 +21,8 @@ PROJECT_ROOT = Path(__file__).resolve().parents[1]
 
 @dataclass(slots=True)
 class DERAssetSpec:
+    """Structured object used by the shared DERGuardian utility workflow."""
+
     name: str
     kind: str
     bus: str
@@ -28,6 +39,8 @@ class DERAssetSpec:
 
 @dataclass(slots=True)
 class MeasurementConfig:
+    """Structured object used by the shared DERGuardian utility workflow."""
+
     default_numeric_noise_std: float = 0.002
     default_relative_noise_std: float = 0.005
     default_missing_probability: float = 0.001
@@ -40,6 +53,8 @@ class MeasurementConfig:
 
 @dataclass(slots=True)
 class WindowConfig:
+    """Structured object used by the shared DERGuardian utility workflow."""
+
     window_seconds: int = 300
     step_seconds: int = 60
     min_attack_overlap_fraction: float = 0.2
@@ -47,6 +62,8 @@ class WindowConfig:
 
 @dataclass(slots=True)
 class PipelineConfig:
+    """Structured object used by the shared DERGuardian utility workflow."""
+
     run_id: str = field(default_factory=lambda: f"run-{uuid.uuid4().hex[:10]}")
     scenario_id: str = "clean_baseline"
     split_id: str = "train"
@@ -132,6 +149,8 @@ class PipelineConfig:
 
 @dataclass(slots=True)
 class ProjectPaths:
+    """Structured object used by the shared DERGuardian utility workflow."""
+
     root: Path = PROJECT_ROOT
     opendss_root: Path = field(default_factory=lambda: PROJECT_ROOT / "opendss")
     clean_output: Path = field(default_factory=lambda: PROJECT_ROOT / "outputs" / "clean")
@@ -155,10 +174,20 @@ class ProjectPaths:
 
 
 def default_pipeline_config() -> PipelineConfig:
+    """Handle default pipeline config within the shared DERGuardian utility workflow.
+
+        Arguments and returned values follow the explicit type hints and are used by the surrounding pipeline contracts.
+        """
+
     return PipelineConfig()
 
 
 def load_pipeline_config(config_path: str | Path | None = None) -> PipelineConfig:
+    """Load pipeline config for the shared DERGuardian utility workflow.
+
+        Arguments and returned values follow the explicit type hints and are used by the surrounding pipeline contracts.
+        """
+
     if config_path is None:
         return default_pipeline_config()
     path = Path(config_path)
@@ -168,6 +197,11 @@ def load_pipeline_config(config_path: str | Path | None = None) -> PipelineConfi
 
 
 def save_pipeline_config(config: PipelineConfig, path: str | Path) -> Path:
+    """Handle save pipeline config within the shared DERGuardian utility workflow.
+
+        Arguments and returned values follow the explicit type hints and are used by the surrounding pipeline contracts.
+        """
+
     out_path = Path(path)
     out_path.parent.mkdir(parents=True, exist_ok=True)
     with out_path.open("w", encoding="utf-8") as handle:
@@ -176,5 +210,10 @@ def save_pipeline_config(config: PipelineConfig, path: str | Path) -> Path:
 
 
 def research_master_dss_path(paths: ProjectPaths | None = None) -> Path:
+    """Handle research master dss path within the shared DERGuardian utility workflow.
+
+        Arguments and returned values follow the explicit type hints and are used by the surrounding pipeline contracts.
+        """
+
     resolved = (paths or ProjectPaths()).opendss_root / "Research_IEEE123_Master.dss"
     return resolved.resolve()

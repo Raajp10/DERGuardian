@@ -1,3 +1,11 @@
+"""Phase 2 scenario and attacked-dataset support for DERGuardian.
+
+This module implements cyber log generator logic for schema-bound synthetic attack
+scenarios, injection compilation, cyber logs, labels, validation, or reporting.
+Generated scenarios are heldout synthetic evidence and are not claimed as
+real-world zero-day proof.
+"""
+
 from __future__ import annotations
 
 from itertools import count
@@ -20,6 +28,11 @@ def generate_baseline_cyber_events(
     config: PipelineConfig,
     rng: np.random.Generator,
 ) -> pd.DataFrame:
+    """Generate baseline cyber events for the Phase 2 scenario and attacked-dataset workflow.
+
+        Arguments and returned values follow the explicit type hints and are used by the surrounding pipeline contracts.
+        """
+
     truth = truth_df.copy()
     truth["timestamp_utc"] = pd.to_datetime(truth["timestamp_utc"], utc=True)
     control = control_df.copy()
@@ -194,6 +207,11 @@ def inject_attack_events(
     scenarios: list[dict[str, object]],
     rng: np.random.Generator,
 ) -> pd.DataFrame:
+    """Handle inject attack events within the Phase 2 scenario and attacked-dataset workflow.
+
+        Arguments and returned values follow the explicit type hints and are used by the surrounding pipeline contracts.
+        """
+
     events = cyber_df.copy()
     protocol_ports = {"tls": 443, "https": 443, "modbus": 502, "dnp3": 20000, "mqtt": 1883}
     reference_ts = pd.to_datetime(events["timestamp_utc"], utc=True).min() if not events.empty else pd.Timestamp("2025-01-01T00:00:00Z")

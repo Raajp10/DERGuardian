@@ -35,7 +35,9 @@ data/full/
 *.pth
 *.ckpt
 *.safetensors
-deployment_runtime/
+deployment_runtime/**/__pycache__/
+deployment_runtime/**/*.pyc
+deployment_runtime/runtime_outputs/
 demo.zip
 /demo/
 /DERGuardian_professor_demo/

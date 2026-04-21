@@ -1,3 +1,11 @@
+"""Phase 1 detector training and evaluation support for DERGuardian.
+
+This module implements dataset loader logic for residual-window model training,
+inference, packaging, metrics, or reporting. It supports the frozen benchmark
+path and related audits while keeping benchmark selection separate from replay,
+heldout synthetic zero-day-like, and extension contexts.
+"""
+
 from __future__ import annotations
 
 from dataclasses import dataclass
@@ -15,12 +23,19 @@ from common.io_utils import read_dataframe
 
 @dataclass(slots=True)
 class WindowDatasetBundle:
+    """Structured object used by the Phase 1 detector modeling workflow."""
+
     clean_windows: pd.DataFrame
     attacked_windows: pd.DataFrame
     attack_labels: pd.DataFrame
 
 
 def load_window_dataset_bundle(project_root: str | Path | None = None) -> WindowDatasetBundle:
+    """Load window dataset bundle for the Phase 1 detector modeling workflow.
+
+        Arguments and returned values follow the explicit type hints and are used by the surrounding pipeline contracts.
+        """
+
     root = Path(project_root) if project_root is not None else ROOT
     clean_path = root / "outputs" / "windows" / "merged_windows_clean.parquet"
     attacked_candidates = [

@@ -1,3 +1,10 @@
+"""Phase 1 context and fusion helper for DERGuardian.
+
+This module builds or consumes structured context artifacts around normal-system
+behavior, feature evidence, and detector outputs. It supports explanation and
+fusion workflows but is not the canonical detector-selection mechanism.
+"""
+
 from __future__ import annotations
 
 from pathlib import Path
@@ -52,18 +59,38 @@ SUPPORTED_FAMILIES = (
 
 
 def canonical_reasoning_jsonl_path(root: Path, artifact_root_name: str = CANONICAL_ARTIFACT_ROOT) -> Path:
+    """Handle canonical reasoning jsonl path within the Phase 1 context and fusion support workflow.
+
+        Arguments and returned values follow the explicit type hints and are used by the surrounding pipeline contracts.
+        """
+
     return root / "outputs" / "reports" / artifact_root_name / "phase1_context_reasoning_outputs.jsonl"
 
 
 def canonical_reasoning_table_path(root: Path, artifact_root_name: str = CANONICAL_ARTIFACT_ROOT) -> Path:
+    """Handle canonical reasoning table path within the Phase 1 context and fusion support workflow.
+
+        Arguments and returned values follow the explicit type hints and are used by the surrounding pipeline contracts.
+        """
+
     return root / "outputs" / "reports" / artifact_root_name / "phase1_context_reasoning_outputs.parquet"
 
 
 def canonical_reasoner_model_dir(root: Path, model_root_name: str = "models_full_run") -> Path:
+    """Handle canonical reasoner model dir within the Phase 1 context and fusion support workflow.
+
+        Arguments and returned values follow the explicit type hints and are used by the surrounding pipeline contracts.
+        """
+
     return root / "outputs" / model_root_name / "context_reasoner"
 
 
 def load_context_summaries(path: Path) -> list[dict[str, Any]]:
+    """Load context summaries for the Phase 1 context and fusion support workflow.
+
+        Arguments and returned values follow the explicit type hints and are used by the surrounding pipeline contracts.
+        """
+
     records: list[dict[str, Any]] = []
     with path.open("r", encoding="utf-8") as handle:
         for line in handle:
@@ -74,6 +101,11 @@ def load_context_summaries(path: Path) -> list[dict[str, Any]]:
 
 
 def run_reasoner_on_contexts(context_summaries: list[dict[str, Any]]) -> tuple[list[dict[str, Any]], pd.DataFrame]:
+    """Run reasoner on contexts for the Phase 1 context and fusion support workflow.
+
+        Arguments and returned values follow the explicit type hints and are used by the surrounding pipeline contracts.
+        """
+
     records: list[dict[str, Any]] = []
     table_rows: list[dict[str, Any]] = []
     for summary in context_summaries:
@@ -116,6 +148,11 @@ def persist_reasoning_outputs(
     artifact_root_name: str = CANONICAL_ARTIFACT_ROOT,
     model_root_name: str = "models_full_run",
 ) -> tuple[Path, Path, Path]:
+    """Handle persist reasoning outputs within the Phase 1 context and fusion support workflow.
+
+        Arguments and returned values follow the explicit type hints and are used by the surrounding pipeline contracts.
+        """
+
     jsonl_path = canonical_reasoning_jsonl_path(root, artifact_root_name=artifact_root_name)
     table_path = canonical_reasoning_table_path(root, artifact_root_name=artifact_root_name)
     model_dir = canonical_reasoner_model_dir(root, model_root_name=model_root_name)
@@ -142,6 +179,11 @@ def build_and_persist_reasoning_outputs(
     artifact_root_name: str = CANONICAL_ARTIFACT_ROOT,
     model_root_name: str = "models_full_run",
 ) -> tuple[list[dict[str, Any]], pd.DataFrame, tuple[Path, Path, Path]]:
+    """Build and persist reasoning outputs for the Phase 1 context and fusion support workflow.
+
+        Arguments and returned values follow the explicit type hints and are used by the surrounding pipeline contracts.
+        """
+
     if context_summaries is None:
         context_summaries = load_context_summaries(canonical_context_summary_path(root, artifact_root_name=artifact_root_name))
     records, table = run_reasoner_on_contexts(context_summaries)
@@ -156,6 +198,11 @@ def build_and_persist_reasoning_outputs(
 
 
 def reason_from_context(summary: dict[str, Any]) -> dict[str, Any]:
+    """Handle reason from context within the Phase 1 context and fusion support workflow.
+
+        Arguments and returned values follow the explicit type hints and are used by the surrounding pipeline contracts.
+        """
+
     top_signals = [str(item.get("signal", "")) for item in summary.get("top_deviating_signals", [])]
     top_features = summary.get("top_deviating_signals", [])
     assets = list(summary.get("mapped_assets", []))
@@ -263,6 +310,11 @@ def reason_from_context(summary: dict[str, Any]) -> dict[str, Any]:
 
 
 def build_human_explanation(summary: dict[str, Any], family: str, reasons: list[str], anomaly_score: float) -> str:
+    """Build human explanation for the Phase 1 context and fusion support workflow.
+
+        Arguments and returned values follow the explicit type hints and are used by the surrounding pipeline contracts.
+        """
+
     assets = summary.get("mapped_assets", [])
     feeder_band = summary.get("feeder_context", {}).get("feeder_operating_band", "unknown load")
     top_text = ", ".join(item.get("description", item.get("signal", "")) for item in summary.get("top_deviating_signals", [])[:3])
@@ -277,6 +329,11 @@ def build_human_explanation(summary: dict[str, Any], family: str, reasons: list[
 
 
 def infer_assets_from_features(top_features: list[dict[str, Any]]) -> list[str]:
+    """Handle infer assets from features within the Phase 1 context and fusion support workflow.
+
+        Arguments and returned values follow the explicit type hints and are used by the surrounding pipeline contracts.
+        """
+
     assets = []
     for item in top_features:
         asset = str(item.get("asset_id", ""))
@@ -286,6 +343,11 @@ def infer_assets_from_features(top_features: list[dict[str, Any]]) -> list[str]:
 
 
 def main() -> None:
+    """Run the command-line entrypoint for the Phase 1 context and fusion support workflow.
+
+        Arguments and returned values follow the explicit type hints and are used by the surrounding pipeline contracts.
+        """
+
     parser = argparse.ArgumentParser(description="Run the optional local prompt-style Phase 1 reasoning layer.")
     parser.add_argument("--project-root", default=str(ROOT))
     parser.add_argument("--artifact-root", default=CANONICAL_ARTIFACT_ROOT)

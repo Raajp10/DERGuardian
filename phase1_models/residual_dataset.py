@@ -1,3 +1,11 @@
+"""Phase 1 detector training and evaluation support for DERGuardian.
+
+This module implements residual dataset logic for residual-window model training,
+inference, packaging, metrics, or reporting. It supports the frozen benchmark
+path and related audits while keeping benchmark selection separate from replay,
+heldout synthetic zero-day-like, and extension contexts.
+"""
+
 from __future__ import annotations
 
 from pathlib import Path
@@ -40,10 +48,20 @@ REQUIRED_RESIDUAL_COLUMNS = {
 
 
 def canonical_residual_artifact_path(root: Path, artifact_root_name: str = CANONICAL_ARTIFACT_ROOT) -> Path:
+    """Handle canonical residual artifact path within the Phase 1 detector modeling workflow.
+
+        Arguments and returned values follow the explicit type hints and are used by the surrounding pipeline contracts.
+        """
+
     return root / "outputs" / "reports" / artifact_root_name / RESIDUAL_ARTIFACT_FILENAME
 
 
 def canonical_window_source_paths(root: Path) -> tuple[Path, Path, Path]:
+    """Handle canonical window source paths within the Phase 1 detector modeling workflow.
+
+        Arguments and returned values follow the explicit type hints and are used by the surrounding pipeline contracts.
+        """
+
     return (
         root / "outputs" / "windows" / "merged_windows_clean.parquet",
         root / "outputs" / "attacked" / "merged_windows.parquet",
@@ -57,6 +75,11 @@ def read_window_sources(
     attacked_windows_path: Path | None = None,
     labels_path: Path | None = None,
 ) -> tuple[pd.DataFrame, pd.DataFrame, pd.DataFrame]:
+    """Read window sources for the Phase 1 detector modeling workflow.
+
+        Arguments and returned values follow the explicit type hints and are used by the surrounding pipeline contracts.
+        """
+
     clean_path, attacked_path, resolved_labels_path = canonical_window_source_paths(root)
     clean = read_dataframe(clean_windows_path or clean_path)
     attacked = read_dataframe(attacked_windows_path or attacked_path)
@@ -69,6 +92,11 @@ def normalize_window_sources(
     attacked_windows: pd.DataFrame,
     labels_df: pd.DataFrame,
 ) -> tuple[pd.DataFrame, pd.DataFrame, pd.DataFrame]:
+    """Handle normalize window sources within the Phase 1 detector modeling workflow.
+
+        Arguments and returned values follow the explicit type hints and are used by the surrounding pipeline contracts.
+        """
+
     clean = clean_windows.copy()
     attacked = attacked_windows.copy()
     labels = labels_df.copy()
@@ -86,6 +114,11 @@ def normalize_window_sources(
 
 
 def annotate_scenario_windows(frame: pd.DataFrame, labels_df: pd.DataFrame, default_scenario: str = "benign") -> pd.DataFrame:
+    """Handle annotate scenario windows within the Phase 1 detector modeling workflow.
+
+        Arguments and returned values follow the explicit type hints and are used by the surrounding pipeline contracts.
+        """
+
     annotated = frame.copy()
     if "scenario_window_id" not in annotated.columns:
         annotated["scenario_window_id"] = default_scenario
@@ -104,6 +137,11 @@ def build_aligned_residual_dataframe(
     attacked_windows: pd.DataFrame,
     labels_df: pd.DataFrame,
 ) -> pd.DataFrame:
+    """Build aligned residual dataframe for the Phase 1 detector modeling workflow.
+
+        Arguments and returned values follow the explicit type hints and are used by the surrounding pipeline contracts.
+        """
+
     clean, attacked, labels = normalize_window_sources(clean_windows, attacked_windows, labels_df)
     merged = attacked.merge(clean, on="window_start_utc", how="inner", suffixes=("_attacked", "_clean"))
     metadata = pd.DataFrame(
@@ -150,6 +188,11 @@ def build_aligned_residual_dataframe(
 
 
 def load_persisted_residual_dataframe(path: Path) -> pd.DataFrame:
+    """Load persisted residual dataframe for the Phase 1 detector modeling workflow.
+
+        Arguments and returned values follow the explicit type hints and are used by the surrounding pipeline contracts.
+        """
+
     frame = read_dataframe(path)
     if "window_start_utc" in frame.columns:
         frame["window_start_utc"] = pd.to_datetime(frame["window_start_utc"], utc=True)
@@ -159,11 +202,21 @@ def load_persisted_residual_dataframe(path: Path) -> pd.DataFrame:
 
 
 def persist_residual_dataframe(frame: pd.DataFrame, path: Path) -> Path:
+    """Handle persist residual dataframe within the Phase 1 detector modeling workflow.
+
+        Arguments and returned values follow the explicit type hints and are used by the surrounding pipeline contracts.
+        """
+
     ordered = frame.sort_values("window_start_utc").reset_index(drop=True)
     return write_dataframe(ordered, path, fmt="parquet")
 
 
 def residual_artifact_is_usable(path: Path) -> bool:
+    """Handle residual artifact is usable within the Phase 1 detector modeling workflow.
+
+        Arguments and returned values follow the explicit type hints and are used by the surrounding pipeline contracts.
+        """
+
     if not path.exists():
         return False
     try:
@@ -176,6 +229,11 @@ def residual_artifact_is_usable(path: Path) -> bool:
 
 
 def residual_artifact_is_fresh(path: Path, source_paths: tuple[Path, Path, Path]) -> bool:
+    """Handle residual artifact is fresh within the Phase 1 detector modeling workflow.
+
+        Arguments and returned values follow the explicit type hints and are used by the surrounding pipeline contracts.
+        """
+
     if not path.exists():
         return False
     residual_mtime = path.stat().st_mtime

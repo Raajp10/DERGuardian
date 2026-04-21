@@ -1,3 +1,11 @@
+"""Phase 1 detector training and evaluation support for DERGuardian.
+
+This module implements feature builder logic for residual-window model training,
+inference, packaging, metrics, or reporting. It supports the frozen benchmark
+path and related audits while keeping benchmark selection separate from replay,
+heldout synthetic zero-day-like, and extension contexts.
+"""
+
 from __future__ import annotations
 
 from dataclasses import dataclass
@@ -29,16 +37,25 @@ NON_FEATURE_COLUMNS = {
 
 @dataclass(slots=True)
 class Standardizer:
+    """Structured object used by the Phase 1 detector modeling workflow."""
+
     mean: np.ndarray
     std: np.ndarray
 
 
 @dataclass(slots=True)
 class Discretizer:
+    """Structured object used by the Phase 1 detector modeling workflow."""
+
     edges: dict[str, np.ndarray]
 
 
 def select_numeric_feature_columns(df: pd.DataFrame, max_features: int = 128) -> list[str]:
+    """Select numeric feature columns for the Phase 1 detector modeling workflow.
+
+        Arguments and returned values follow the explicit type hints and are used by the surrounding pipeline contracts.
+        """
+
     numeric = [
         column
         for column in df.columns
@@ -52,6 +69,11 @@ def select_numeric_feature_columns(df: pd.DataFrame, max_features: int = 128) ->
 
 
 def fit_standardizer(df: pd.DataFrame, feature_columns: list[str]) -> Standardizer:
+    """Fit standardizer for the Phase 1 detector modeling workflow.
+
+        Arguments and returned values follow the explicit type hints and are used by the surrounding pipeline contracts.
+        """
+
     values = df[feature_columns].astype(float).fillna(0.0).to_numpy()
     mean = values.mean(axis=0)
     std = values.std(axis=0)
@@ -60,6 +82,11 @@ def fit_standardizer(df: pd.DataFrame, feature_columns: list[str]) -> Standardiz
 
 
 def transform_features(df: pd.DataFrame, feature_columns: list[str], standardizer: Standardizer | None = None) -> np.ndarray:
+    """Transform features for the Phase 1 detector modeling workflow.
+
+        Arguments and returned values follow the explicit type hints and are used by the surrounding pipeline contracts.
+        """
+
     values = df[feature_columns].astype(float).fillna(0.0).to_numpy()
     if standardizer is None:
         return values
@@ -72,6 +99,11 @@ def build_sequence_dataset(
     seq_len: int,
     standardizer: Standardizer | None = None,
 ) -> tuple[np.ndarray, np.ndarray, pd.DataFrame]:
+    """Build sequence dataset for the Phase 1 detector modeling workflow.
+
+        Arguments and returned values follow the explicit type hints and are used by the surrounding pipeline contracts.
+        """
+
     frame = df.sort_values("window_start_utc").reset_index(drop=True)
     features = transform_features(frame, feature_columns, standardizer)
     labels = frame["attack_present"].astype(int).to_numpy() if "attack_present" in frame.columns else np.zeros(len(frame), dtype=int)
@@ -94,6 +126,11 @@ def build_sequence_dataset(
 
 
 def fit_discretizer(df: pd.DataFrame, feature_columns: list[str], bins: int = 16) -> Discretizer:
+    """Fit discretizer for the Phase 1 detector modeling workflow.
+
+        Arguments and returned values follow the explicit type hints and are used by the surrounding pipeline contracts.
+        """
+
     edges: dict[str, np.ndarray] = {}
     for column in feature_columns:
         series = df[column].astype(float).fillna(0.0)
@@ -106,6 +143,11 @@ def fit_discretizer(df: pd.DataFrame, feature_columns: list[str], bins: int = 16
 
 
 def transform_to_tokens(df: pd.DataFrame, feature_columns: list[str], discretizer: Discretizer) -> np.ndarray:
+    """Transform to tokens for the Phase 1 detector modeling workflow.
+
+        Arguments and returned values follow the explicit type hints and are used by the surrounding pipeline contracts.
+        """
+
     tokens = []
     for column in feature_columns:
         series = df[column].astype(float).fillna(0.0).to_numpy()
@@ -116,6 +158,11 @@ def transform_to_tokens(df: pd.DataFrame, feature_columns: list[str], discretize
 
 
 def chronological_split(df: pd.DataFrame, train_fraction: float = 0.6, val_fraction: float = 0.2) -> tuple[pd.DataFrame, pd.DataFrame, pd.DataFrame]:
+    """Handle chronological split within the Phase 1 detector modeling workflow.
+
+        Arguments and returned values follow the explicit type hints and are used by the surrounding pipeline contracts.
+        """
+
     frame = df.sort_values("window_start_utc").reset_index(drop=True)
     n_rows = len(frame)
     train_end = max(int(n_rows * train_fraction), 1)

@@ -1,3 +1,11 @@
+"""Phase 1 detector training and evaluation support for DERGuardian.
+
+This module implements metrics logic for residual-window model training,
+inference, packaging, metrics, or reporting. It supports the frozen benchmark
+path and related audits while keeping benchmark selection separate from replay,
+heldout synthetic zero-day-like, and extension contexts.
+"""
+
 from __future__ import annotations
 
 from pathlib import Path
@@ -21,6 +29,11 @@ LATENCY_REFERENCE_CANDIDATES = (
 
 
 def compute_binary_metrics(y_true: np.ndarray, scores: np.ndarray, threshold: float) -> dict[str, float | list[list[int]] | None]:
+    """Compute binary metrics for the Phase 1 detector modeling workflow.
+
+        Arguments and returned values follow the explicit type hints and are used by the surrounding pipeline contracts.
+        """
+
     y_true = np.asarray(y_true).astype(int)
     scores = np.asarray(scores).astype(float)
     y_pred = (scores >= float(threshold)).astype(int)
@@ -42,6 +55,11 @@ def compute_binary_metrics(y_true: np.ndarray, scores: np.ndarray, threshold: fl
 
 
 def compute_curve_payload(y_true: np.ndarray, scores: np.ndarray) -> dict[str, list[float]]:
+    """Compute curve payload for the Phase 1 detector modeling workflow.
+
+        Arguments and returned values follow the explicit type hints and are used by the surrounding pipeline contracts.
+        """
+
     y_true = np.asarray(y_true).astype(int)
     scores = np.asarray(scores).astype(float)
     payload: dict[str, list[float]] = {"roc_fpr": [], "roc_tpr": [], "pr_precision": [], "pr_recall": []}
@@ -58,6 +76,11 @@ def compute_curve_payload(y_true: np.ndarray, scores: np.ndarray) -> dict[str, l
 
 
 def detection_latency_table(predictions: pd.DataFrame, labels: pd.DataFrame, model_name: str) -> pd.DataFrame:
+    """Handle detection latency table within the Phase 1 detector modeling workflow.
+
+        Arguments and returned values follow the explicit type hints and are used by the surrounding pipeline contracts.
+        """
+
     if predictions.empty or labels.empty:
         return pd.DataFrame(
             columns=[
@@ -102,6 +125,11 @@ def detection_latency_table(predictions: pd.DataFrame, labels: pd.DataFrame, mod
 
 
 def per_scenario_metrics(predictions: pd.DataFrame, labels: pd.DataFrame, model_name: str) -> pd.DataFrame:
+    """Handle per scenario metrics within the Phase 1 detector modeling workflow.
+
+        Arguments and returned values follow the explicit type hints and are used by the surrounding pipeline contracts.
+        """
+
     if predictions.empty:
         return pd.DataFrame(columns=["model_name", "scenario_id", "precision", "recall", "f1", "support"])
     frame = predictions.copy()

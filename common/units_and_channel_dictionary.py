@@ -1,3 +1,12 @@
+"""Shared utility support for DERGuardian.
+
+This module provides units and channel dictionary helpers used across the Phase 1 data
+pipeline, Phase 2 scenario pipeline, and Phase 3 evaluation/reporting layers.
+The functions here are infrastructure code: they prepare paths, metadata,
+profiles, graphs, units, or time alignment without changing canonical detector
+outputs or benchmark decisions.
+"""
+
 from __future__ import annotations
 
 from dataclasses import dataclass
@@ -8,6 +17,8 @@ import pandas as pd
 
 @dataclass(slots=True)
 class ChannelEntry:
+    """Structured object used by the shared DERGuardian utility workflow."""
+
     channel: str
     dtype: str
     units: str
@@ -19,6 +30,11 @@ PHASE_SUFFIX_MAP = {"phase_a": "phase A", "phase_b": "phase B", "phase_c": "phas
 
 
 def infer_channel_entry(column: str, dtype: str, layer: str) -> ChannelEntry:
+    """Handle infer channel entry within the shared DERGuardian utility workflow.
+
+        Arguments and returned values follow the explicit type hints and are used by the surrounding pipeline contracts.
+        """
+
     if column == "timestamp_utc":
         return ChannelEntry(column, dtype, "UTC ISO 8601", layer, "Timestamp in coordinated universal time.")
     if column in {"window_start_utc", "window_end_utc", "start_time_utc", "end_time_utc", "ingest_timestamp_utc"}:
@@ -229,10 +245,20 @@ def _cyber_entry(column: str, dtype: str, layer: str) -> ChannelEntry:
 
 
 def build_channel_dictionary(df: pd.DataFrame, layer: str) -> list[ChannelEntry]:
+    """Build channel dictionary for the shared DERGuardian utility workflow.
+
+        Arguments and returned values follow the explicit type hints and are used by the surrounding pipeline contracts.
+        """
+
     return [infer_channel_entry(column, str(df[column].dtype), layer) for column in df.columns]
 
 
 def write_data_dictionary(dictionary_entries: list[ChannelEntry], output_path: str) -> str:
+    """Write data dictionary for the shared DERGuardian utility workflow.
+
+        Arguments and returned values follow the explicit type hints and are used by the surrounding pipeline contracts.
+        """
+
     rows = [
         "| channel | dtype | units | layer | description |",
         "|---|---|---|---|---|",

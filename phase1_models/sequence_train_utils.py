@@ -1,3 +1,11 @@
+"""Phase 1 detector training and evaluation support for DERGuardian.
+
+This module implements sequence train utils logic for residual-window model training,
+inference, packaging, metrics, or reporting. It supports the frozen benchmark
+path and related audits while keeping benchmark selection separate from replay,
+heldout synthetic zero-day-like, and extension contexts.
+"""
+
 from __future__ import annotations
 
 from pathlib import Path
@@ -25,6 +33,11 @@ def train_sequence_classifier_model(
     seq_len: int = 8,
     epochs: int = 6,
 ) -> dict[str, object]:
+    """Handle train sequence classifier model within the Phase 1 detector modeling workflow.
+
+        Arguments and returned values follow the explicit type hints and are used by the surrounding pipeline contracts.
+        """
+
     bundle = load_window_dataset_bundle(project_root)
     feature_columns = select_numeric_feature_columns(bundle.clean_windows, max_features=max_features)
     standardizer = fit_standardizer(bundle.clean_windows, feature_columns)

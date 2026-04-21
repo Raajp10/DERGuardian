@@ -1,3 +1,11 @@
+"""Repository orchestration script for DERGuardian.
+
+This script runs or rebuilds methodology alignment common artifacts for audits, figures,
+reports, or reproducibility checks. It is release-support code and must preserve
+the separation between canonical benchmark, replay, heldout synthetic, and
+extension experiment contexts.
+"""
+
 from __future__ import annotations
 
 import ast
@@ -99,6 +107,8 @@ STOPWORDS = {
 
 @dataclass(slots=True)
 class ReplaySummary:
+    """Structured object used by the repository orchestration workflow."""
+
     source_bundle: str
     scenario_id: str
     generator_source: str
@@ -112,26 +122,51 @@ class ReplaySummary:
 
 
 def ensure_dir(path: Path) -> None:
+    """Handle ensure dir within the repository orchestration workflow.
+
+        Arguments and returned values follow the explicit type hints and are used by the surrounding pipeline contracts.
+        """
+
     path.mkdir(parents=True, exist_ok=True)
 
 
 def read_json(path: Path) -> Any:
+    """Read json for the repository orchestration workflow.
+
+        Arguments and returned values follow the explicit type hints and are used by the surrounding pipeline contracts.
+        """
+
     return json.loads(path.read_text(encoding="utf-8"))
 
 
 def write_json(path: Path, payload: Any) -> Path:
+    """Write json for the repository orchestration workflow.
+
+        Arguments and returned values follow the explicit type hints and are used by the surrounding pipeline contracts.
+        """
+
     ensure_dir(path.parent)
     path.write_text(json.dumps(payload, indent=2, default=json_default), encoding="utf-8")
     return path
 
 
 def write_markdown(path: Path, text: str) -> Path:
+    """Write markdown for the repository orchestration workflow.
+
+        Arguments and returned values follow the explicit type hints and are used by the surrounding pipeline contracts.
+        """
+
     ensure_dir(path.parent)
     path.write_text(text.rstrip() + "\n", encoding="utf-8")
     return path
 
 
 def json_default(value: Any) -> Any:
+    """Handle json default within the repository orchestration workflow.
+
+        Arguments and returned values follow the explicit type hints and are used by the surrounding pipeline contracts.
+        """
+
     if isinstance(value, Path):
         return str(value)
     if isinstance(value, pd.Timestamp):
@@ -153,6 +188,11 @@ def json_default(value: Any) -> Any:
 
 
 def parse_sequence(value: Any) -> list[Any]:
+    """Handle parse sequence within the repository orchestration workflow.
+
+        Arguments and returned values follow the explicit type hints and are used by the surrounding pipeline contracts.
+        """
+
     if value is None:
         return []
     if isinstance(value, float) and pd.isna(value):
@@ -184,11 +224,21 @@ def parse_sequence(value: Any) -> list[Any]:
 
 
 def pipe_join(values: list[Any]) -> str:
+    """Handle pipe join within the repository orchestration workflow.
+
+        Arguments and returned values follow the explicit type hints and are used by the surrounding pipeline contracts.
+        """
+
     cleaned = [str(item).strip() for item in values if str(item).strip()]
     return "|".join(cleaned)
 
 
 def safe_float(value: Any) -> float | None:
+    """Handle safe float within the repository orchestration workflow.
+
+        Arguments and returned values follow the explicit type hints and are used by the surrounding pipeline contracts.
+        """
+
     if value is None:
         return None
     try:
@@ -201,6 +251,11 @@ def safe_float(value: Any) -> float | None:
 
 
 def file_size_mb(path: Path) -> float:
+    """Handle file size mb within the repository orchestration workflow.
+
+        Arguments and returned values follow the explicit type hints and are used by the surrounding pipeline contracts.
+        """
+
     if path.is_file():
         return path.stat().st_size / (1024.0 * 1024.0)
     total = 0
@@ -211,21 +266,41 @@ def file_size_mb(path: Path) -> float:
 
 
 def normalize_benchmark_family(family: str | None) -> str:
+    """Handle normalize benchmark family within the repository orchestration workflow.
+
+        Arguments and returned values follow the explicit type hints and are used by the surrounding pipeline contracts.
+        """
+
     raw = str(family or "").strip()
     return BENCHMARK_FAMILY_TO_CANONICAL.get(raw, raw)
 
 
 def normalize_signal(signal: str) -> str:
+    """Handle normalize signal within the repository orchestration workflow.
+
+        Arguments and returned values follow the explicit type hints and are used by the surrounding pipeline contracts.
+        """
+
     text = str(signal).strip().lower()
     text = re.sub(r"[^a-z0-9_]+", "_", text)
     return text.strip("_")
 
 
 def tokenize(text: str) -> set[str]:
+    """Handle tokenize within the repository orchestration workflow.
+
+        Arguments and returned values follow the explicit type hints and are used by the surrounding pipeline contracts.
+        """
+
     return {token for token in re.findall(r"[a-z0-9_]+", str(text).lower()) if token and token not in STOPWORDS}
 
 
 def label_score(label: str) -> float:
+    """Handle label score within the repository orchestration workflow.
+
+        Arguments and returned values follow the explicit type hints and are used by the surrounding pipeline contracts.
+        """
+
     if label in {"exact", "high"}:
         return 1.0
     if label in {"partial", "nearest_valid_family", "medium"}:
@@ -234,6 +309,11 @@ def label_score(label: str) -> float:
 
 
 def asset_match(truth_assets: set[str], predicted_assets: set[str]) -> str:
+    """Handle asset match within the repository orchestration workflow.
+
+        Arguments and returned values follow the explicit type hints and are used by the surrounding pipeline contracts.
+        """
+
     if truth_assets and predicted_assets == truth_assets:
         return "exact"
     if truth_assets & predicted_assets:
@@ -242,6 +322,11 @@ def asset_match(truth_assets: set[str], predicted_assets: set[str]) -> str:
 
 
 def family_match(truth_family: str, predicted_family: str) -> str:
+    """Handle family match within the repository orchestration workflow.
+
+        Arguments and returned values follow the explicit type hints and are used by the surrounding pipeline contracts.
+        """
+
     if predicted_family == truth_family:
         return "exact"
     if predicted_family in FAMILY_PROXIMITY.get(truth_family, {}):
@@ -255,6 +340,11 @@ def evidence_overlap(
     truth_assets: set[str],
     predicted_assets: set[str],
 ) -> tuple[float, str]:
+    """Handle evidence overlap within the repository orchestration workflow.
+
+        Arguments and returned values follow the explicit type hints and are used by the surrounding pipeline contracts.
+        """
+
     base = len(truth_signals & predicted_signals) / max(len(truth_signals), 1) if truth_signals else 0.0
     if base >= 0.5:
         return float(base), "high"
@@ -269,6 +359,11 @@ def action_relevance_score(
     truth_effects: str,
     actions: list[str],
 ) -> tuple[float, str]:
+    """Handle action relevance score within the repository orchestration workflow.
+
+        Arguments and returned values follow the explicit type hints and are used by the surrounding pipeline contracts.
+        """
+
     if not actions:
         return 0.0, "low"
     text = " ".join(str(item) for item in actions).lower()
@@ -285,6 +380,11 @@ def action_relevance_score(
 
 
 def partial_alignment_score(truth_family: str, predicted_family: str, grounding_overlap: float) -> float:
+    """Handle partial alignment score within the repository orchestration workflow.
+
+        Arguments and returned values follow the explicit type hints and are used by the surrounding pipeline contracts.
+        """
+
     if truth_family == predicted_family:
         return 1.0
     base = FAMILY_PROXIMITY.get(truth_family, {}).get(predicted_family, 0.0)
@@ -295,6 +395,11 @@ def partial_alignment_score(truth_family: str, predicted_family: str, grounding_
 
 
 def selected_heldout_json_path(generator_source: str) -> Path:
+    """Handle selected heldout json path within the repository orchestration workflow.
+
+        Arguments and returned values follow the explicit type hints and are used by the surrounding pipeline contracts.
+        """
+
     folder = HELDOUT_ROOT / generator_source
     candidate = folder / "new_respnse.json"
     if candidate.exists():
@@ -306,12 +411,22 @@ def selected_heldout_json_path(generator_source: str) -> Path:
 
 
 def load_generator_truth_lookup(generator_source: str) -> tuple[dict[str, Any], dict[str, dict[str, Any]]]:
+    """Load generator truth lookup for the repository orchestration workflow.
+
+        Arguments and returned values follow the explicit type hints and are used by the surrounding pipeline contracts.
+        """
+
     payload = read_json(selected_heldout_json_path(generator_source))
     lookup = {str(item["scenario_id"]): item for item in payload.get("scenarios", [])}
     return payload, lookup
 
 
 def load_repaired_truth_lookup(generator_source: str) -> tuple[dict[str, Any], dict[str, dict[str, Any]]]:
+    """Load repaired truth lookup for the repository orchestration workflow.
+
+        Arguments and returned values follow the explicit type hints and are used by the surrounding pipeline contracts.
+        """
+
     path = IMPROVED_PHASE3_ROOT / "repaired_bundles_raw" / generator_source / "repaired_benchmark_bundle.json"
     payload = read_json(path)
     lookup = {str(item["scenario_id"]): item for item in payload.get("scenarios", [])}
@@ -319,6 +434,11 @@ def load_repaired_truth_lookup(generator_source: str) -> tuple[dict[str, Any], d
 
 
 def load_human_authored_truth_lookup() -> tuple[dict[str, Any], dict[str, dict[str, Any]]]:
+    """Load human authored truth lookup for the repository orchestration workflow.
+
+        Arguments and returned values follow the explicit type hints and are used by the surrounding pipeline contracts.
+        """
+
     path = IMPROVED_PHASE3_ROOT / "additional_source" / "human_authored" / "benchmark_bundle.json"
     payload = read_json(path)
     lookup = {str(item["scenario_id"]): item for item in payload.get("scenarios", [])}
@@ -326,6 +446,11 @@ def load_human_authored_truth_lookup() -> tuple[dict[str, Any], dict[str, dict[s
 
 
 def benchmark_scenario_metadata(scenario: dict[str, Any]) -> dict[str, Any]:
+    """Handle benchmark scenario metadata within the repository orchestration workflow.
+
+        Arguments and returned values follow the explicit type hints and are used by the surrounding pipeline contracts.
+        """
+
     additional_targets = list(scenario.get("additional_targets", []) or [])
     target_assets = [str(scenario.get("target_asset", "")).strip()]
     target_assets.extend(str(item.get("target_asset", "")).strip() for item in additional_targets)
@@ -358,6 +483,11 @@ def benchmark_scenario_metadata(scenario: dict[str, Any]) -> dict[str, Any]:
 
 
 def phase2_scenario_metadata(scenario: dict[str, Any]) -> dict[str, Any]:
+    """Handle phase2 scenario metadata within the repository orchestration workflow.
+
+        Arguments and returned values follow the explicit type hints and are used by the surrounding pipeline contracts.
+        """
+
     additional_targets = list(scenario.get("additional_targets", []) or [])
     target_assets = [str(scenario.get("target_asset", "")).strip()]
     target_assets.extend(str(item.get("target_asset", "")).strip() for item in additional_targets)
@@ -390,6 +520,11 @@ def phase2_scenario_metadata(scenario: dict[str, Any]) -> dict[str, Any]:
 
 
 def canonical_labels_lookup() -> tuple[pd.DataFrame, dict[str, dict[str, Any]]]:
+    """Handle canonical labels lookup within the repository orchestration workflow.
+
+        Arguments and returned values follow the explicit type hints and are used by the surrounding pipeline contracts.
+        """
+
     labels = pd.read_parquet(ROOT / "outputs" / "attacked" / "attack_labels.parquet").copy()
     labels_lookup: dict[str, dict[str, Any]] = {}
     for _, row in labels.iterrows():
@@ -404,6 +539,11 @@ def canonical_labels_lookup() -> tuple[pd.DataFrame, dict[str, dict[str, Any]]]:
 
 
 def read_labels_lookup(path: Path) -> tuple[pd.DataFrame, dict[str, dict[str, Any]]]:
+    """Read labels lookup for the repository orchestration workflow.
+
+        Arguments and returned values follow the explicit type hints and are used by the surrounding pipeline contracts.
+        """
+
     labels = pd.read_parquet(path).copy()
     labels_lookup: dict[str, dict[str, Any]] = {}
     for _, row in labels.iterrows():
@@ -418,6 +558,11 @@ def read_labels_lookup(path: Path) -> tuple[pd.DataFrame, dict[str, dict[str, An
 
 
 def replay_source_bundle_from_eval_dir(name: str) -> tuple[str, str]:
+    """Handle replay source bundle from eval dir within the repository orchestration workflow.
+
+        Arguments and returned values follow the explicit type hints and are used by the surrounding pipeline contracts.
+        """
+
     if "__canonical_bundle_replay__" in name:
         return "canonical_bundle", "canonical_bundle"
     if "__existing_heldout_phase2_bundle__" in name:
@@ -432,6 +577,11 @@ def replay_source_bundle_from_eval_dir(name: str) -> tuple[str, str]:
 
 
 def load_transformer_replay_lookup() -> dict[tuple[str, str], ReplaySummary]:
+    """Load transformer replay lookup for the repository orchestration workflow.
+
+        Arguments and returned values follow the explicit type hints and are used by the surrounding pipeline contracts.
+        """
+
     lookup: dict[tuple[str, str], ReplaySummary] = {}
     if not IMPROVED_EVAL_ROOT.exists():
         return lookup
@@ -466,6 +616,11 @@ def load_transformer_replay_lookup() -> dict[tuple[str, str], ReplaySummary]:
 
 
 def scenario_truth_lookup(generator_source: str, source_bundle: str) -> dict[str, dict[str, Any]]:
+    """Handle scenario truth lookup within the repository orchestration workflow.
+
+        Arguments and returned values follow the explicit type hints and are used by the surrounding pipeline contracts.
+        """
+
     if source_bundle == "canonical_bundle":
         manifest = read_json(ROOT / "outputs" / "attacked" / "scenario_manifest.json")
         return {str(item["scenario_id"]): item for item in manifest.get("applied_scenarios", [])}
@@ -480,6 +635,11 @@ def scenario_truth_lookup(generator_source: str, source_bundle: str) -> dict[str
 
 
 def inventory_required_fields() -> list[str]:
+    """Handle inventory required fields within the repository orchestration workflow.
+
+        Arguments and returned values follow the explicit type hints and are used by the surrounding pipeline contracts.
+        """
+
     return [
         "dataset_id",
         "source_bundle",
@@ -497,6 +657,11 @@ def inventory_required_fields() -> list[str]:
 
 
 def metadata_completeness_ratio(row: pd.Series) -> float:
+    """Handle metadata completeness ratio within the repository orchestration workflow.
+
+        Arguments and returned values follow the explicit type hints and are used by the surrounding pipeline contracts.
+        """
+
     filled = 0
     for field in inventory_required_fields():
         value = row.get(field)
@@ -513,6 +678,11 @@ def metadata_completeness_ratio(row: pd.Series) -> float:
 
 
 def balance_score_from_counts(counts: pd.Series) -> float:
+    """Handle balance score from counts within the repository orchestration workflow.
+
+        Arguments and returned values follow the explicit type hints and are used by the surrounding pipeline contracts.
+        """
+
     series = pd.to_numeric(counts, errors="coerce").fillna(0.0)
     series = series[series > 0]
     if series.empty or len(series) == 1:
@@ -523,6 +693,11 @@ def balance_score_from_counts(counts: pd.Series) -> float:
 
 
 def severity_numeric(value: str | None) -> float | None:
+    """Handle severity numeric within the repository orchestration workflow.
+
+        Arguments and returned values follow the explicit type hints and are used by the surrounding pipeline contracts.
+        """
+
     text = str(value or "").strip().lower()
     if not text:
         return None
@@ -530,6 +705,11 @@ def severity_numeric(value: str | None) -> float | None:
 
 
 def pretty_label(source_bundle: str) -> str:
+    """Handle pretty label within the repository orchestration workflow.
+
+        Arguments and returned values follow the explicit type hints and are used by the surrounding pipeline contracts.
+        """
+
     mapping = {
         "canonical_bundle": "Canonical bundle",
         "additional_heldout_human_authored": "Human-authored heldout",

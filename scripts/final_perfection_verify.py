@@ -1,3 +1,11 @@
+"""Repository orchestration script for DERGuardian.
+
+This script runs or rebuilds final perfection verify artifacts for audits, figures,
+reports, or reproducibility checks. It is release-support code and must preserve
+the separation between canonical benchmark, replay, heldout synthetic, and
+extension experiment contexts.
+"""
+
 from __future__ import annotations
 
 import csv
@@ -19,16 +27,31 @@ ROOT_ALLOWED = {
 
 
 def write_text(path: Path, text: str) -> None:
+    """Write text for the repository orchestration workflow.
+
+        Arguments and returned values follow the explicit type hints and are used by the surrounding pipeline contracts.
+        """
+
     path.parent.mkdir(parents=True, exist_ok=True)
     path.write_text(text.rstrip() + "\n", encoding="utf-8")
 
 
 def root_is_clean() -> tuple[bool, list[str]]:
+    """Handle root is clean within the repository orchestration workflow.
+
+        Arguments and returned values follow the explicit type hints and are used by the surrounding pipeline contracts.
+        """
+
     extras = sorted(path.name for path in ROOT.iterdir() if path.is_file() and path.name not in ROOT_ALLOWED)
     return not extras, extras
 
 
 def no_absolute_public_paths() -> bool:
+    """Handle no absolute public paths within the repository orchestration workflow.
+
+        Arguments and returned values follow the explicit type hints and are used by the surrounding pipeline contracts.
+        """
+
     win_prefix = "\\".join(["C:", "Users", "raajp", "Desktop", "Final_Project"])
     posix_prefix = "/".join(["C:", "Users", "raajp", "Desktop", "Final_Project"])
     patterns = (win_prefix, posix_prefix)
@@ -49,6 +72,11 @@ def no_absolute_public_paths() -> bool:
 
 
 def main() -> None:
+    """Run the command-line entrypoint for the repository orchestration workflow.
+
+        Arguments and returned values follow the explicit type hints and are used by the surrounding pipeline contracts.
+        """
+
     clean, extras = root_is_clean()
     checks = [
         ("repo_readable_in_5_min", True, "README, professor guide, and master report provide a short reader path."),

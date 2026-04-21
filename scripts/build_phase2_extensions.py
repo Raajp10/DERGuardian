@@ -1,3 +1,11 @@
+"""Repository orchestration script for DERGuardian.
+
+This script runs or rebuilds build phase2 extensions artifacts for audits, figures,
+reports, or reproducibility checks. It is release-support code and must preserve
+the separation between canonical benchmark, replay, heldout synthetic, and
+extension experiment contexts.
+"""
+
 from __future__ import annotations
 
 import json
@@ -361,6 +369,11 @@ def _human_authored_records(replay_lookup: dict[tuple[str, str], Any]) -> list[d
 
 
 def build_master_inventory() -> pd.DataFrame:
+    """Build master inventory for the repository orchestration workflow.
+
+        Arguments and returned values follow the explicit type hints and are used by the surrounding pipeline contracts.
+        """
+
     replay_lookup = load_transformer_replay_lookup()
     records: list[dict[str, Any]] = []
     records.extend(_canonical_records(replay_lookup))
@@ -836,6 +849,11 @@ def _quality_report(frame: pd.DataFrame, family_df: pd.DataFrame, asset_signal_d
 
 
 def main() -> None:
+    """Run the command-line entrypoint for the repository orchestration workflow.
+
+        Arguments and returned values follow the explicit type hints and are used by the surrounding pipeline contracts.
+        """
+
     _canonical_freeze_report()
     inventory = build_master_inventory()
     _serializable_inventory(inventory).to_csv(ROOT_OUTPUTS["master_inventory"], index=False)

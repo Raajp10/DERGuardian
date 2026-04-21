@@ -1,3 +1,11 @@
+"""Repository orchestration script for DERGuardian.
+
+This script runs or rebuilds run improved phase3 suite artifacts for audits, figures,
+reports, or reproducibility checks. It is release-support code and must preserve
+the separation between canonical benchmark, replay, heldout synthetic, and
+extension experiment contexts.
+"""
+
 from __future__ import annotations
 
 from dataclasses import dataclass
@@ -59,6 +67,8 @@ STANDARD_SAFETY_NOTE = "This scenario is synthetic and simulation-only for defen
 
 @dataclass(slots=True)
 class ModelSpec:
+    """Structured object used by the repository orchestration workflow."""
+
     role: str
     model_name: str
     window_label: str
@@ -76,6 +86,8 @@ class ModelSpec:
 
 @dataclass(slots=True)
 class BundleSource:
+    """Structured object used by the repository orchestration workflow."""
+
     generator_source: str
     dataset_id: str
     source_type: str
@@ -90,6 +102,8 @@ class BundleSource:
 
 @dataclass(slots=True)
 class ValidationContext:
+    """Structured object used by the repository orchestration workflow."""
+
     shared_schema: dict[str, Any]
     system_card: dict[str, Any]
     timeline: pd.DatetimeIndex
@@ -122,11 +136,21 @@ def _json_default(value: Any) -> Any:
 
 
 def write_json(path: Path, payload: Any) -> None:
+    """Write json for the repository orchestration workflow.
+
+        Arguments and returned values follow the explicit type hints and are used by the surrounding pipeline contracts.
+        """
+
     path.parent.mkdir(parents=True, exist_ok=True)
     path.write_text(json.dumps(payload, indent=2, default=_json_default), encoding="utf-8")
 
 
 def write_markdown(path: Path, text: str) -> None:
+    """Write markdown for the repository orchestration workflow.
+
+        Arguments and returned values follow the explicit type hints and are used by the surrounding pipeline contracts.
+        """
+
     path.parent.mkdir(parents=True, exist_ok=True)
     path.write_text(text.rstrip() + "\n", encoding="utf-8")
 
@@ -2019,6 +2043,11 @@ def _write_reports(
 
 
 def main() -> None:
+    """Run the command-line entrypoint for the repository orchestration workflow.
+
+        Arguments and returned values follow the explicit type hints and are used by the surrounding pipeline contracts.
+        """
+
     IMPROVED_ROOT.mkdir(parents=True, exist_ok=True)
     FIGURE_ROOT.mkdir(parents=True, exist_ok=True)
     context = _validation_context()

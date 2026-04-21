@@ -1,3 +1,12 @@
+"""Phase 1 clean-data and window-building support for DERGuardian.
+
+This module implements extract channels logic for the canonical data-generation
+path. It reads OpenDSS/configuration inputs and writes clean physical, measured,
+cyber, validation, or window artifacts used later by detector benchmarks. It
+must not replace the frozen canonical benchmark result, where the selected
+winner remains transformer at 60 seconds.
+"""
+
 from __future__ import annotations
 
 from pathlib import Path
@@ -13,6 +22,11 @@ from common.io_utils import read_dataframe, write_dataframe
 
 
 def main() -> None:
+    """Run the command-line entrypoint for the Phase 1 clean-data workflow.
+
+        Arguments and returned values follow the explicit type hints and are used by the surrounding pipeline contracts.
+        """
+
     parser = argparse.ArgumentParser(description="Extract selected channels into long format.")
     parser.add_argument("--input", required=True)
     parser.add_argument("--output", required=True)

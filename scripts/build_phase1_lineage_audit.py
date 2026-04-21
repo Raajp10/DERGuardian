@@ -1,3 +1,11 @@
+"""Repository orchestration script for DERGuardian.
+
+This script runs or rebuilds build phase1 lineage audit artifacts for audits, figures,
+reports, or reproducibility checks. It is release-support code and must preserve
+the separation between canonical benchmark, replay, heldout synthetic, and
+extension experiment contexts.
+"""
+
 from __future__ import annotations
 
 import json
@@ -15,14 +23,29 @@ CANONICAL_INPUT_SUMMARY_PATH = ROOT / "phase1_canonical_input_summary.md"
 
 
 def rel(path: Path) -> str:
+    """Handle rel within the repository orchestration workflow.
+
+        Arguments and returned values follow the explicit type hints and are used by the surrounding pipeline contracts.
+        """
+
     return path.resolve().relative_to(ROOT.resolve()).as_posix()
 
 
 def load_json(path: Path) -> dict[str, Any]:
+    """Load json for the repository orchestration workflow.
+
+        Arguments and returned values follow the explicit type hints and are used by the surrounding pipeline contracts.
+        """
+
     return json.loads(path.read_text(encoding="utf-8"))
 
 
 def classify_column(column: str) -> tuple[str, str, bool]:
+    """Handle classify column within the repository orchestration workflow.
+
+        Arguments and returned values follow the explicit type hints and are used by the surrounding pipeline contracts.
+        """
+
     if column in {
         "window_start_utc",
         "window_end_utc",
@@ -73,6 +96,11 @@ def classify_column(column: str) -> tuple[str, str, bool]:
 
 
 def source_artifact_for_column(column: str) -> str:
+    """Handle source artifact for column within the repository orchestration workflow.
+
+        Arguments and returned values follow the explicit type hints and are used by the surrounding pipeline contracts.
+        """
+
     if column in {"attack_present", "attack_family", "attack_severity", "attack_affected_assets", "scenario_window_id"}:
         return "outputs/attacked/attack_labels.parquet"
     if column.startswith("delta__cyber_"):
@@ -83,6 +111,11 @@ def source_artifact_for_column(column: str) -> str:
 
 
 def build_training_inventory() -> tuple[pd.DataFrame, dict[str, Any]]:
+    """Build training inventory for the repository orchestration workflow.
+
+        Arguments and returned values follow the explicit type hints and are used by the surrounding pipeline contracts.
+        """
+
     residual_path = ROOT / "outputs" / "window_size_study" / "60s" / "residual_windows.parquet"
     residual_df = pd.read_parquet(residual_path)
     selected_features = json.loads(
@@ -120,6 +153,11 @@ def build_training_inventory() -> tuple[pd.DataFrame, dict[str, Any]]:
 
 
 def build_data_lineage() -> None:
+    """Build data lineage for the repository orchestration workflow.
+
+        Arguments and returned values follow the explicit type hints and are used by the surrounding pipeline contracts.
+        """
+
     run_manifest = load_json(ROOT / "outputs" / "window_size_study" / "run_manifest.json")
     final_comparison = pd.read_csv(ROOT / "outputs" / "window_size_study" / "final_window_comparison.csv")
     window_dataset_summary = pd.read_csv(ROOT / "outputs" / "window_size_study" / "window_dataset_summary.csv")

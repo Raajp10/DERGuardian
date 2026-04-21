@@ -1,3 +1,9 @@
+"""Test coverage for DERGuardian test phase3 pipeline behavior.
+
+These tests exercise pipeline contracts, package readiness, or phase-level
+functionality without changing scientific outputs.
+"""
+
 from __future__ import annotations
 
 import json
@@ -14,6 +20,8 @@ ROOT = Path(__file__).resolve().parents[1]
 
 
 class Phase3PipelineTests(unittest.TestCase):
+    """Structured object used by the test workflow."""
+
     @classmethod
     def setUpClass(cls) -> None:
         cls.bundle = prepare_window_bundle(ROOT)

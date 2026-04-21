@@ -1,3 +1,11 @@
+"""Phase 1 detector training and evaluation support for DERGuardian.
+
+This module implements export model report logic for residual-window model training,
+inference, packaging, metrics, or reporting. It supports the frozen benchmark
+path and related audits while keeping benchmark selection separate from replay,
+heldout synthetic zero-day-like, and extension contexts.
+"""
+
 from __future__ import annotations
 
 from pathlib import Path
@@ -14,6 +22,11 @@ from phase1_models.model_utils import CANONICAL_ARTIFACT_ROOT, LEGACY_ARTIFACT_R
 
 
 def main() -> None:
+    """Run the command-line entrypoint for the Phase 1 detector modeling workflow.
+
+        Arguments and returned values follow the explicit type hints and are used by the surrounding pipeline contracts.
+        """
+
     parser = argparse.ArgumentParser(description="Export a concise markdown report for phase-1 model artifacts.")
     parser.add_argument("--project-root", default=str(ROOT))
     parser.add_argument("--run-mode", default="full", choices=["full", "smoke", "legacy-smoke"])

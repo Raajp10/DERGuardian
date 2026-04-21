@@ -1,3 +1,10 @@
+"""Phase 3 grounded explanation support for DERGuardian.
+
+This module implements rationale evaluator logic for post-alert explanation packets,
+family attribution, evidence grounding, or validation. It supports operator-facing
+explanation evidence and does not claim human-like root-cause analysis.
+"""
+
 from __future__ import annotations
 
 from pathlib import Path
@@ -31,6 +38,11 @@ REQUIRED_FIELDS = [
 
 
 def explanation_assets(explanation: dict[str, Any]) -> set[str]:
+    """Handle explanation assets within the Phase 3 grounded explanation workflow.
+
+        Arguments and returned values follow the explicit type hints and are used by the surrounding pipeline contracts.
+        """
+
     assets = set()
     for section in ("physical_evidence_used", "cyber_evidence_used"):
         for item in explanation.get(section, []):
@@ -42,6 +54,11 @@ def explanation_assets(explanation: dict[str, Any]) -> set[str]:
 
 
 def completeness_score(explanation: dict[str, Any]) -> float:
+    """Handle completeness score within the Phase 3 grounded explanation workflow.
+
+        Arguments and returned values follow the explicit type hints and are used by the surrounding pipeline contracts.
+        """
+
     filled = 0
     for field in REQUIRED_FIELDS:
         value = explanation.get(field)
@@ -51,6 +68,11 @@ def completeness_score(explanation: dict[str, Any]) -> float:
 
 
 def manual_rubric_template() -> dict[str, str]:
+    """Handle manual rubric template within the Phase 3 grounded explanation workflow.
+
+        Arguments and returned values follow the explicit type hints and are used by the surrounding pipeline contracts.
+        """
+
     return {
         "manual_review_summary_clarity": "",
         "manual_review_evidence_alignment": "",
@@ -59,6 +81,11 @@ def manual_rubric_template() -> dict[str, str]:
 
 
 def to_markdown(frame: pd.DataFrame) -> str:
+    """Handle to markdown within the Phase 3 grounded explanation workflow.
+
+        Arguments and returned values follow the explicit type hints and are used by the surrounding pipeline contracts.
+        """
+
     columns = list(frame.columns)
     lines = [
         "| " + " | ".join(columns) + " |",
@@ -70,6 +97,11 @@ def to_markdown(frame: pd.DataFrame) -> str:
 
 
 def evaluate_directory(packet_dir: Path, explanation_dir: Path, schema_path: Path) -> tuple[pd.DataFrame, dict[str, Any]]:
+    """Handle evaluate directory within the Phase 3 grounded explanation workflow.
+
+        Arguments and returned values follow the explicit type hints and are used by the surrounding pipeline contracts.
+        """
+
     schema = read_json(schema_path)
     rows: list[dict[str, Any]] = []
     explanation_files = sorted(explanation_dir.glob("*.json"))
@@ -130,6 +162,11 @@ def evaluate_directory(packet_dir: Path, explanation_dir: Path, schema_path: Pat
 
 
 def build_report(frame: pd.DataFrame, summary: dict[str, Any]) -> str:
+    """Build report for the Phase 3 grounded explanation workflow.
+
+        Arguments and returned values follow the explicit type hints and are used by the surrounding pipeline contracts.
+        """
+
     lines = [
         "# Explanation Evaluation Report",
         "",
@@ -151,6 +188,11 @@ def build_report(frame: pd.DataFrame, summary: dict[str, Any]) -> str:
 
 
 def main() -> None:
+    """Run the command-line entrypoint for the Phase 3 grounded explanation workflow.
+
+        Arguments and returned values follow the explicit type hints and are used by the surrounding pipeline contracts.
+        """
+
     parser = argparse.ArgumentParser(description="Offline evaluator for explanation quality against known scenario labels.")
     parser.add_argument("--packet-dir", default=str(OUTPUT_ROOT / "packets"))
     parser.add_argument("--explanation-dir", default=str(OUTPUT_ROOT / "explanations"))

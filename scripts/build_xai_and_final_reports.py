@@ -1,3 +1,11 @@
+"""Repository orchestration script for DERGuardian.
+
+This script runs or rebuilds build xai and final reports artifacts for audits, figures,
+reports, or reproducibility checks. It is release-support code and must preserve
+the separation between canonical benchmark, replay, heldout synthetic, and
+extension experiment contexts.
+"""
+
 from __future__ import annotations
 
 import json
@@ -552,6 +560,11 @@ def _write_final_reports(xai_frame: pd.DataFrame) -> None:
 
 
 def main() -> None:
+    """Run the command-line entrypoint for the repository orchestration workflow.
+
+        Arguments and returned values follow the explicit type hints and are used by the surrounding pipeline contracts.
+        """
+
     xai_frame = _compute_xai_audit()
     _write_xai_reports(xai_frame)
     _write_final_reports(xai_frame)

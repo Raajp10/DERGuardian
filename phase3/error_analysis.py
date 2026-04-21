@@ -1,3 +1,10 @@
+"""Phase 3 evaluation and analysis support for DERGuardian.
+
+This module implements error analysis logic for detector evaluation, ablations,
+zero-day-like heldout synthetic analysis, latency sweeps, or final reporting.
+It keeps benchmark, replay, heldout synthetic, and extension results separated.
+"""
+
 from __future__ import annotations
 
 from pathlib import Path
@@ -220,6 +227,11 @@ def _top_signals(entry: dict[str, Any]) -> list[str]:
 
 
 def build_error_analysis(project_root: Path) -> dict[str, Path]:
+    """Build error analysis for the Phase 3 evaluation workflow.
+
+        Arguments and returned values follow the explicit type hints and are used by the surrounding pipeline contracts.
+        """
+
     report_root = ensure_dir(project_root / "outputs" / "reports")
     zero_day_root = project_root / "outputs" / "phase3_zero_day" / "zero_day_models"
     zero_day_artifact_root = project_root / "outputs" / "reports" / "phase3_zero_day_artifacts"
@@ -625,6 +637,11 @@ def build_error_analysis(project_root: Path) -> dict[str, Path]:
 
 
 def main() -> None:
+    """Run the command-line entrypoint for the Phase 3 evaluation workflow.
+
+        Arguments and returned values follow the explicit type hints and are used by the surrounding pipeline contracts.
+        """
+
     parser = argparse.ArgumentParser(
         description=(
             "Build publication-grade Phase 3 error-analysis artifacts from the canonical unseen-scenario evaluation outputs. "

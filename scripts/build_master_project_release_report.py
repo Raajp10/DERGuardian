@@ -1,3 +1,11 @@
+"""Repository orchestration script for DERGuardian.
+
+This script runs or rebuilds build master project release report artifacts for audits, figures,
+reports, or reproducibility checks. It is release-support code and must preserve
+the separation between canonical benchmark, replay, heldout synthetic, and
+extension experiment contexts.
+"""
+
 from __future__ import annotations
 
 import csv
@@ -12,6 +20,11 @@ ROOT = Path(__file__).resolve().parents[1]
 
 
 def rel(path: str | Path) -> str:
+    """Handle rel within the repository orchestration workflow.
+
+        Arguments and returned values follow the explicit type hints and are used by the surrounding pipeline contracts.
+        """
+
     path = Path(path)
     try:
         return path.relative_to(ROOT).as_posix()
@@ -20,12 +33,22 @@ def rel(path: str | Path) -> str:
 
 
 def write_text(path: str | Path, text: str) -> None:
+    """Write text for the repository orchestration workflow.
+
+        Arguments and returned values follow the explicit type hints and are used by the surrounding pipeline contracts.
+        """
+
     target = ROOT / path
     target.parent.mkdir(parents=True, exist_ok=True)
     target.write_text(text.rstrip() + "\n", encoding="utf-8")
 
 
 def write_csv(path: str | Path, rows: list[dict[str, Any]], fieldnames: list[str]) -> None:
+    """Write csv for the repository orchestration workflow.
+
+        Arguments and returned values follow the explicit type hints and are used by the surrounding pipeline contracts.
+        """
+
     target = ROOT / path
     target.parent.mkdir(parents=True, exist_ok=True)
     with target.open("w", encoding="utf-8", newline="") as handle:
@@ -35,6 +58,11 @@ def write_csv(path: str | Path, rows: list[dict[str, Any]], fieldnames: list[str
 
 
 def read_csv(path: str | Path) -> pd.DataFrame:
+    """Read csv for the repository orchestration workflow.
+
+        Arguments and returned values follow the explicit type hints and are used by the surrounding pipeline contracts.
+        """
+
     target = ROOT / path
     if not target.exists():
         return pd.DataFrame()
@@ -42,6 +70,11 @@ def read_csv(path: str | Path) -> pd.DataFrame:
 
 
 def md_table(df: pd.DataFrame, max_rows: int | None = None) -> str:
+    """Handle md table within the repository orchestration workflow.
+
+        Arguments and returned values follow the explicit type hints and are used by the surrounding pipeline contracts.
+        """
+
     if df.empty:
         return "_No rows available._"
     out = df.head(max_rows).copy() if max_rows else df.copy()
@@ -52,10 +85,20 @@ def md_table(df: pd.DataFrame, max_rows: int | None = None) -> str:
 
 
 def path_exists(path: str) -> bool:
+    """Handle path exists within the repository orchestration workflow.
+
+        Arguments and returned values follow the explicit type hints and are used by the surrounding pipeline contracts.
+        """
+
     return (ROOT / path).exists()
 
 
 def sanitize(text: str) -> str:
+    """Handle sanitize within the repository orchestration workflow.
+
+        Arguments and returned values follow the explicit type hints and are used by the surrounding pipeline contracts.
+        """
+
     return (
         text.replace(str(ROOT) + "\\", "")
         .replace(str(ROOT) + "/", "")
@@ -77,6 +120,11 @@ def add_row(
     recommended_to_ignore: str,
     notes: str = "",
 ) -> None:
+    """Handle add row within the repository orchestration workflow.
+
+        Arguments and returned values follow the explicit type hints and are used by the surrounding pipeline contracts.
+        """
+
     rows.append(
         {
             "file_path": file_path,
@@ -94,6 +142,11 @@ def add_row(
 
 
 def categorize_path(path: Path) -> tuple[str, str, str, str, str, str, str]:
+    """Handle categorize path within the repository orchestration workflow.
+
+        Arguments and returned values follow the explicit type hints and are used by the surrounding pipeline contracts.
+        """
+
     text = rel(path)
     name = path.name.lower()
     phase = "cross_project"
@@ -155,6 +208,11 @@ def categorize_path(path: Path) -> tuple[str, str, str, str, str, str, str]:
 
 
 def build_file_audit() -> list[dict[str, Any]]:
+    """Build file audit for the repository orchestration workflow.
+
+        Arguments and returned values follow the explicit type hints and are used by the surrounding pipeline contracts.
+        """
+
     rows: list[dict[str, Any]] = []
 
     scan_roots = [
@@ -240,6 +298,11 @@ def build_file_audit() -> list[dict[str, Any]]:
 
 
 def metric_summaries() -> dict[str, Any]:
+    """Handle metric summaries within the repository orchestration workflow.
+
+        Arguments and returned values follow the explicit type hints and are used by the surrounding pipeline contracts.
+        """
+
     final_window = read_csv("outputs/window_size_study/final_window_comparison.csv")
     phase1_full = read_csv("phase1_window_model_comparison_full.csv")
     zero_day = read_csv("zero_day_model_window_results_full.csv")
@@ -302,6 +365,11 @@ def metric_summaries() -> dict[str, Any]:
 
 
 def find_missing_references() -> list[dict[str, str]]:
+    """Handle find missing references within the repository orchestration workflow.
+
+        Arguments and returned values follow the explicit type hints and are used by the surrounding pipeline contracts.
+        """
+
     docs = [
         ROOT / "README.md",
         ROOT / "FINAL_PUBLISHABLE_REPO_DECISION.md",
@@ -359,6 +427,11 @@ def find_missing_references() -> list[dict[str, str]]:
 
 
 def write_master_report(metrics: dict[str, Any], missing_refs: list[dict[str, str]]) -> None:
+    """Write master report for the repository orchestration workflow.
+
+        Arguments and returned values follow the explicit type hints and are used by the surrounding pipeline contracts.
+        """
+
     canonical = metrics["canonical"]
     phase2_counts = metrics["phase2_counts"]
     xai_summary = metrics["xai_summary"]
@@ -794,6 +867,11 @@ Read these 10 files first:
 
 
 def write_git_lists() -> None:
+    """Write git lists for the repository orchestration workflow.
+
+        Arguments and returned values follow the explicit type hints and are used by the surrounding pipeline contracts.
+        """
+
     include = """# Git Include List
 
 This list names the files and folders that should be committed for a clean public DERGuardian release.
@@ -934,6 +1012,11 @@ Large artifacts are better attached to a release, stored in institutional storag
 
 
 def write_verification(missing_refs: list[dict[str, str]], audit_rows: list[dict[str, Any]]) -> None:
+    """Write verification for the repository orchestration workflow.
+
+        Arguments and returned values follow the explicit type hints and are used by the surrounding pipeline contracts.
+        """
+
     verification = f"""# Master Project Final Verification
 
 ## Is The Project Understandable To A New Reader?
@@ -1041,6 +1124,11 @@ Yes, with normal manual release judgment. Git metadata exists, `.gitignore` excl
 
 
 def write_professor_guide() -> None:
+    """Write professor guide for the repository orchestration workflow.
+
+        Arguments and returned values follow the explicit type hints and are used by the surrounding pipeline contracts.
+        """
+
     guide = """# Professor Reading Guide
 
 Use this order for a fast but defensible review.
@@ -1069,6 +1157,11 @@ For Git upload decisions, read `GIT_INCLUDE_LIST.md`, `GIT_IGNORE_LIST.md`, and 
 
 
 def main() -> None:
+    """Run the command-line entrypoint for the repository orchestration workflow.
+
+        Arguments and returned values follow the explicit type hints and are used by the surrounding pipeline contracts.
+        """
+
     metrics = metric_summaries()
     audit_rows = build_file_audit()
     audit_fields = [

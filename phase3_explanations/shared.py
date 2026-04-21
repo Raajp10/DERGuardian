@@ -1,3 +1,10 @@
+"""Phase 3 grounded explanation support for DERGuardian.
+
+This module implements shared logic for post-alert explanation packets,
+family attribution, evidence grounding, or validation. It supports operator-facing
+explanation evidence and does not claim human-like root-cause analysis.
+"""
+
 from __future__ import annotations
 
 from pathlib import Path
@@ -74,21 +81,41 @@ ASSET_TOKEN_PATTERN = re.compile(r"\b(?:pv\d+|bess\d+|creg\d+[a-z]?|c\d+[a-z]?|s
 
 
 def resolve_repo_path(path: str | Path) -> Path:
+    """Handle resolve repo path within the Phase 3 grounded explanation workflow.
+
+        Arguments and returned values follow the explicit type hints and are used by the surrounding pipeline contracts.
+        """
+
     candidate = Path(path)
     return candidate.resolve() if candidate.is_absolute() else (ROOT / candidate).resolve()
 
 
 def ensure_dir(path: str | Path) -> Path:
+    """Handle ensure dir within the Phase 3 grounded explanation workflow.
+
+        Arguments and returned values follow the explicit type hints and are used by the surrounding pipeline contracts.
+        """
+
     directory = resolve_repo_path(path)
     directory.mkdir(parents=True, exist_ok=True)
     return directory
 
 
 def read_json(path: str | Path) -> Any:
+    """Read json for the Phase 3 grounded explanation workflow.
+
+        Arguments and returned values follow the explicit type hints and are used by the surrounding pipeline contracts.
+        """
+
     return json.loads(resolve_repo_path(path).read_text(encoding="utf-8"))
 
 
 def write_json(payload: Any, path: str | Path) -> Path:
+    """Write json for the Phase 3 grounded explanation workflow.
+
+        Arguments and returned values follow the explicit type hints and are used by the surrounding pipeline contracts.
+        """
+
     output_path = resolve_repo_path(path)
     output_path.parent.mkdir(parents=True, exist_ok=True)
     output_path.write_text(json.dumps(json_ready(payload), indent=2), encoding="utf-8")
@@ -96,6 +123,11 @@ def write_json(payload: Any, path: str | Path) -> Path:
 
 
 def write_text(text: str, path: str | Path) -> Path:
+    """Write text for the Phase 3 grounded explanation workflow.
+
+        Arguments and returned values follow the explicit type hints and are used by the surrounding pipeline contracts.
+        """
+
     output_path = resolve_repo_path(path)
     output_path.parent.mkdir(parents=True, exist_ok=True)
     output_path.write_text(text, encoding="utf-8")
@@ -103,6 +135,11 @@ def write_text(text: str, path: str | Path) -> Path:
 
 
 def load_table(path: str | Path) -> pd.DataFrame:
+    """Load table for the Phase 3 grounded explanation workflow.
+
+        Arguments and returned values follow the explicit type hints and are used by the surrounding pipeline contracts.
+        """
+
     resolved = resolve_repo_path(path)
     suffix = resolved.suffix.lower()
     if suffix == ".parquet":
@@ -113,6 +150,11 @@ def load_table(path: str | Path) -> pd.DataFrame:
 
 
 def parse_object(value: object) -> object:
+    """Handle parse object within the Phase 3 grounded explanation workflow.
+
+        Arguments and returned values follow the explicit type hints and are used by the surrounding pipeline contracts.
+        """
+
     if isinstance(value, (list, dict)):
         return value
     if value is None or (isinstance(value, float) and math.isnan(value)):
@@ -129,6 +171,11 @@ def parse_object(value: object) -> object:
 
 
 def load_attack_labels(path: str | Path | None = None) -> pd.DataFrame:
+    """Load attack labels for the Phase 3 grounded explanation workflow.
+
+        Arguments and returned values follow the explicit type hints and are used by the surrounding pipeline contracts.
+        """
+
     labels = load_table(path or DEFAULT_PATHS["attack_labels"]).copy()
     for column in ("start_time_utc", "end_time_utc"):
         labels[column] = pd.to_datetime(labels[column], utc=True)
@@ -139,6 +186,11 @@ def load_attack_labels(path: str | Path | None = None) -> pd.DataFrame:
 
 
 def load_cyber_events(path: str | Path | None = None) -> pd.DataFrame:
+    """Load cyber events for the Phase 3 grounded explanation workflow.
+
+        Arguments and returned values follow the explicit type hints and are used by the surrounding pipeline contracts.
+        """
+
     cyber = load_table(path or DEFAULT_PATHS["cyber_events"]).copy()
     for column in ("timestamp_utc", "ingest_timestamp_utc"):
         if column in cyber.columns:
@@ -147,6 +199,11 @@ def load_cyber_events(path: str | Path | None = None) -> pd.DataFrame:
 
 
 def normalize_timestamp(value: object) -> pd.Timestamp:
+    """Handle normalize timestamp within the Phase 3 grounded explanation workflow.
+
+        Arguments and returned values follow the explicit type hints and are used by the surrounding pipeline contracts.
+        """
+
     timestamp = pd.Timestamp(value)
     if timestamp.tzinfo is None:
         timestamp = timestamp.tz_localize("UTC")
@@ -154,10 +211,20 @@ def normalize_timestamp(value: object) -> pd.Timestamp:
 
 
 def timestamp_to_z(value: object) -> str:
+    """Handle timestamp to z within the Phase 3 grounded explanation workflow.
+
+        Arguments and returned values follow the explicit type hints and are used by the surrounding pipeline contracts.
+        """
+
     return normalize_timestamp(value).isoformat().replace("+00:00", "Z")
 
 
 def json_ready(value: Any) -> Any:
+    """Handle json ready within the Phase 3 grounded explanation workflow.
+
+        Arguments and returned values follow the explicit type hints and are used by the surrounding pipeline contracts.
+        """
+
     if isinstance(value, dict):
         return {str(key): json_ready(item) for key, item in value.items()}
     if isinstance(value, list):
@@ -190,6 +257,11 @@ def json_ready(value: Any) -> Any:
 
 
 def load_scenario_lookup(path: str | Path | None = None) -> dict[str, dict[str, Any]]:
+    """Load scenario lookup for the Phase 3 grounded explanation workflow.
+
+        Arguments and returned values follow the explicit type hints and are used by the surrounding pipeline contracts.
+        """
+
     manifest = read_json(path or DEFAULT_PATHS["scenario_manifest"])
     scenarios = manifest.get("applied_scenarios", [])
     if not scenarios:
@@ -198,6 +270,11 @@ def load_scenario_lookup(path: str | Path | None = None) -> dict[str, dict[str, 
 
 
 def infer_assets_from_signals(signals: list[str]) -> list[str]:
+    """Handle infer assets from signals within the Phase 3 grounded explanation workflow.
+
+        Arguments and returned values follow the explicit type hints and are used by the surrounding pipeline contracts.
+        """
+
     assets: list[str] = []
     for signal in signals:
         parts = signal.split("_")
@@ -212,6 +289,11 @@ def infer_assets_from_signals(signals: list[str]) -> list[str]:
 
 
 def asset_mentions(text: str) -> list[str]:
+    """Handle asset mentions within the Phase 3 grounded explanation workflow.
+
+        Arguments and returned values follow the explicit type hints and are used by the surrounding pipeline contracts.
+        """
+
     mentions = []
     for match in ASSET_TOKEN_PATTERN.findall(text or ""):
         normalized = match.lower().replace(" ", "")
@@ -222,6 +304,11 @@ def asset_mentions(text: str) -> list[str]:
 
 
 def humanize_feature_name(feature: str) -> str:
+    """Handle humanize feature name within the Phase 3 grounded explanation workflow.
+
+        Arguments and returned values follow the explicit type hints and are used by the surrounding pipeline contracts.
+        """
+
     cleaned = feature.replace("delta__", "").replace("__", " / ")
     cleaned = cleaned.replace("_", " ")
     replacements = {
@@ -242,6 +329,11 @@ def humanize_feature_name(feature: str) -> str:
 
 
 def severity_from_score(score: float, threshold: float) -> str:
+    """Handle severity from score within the Phase 3 grounded explanation workflow.
+
+        Arguments and returned values follow the explicit type hints and are used by the surrounding pipeline contracts.
+        """
+
     if threshold <= 0:
         return "medium"
     ratio = score / threshold
@@ -255,6 +347,11 @@ def severity_from_score(score: float, threshold: float) -> str:
 
 
 def confidence_band(score: float) -> str:
+    """Handle confidence band within the Phase 3 grounded explanation workflow.
+
+        Arguments and returned values follow the explicit type hints and are used by the surrounding pipeline contracts.
+        """
+
     if score >= 0.8:
         return "high"
     if score >= 0.55:
@@ -263,6 +360,11 @@ def confidence_band(score: float) -> str:
 
 
 def allowed_operator_action(action: str) -> bool:
+    """Handle allowed operator action within the Phase 3 grounded explanation workflow.
+
+        Arguments and returned values follow the explicit type hints and are used by the surrounding pipeline contracts.
+        """
+
     text = action.strip().lower()
     if not text:
         return False
@@ -272,6 +374,11 @@ def allowed_operator_action(action: str) -> bool:
 
 
 def build_safe_operator_actions(packet: dict[str, Any]) -> list[str]:
+    """Build safe operator actions for the Phase 3 grounded explanation workflow.
+
+        Arguments and returned values follow the explicit type hints and are used by the surrounding pipeline contracts.
+        """
+
     assets = packet.get("affected_assets", [])
     top_asset = assets[0] if assets else "the affected DER asset"
     actions = [
@@ -288,6 +395,11 @@ def build_safe_operator_actions(packet: dict[str, Any]) -> list[str]:
 
 
 def extract_allowed_assets_and_signals(packet: dict[str, Any]) -> tuple[set[str], set[str]]:
+    """Handle extract allowed assets and signals within the Phase 3 grounded explanation workflow.
+
+        Arguments and returned values follow the explicit type hints and are used by the surrounding pipeline contracts.
+        """
+
     assets = {str(item).lower() for item in packet.get("affected_assets", [])}
     signals: set[str] = set()
     for section in ("physical_evidence", "cyber_evidence", "top_features"):

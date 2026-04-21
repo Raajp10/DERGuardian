@@ -1,0 +1,34 @@
+{
+  "site_id": "ieee123-der-site-01",
+  "gateway_id": "ieee123-site-gateway-01",
+  "control_center_id": "research-control-center-01",
+  "output_root": "outputs/deployment_runtime",
+  "report_root": "outputs/reports/deployment_runtime",
+  "demo": {
+    "default_attacked_scenario_id": "scn_unauthorized_bess48_discharge",
+    "pre_attack_padding_seconds": 900,
+    "post_attack_padding_seconds": 900
+  },
+  "model_profiles": {
+    "threshold_baseline": {
+      "model_name": "threshold_baseline",
+      "artifact_dir": "outputs/models_full_run/threshold_baseline",
+      "reference_windows_path": "outputs/windows/merged_windows_clean.parquet",
+      "attacked_windows_path": "outputs/windows/merged_windows_attacked.parquet",
+      "predictions_path": "outputs/models_full_run/threshold_baseline/predictions.parquet",
+      "results_path": "outputs/models_full_run/threshold_baseline/results.json",
+      "window_seconds": 300,
+      "step_seconds": 60
+    },
+    "autoencoder_zero_day": {
+      "model_name": "autoencoder",
+      "artifact_dir": "outputs/phase3_zero_day/latency_window_sweep/w120_s24/autoencoder",
+      "reference_windows_path": "outputs/phase3_zero_day/latency_window_sweep/w120_s24/clean_windows_120s_24s.parquet",
+      "attacked_windows_path": "outputs/phase3_zero_day/latency_window_sweep/w120_s24/attacked_windows_120s_24s.parquet",
+      "predictions_path": "outputs/phase3_zero_day/latency_window_sweep/w120_s24/autoencoder/predictions.parquet",
+      "results_path": "outputs/phase3_zero_day/latency_window_sweep/w120_s24/autoencoder/results.json",
+      "window_seconds": 120,
+      "step_seconds": 24
+    }
+  }
+}

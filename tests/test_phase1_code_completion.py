@@ -1,3 +1,9 @@
+"""Test coverage for DERGuardian test phase1 code completion behavior.
+
+These tests exercise pipeline contracts, package readiness, or phase-level
+functionality without changing scientific outputs.
+"""
+
 from __future__ import annotations
 
 import json
@@ -19,6 +25,8 @@ ROOT = Path(__file__).resolve().parents[1]
 
 
 class Phase1CodeCompletionTests(unittest.TestCase):
+    """Structured object used by the test workflow."""
+
     def test_latency_defaults_to_window_end_and_prefers_emission_time(self) -> None:
         labels = pd.DataFrame(
             [

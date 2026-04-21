@@ -1,3 +1,11 @@
+"""Build evidence-grounded explanation packets for Phase 3 alerts.
+
+The packet joins detector predictions with clean/attacked window deltas, cyber
+events, scenario metadata, feature importance, and conservative candidate-family
+hints. It produces post-alert operator support only; it is not a human-like
+root-cause-analysis system.
+"""
+
 from __future__ import annotations
 
 from pathlib import Path
@@ -45,6 +53,8 @@ def select_incident_row(
     window_start: str | None = None,
     incident_id: str | None = None,
 ) -> pd.Series:
+    """Select the prediction row that should seed one explanation packet."""
+
     frame = predictions.copy()
     frame["window_start_utc"] = pd.to_datetime(frame["window_start_utc"], utc=True)
     frame["window_end_utc"] = pd.to_datetime(frame["window_end_utc"], utc=True)
@@ -68,6 +78,11 @@ def select_incident_row(
 
 
 def match_window_row(frame: pd.DataFrame, start: pd.Timestamp, end: pd.Timestamp) -> pd.Series:
+    """Handle match window row within the Phase 3 grounded explanation workflow.
+
+        Arguments and returned values follow the explicit type hints and are used by the surrounding pipeline contracts.
+        """
+
     subset = frame.copy()
     subset["window_start_utc"] = pd.to_datetime(subset["window_start_utc"], utc=True)
     subset["window_end_utc"] = pd.to_datetime(subset["window_end_utc"], utc=True)
@@ -78,6 +93,11 @@ def match_window_row(frame: pd.DataFrame, start: pd.Timestamp, end: pd.Timestamp
 
 
 def load_feature_importance(path: str | Path | None) -> dict[str, dict[str, float]]:
+    """Load feature importance for the Phase 3 grounded explanation workflow.
+
+        Arguments and returned values follow the explicit type hints and are used by the surrounding pipeline contracts.
+        """
+
     resolved = resolve_repo_path(path or DEFAULT_PATHS["feature_importance"])
     if not resolved.exists():
         return {}
@@ -97,6 +117,8 @@ def compute_top_features(
     feature_lookup: dict[str, dict[str, float]],
     top_k: int = 10,
 ) -> list[dict[str, Any]]:
+    """Rank physical/cyber window features by local attacked-vs-clean shift."""
+
     records: list[dict[str, Any]] = []
     numeric_columns = [
         column
@@ -132,10 +154,20 @@ def compute_top_features(
 
 
 def preferred_feature_candidates(signal: str) -> list[str]:
+    """Handle preferred feature candidates within the Phase 3 grounded explanation workflow.
+
+        Arguments and returned values follow the explicit type hints and are used by the surrounding pipeline contracts.
+        """
+
     return [f"{signal}__mean", f"{signal}__last", f"{signal}__max", f"{signal}__min", signal]
 
 
 def pick_relevant_feature(top_features: list[dict[str, Any]], signal: str) -> dict[str, Any] | None:
+    """Handle pick relevant feature within the Phase 3 grounded explanation workflow.
+
+        Arguments and returned values follow the explicit type hints and are used by the surrounding pipeline contracts.
+        """
+
     for candidate in preferred_feature_candidates(signal):
         for item in top_features:
             if item.get("signal") == candidate.replace("__mean", "").replace("__last", "").replace("__max", "").replace("__min", ""):
@@ -149,6 +181,11 @@ def pick_relevant_feature(top_features: list[dict[str, Any]], signal: str) -> di
 
 
 def feature_record_from_rows(attacked_row: pd.Series, clean_row: pd.Series, signal: str) -> dict[str, Any] | None:
+    """Handle feature record from rows within the Phase 3 grounded explanation workflow.
+
+        Arguments and returned values follow the explicit type hints and are used by the surrounding pipeline contracts.
+        """
+
     for candidate in preferred_feature_candidates(signal):
         if candidate not in attacked_row.index or candidate not in clean_row.index:
             continue
@@ -171,6 +208,11 @@ def feature_record_from_rows(attacked_row: pd.Series, clean_row: pd.Series, sign
 
 
 def categorize_physical_signal(signal: str) -> str:
+    """Handle categorize physical signal within the Phase 3 grounded explanation workflow.
+
+        Arguments and returned values follow the explicit type hints and are used by the surrounding pipeline contracts.
+        """
+
     if signal.startswith("feeder_") and "losses" in signal:
         return "losses_increase"
     if signal.startswith("feeder_"):
@@ -201,6 +243,8 @@ def build_physical_evidence(
     scenario_label: dict[str, Any] | None,
     cyber_evidence: list[dict[str, Any]],
 ) -> list[dict[str, Any]]:
+    """Assemble physical evidence records grounded in window-level deltas."""
+
     evidence: list[dict[str, Any]] = []
     referenced_signals: list[str] = []
     if scenario_label:
@@ -241,6 +285,8 @@ def build_physical_evidence(
         if scenario_label and asset not in {"feeder"}:
             known_assets = set(str(item) for item in scenario_label.get("affected_assets", [])) if isinstance(scenario_label.get("affected_assets"), list) else set()
             observable_assets = set(infer_assets_from_signals(referenced_signals))
+            # Prefer scenario-grounded evidence before falling back to global
+            # high-delta features; this avoids unsupported asset claims.
             if asset not in known_assets and asset not in observable_assets:
                 continue
         pair = (signal, feature["aggregation"])
@@ -272,6 +318,8 @@ def build_cyber_evidence(
     window_end: pd.Timestamp,
     lookback_seconds: int,
 ) -> list[dict[str, Any]]:
+    """Collect cyber events that overlap the alert window or short lookback."""
+
     lookback_start = window_start - pd.Timedelta(seconds=int(lookback_seconds))
     relevant = cyber[(cyber["timestamp_utc"] >= lookback_start) & (cyber["timestamp_utc"] <= window_end)].copy()
     if relevant.empty:
@@ -357,6 +405,11 @@ def build_cyber_evidence(
 
 
 def build_detector_candidate_hints(top_features: list[dict[str, Any]], physical_evidence: list[dict[str, Any]], cyber_evidence: list[dict[str, Any]]) -> list[dict[str, Any]]:
+    """Build detector candidate hints for the Phase 3 grounded explanation workflow.
+
+        Arguments and returned values follow the explicit type hints and are used by the surrounding pipeline contracts.
+        """
+
     hints: list[dict[str, Any]] = []
     top_feature_names = {item["feature"] for item in top_features[:6]}
     categories = {item["category"] for item in physical_evidence}
@@ -381,6 +434,11 @@ def build_detector_candidate_hints(top_features: list[dict[str, Any]], physical_
 
 
 def find_overlapping_label(labels: pd.DataFrame, start: pd.Timestamp, end: pd.Timestamp, scenario_id: str | None) -> dict[str, Any] | None:
+    """Handle find overlapping label within the Phase 3 grounded explanation workflow.
+
+        Arguments and returned values follow the explicit type hints and are used by the surrounding pipeline contracts.
+        """
+
     overlap = labels[(labels["start_time_utc"] <= end) & (labels["end_time_utc"] >= start)]
     if scenario_id:
         scenario_match = overlap[overlap["scenario_id"] == scenario_id]
@@ -408,6 +466,8 @@ def build_packet(
     top_k_features: int = 10,
     cyber_lookback_seconds: int = 900,
 ) -> dict[str, Any]:
+    """Create one explanation packet from existing detector and evidence files."""
+
     predictions = load_table(predictions_path)
     attacked_windows = load_table(attacked_windows_path)
     clean_windows = load_table(clean_windows_path)
@@ -476,6 +536,8 @@ def build_packet(
 
 
 def main() -> None:
+    """CLI entrypoint for writing a grounded explanation packet JSON file."""
+
     parser = argparse.ArgumentParser(description="Build a grounded explanation packet from existing detector outputs and structured evidence.")
     parser.add_argument("--predictions", default=str(DEFAULT_PATHS["threshold_predictions"]))
     parser.add_argument("--results", default=str(DEFAULT_PATHS["threshold_results"]))

@@ -1,3 +1,12 @@
+"""Train and evaluate the Phase 1 detector suite for DERGuardian.
+
+This module builds residual-window training data, runs the threshold baseline,
+Isolation Forest, MLP autoencoder, sequence models, token baseline, and fusion
+calibrators, then writes benchmark reports and ready-model packages. It supports
+the canonical benchmark path and keeps later replay or extension evidence
+separate from benchmark model selection.
+"""
+
 from __future__ import annotations
 
 from dataclasses import dataclass
@@ -77,6 +86,8 @@ PRIMARY_FUSION_TOKEN_MODEL = "llm_baseline"
 
 @dataclass(slots=True)
 class FullRunData:
+    """Prepared residual data and metadata shared by Phase 1 model runners."""
+
     residual_df: pd.DataFrame
     labels_df: pd.DataFrame
     split_df: pd.DataFrame
@@ -85,6 +96,8 @@ class FullRunData:
 
 
 def main() -> None:
+    """CLI entrypoint for the full Phase 1 detector benchmark workflow."""
+
     parser = argparse.ArgumentParser(description="Run full Phase 1 DER anomaly-model diagnostics, training, and paper artifact generation.")
     parser.add_argument("--project-root", default=str(ROOT))
     parser.add_argument("--feature-counts", default="32,64,96,128")
@@ -119,11 +132,15 @@ def run_full_benchmark(
     report_root_name: str = CANONICAL_ARTIFACT_ROOT,
     model_root_name: str = CANONICAL_MODEL_ROOT,
 ) -> Path:
+    """Train/evaluate the detector suite and write benchmark artifacts."""
+
     report_root = root / "outputs" / "reports" / report_root_name
     report_root.mkdir(parents=True, exist_ok=True)
     artifact_root_name = report_root_name
 
     full_data = prepare_full_run_data(root, buffer_windows=buffer_windows)
+    # All models below share this prepared residual split so model comparisons
+    # are benchmark comparisons, not replay or heldout synthetic evaluations.
     _write_diagnostic_tables(full_data, report_root, feature_counts, window_seconds=window_seconds)
 
     model_results: list[dict[str, object]] = []
@@ -386,6 +403,11 @@ def prepare_full_run_data(
 
 
 def assign_attack_aware_split(residual_df: pd.DataFrame, labels_df: pd.DataFrame, buffer_windows: int = 2) -> pd.DataFrame:
+    """Handle assign attack aware split within the Phase 1 detector modeling workflow.
+
+        Arguments and returned values follow the explicit type hints and are used by the surrounding pipeline contracts.
+        """
+
     frame = residual_df.sort_values("window_start_utc").reset_index(drop=True)
     frame["split_name"] = ""
     position_map = {int(idx): pos for pos, idx in enumerate(frame.index)}
@@ -441,6 +463,11 @@ def _split_indices(indices: list[int], ratios: tuple[float, float, float] = (0.5
 
 
 def rank_features_by_effect_size(frame: pd.DataFrame, feature_columns: list[str]) -> pd.DataFrame:
+    """Handle rank features by effect size within the Phase 1 detector modeling workflow.
+
+        Arguments and returned values follow the explicit type hints and are used by the surrounding pipeline contracts.
+        """
+
     benign = frame[frame["attack_present"] == 0]
     attack = frame[frame["attack_present"] == 1]
     rows: list[dict[str, object]] = []
@@ -478,6 +505,11 @@ def run_threshold_baseline(
     model_root_name: str,
     artifact_root_name: str,
 ) -> dict[str, object]:
+    """Run threshold baseline for the Phase 1 detector modeling workflow.
+
+        Arguments and returned values follow the explicit type hints and are used by the surrounding pipeline contracts.
+        """
+
     model_name = "threshold_baseline"
     paths = ensure_model_paths(model_name, root, model_root=model_root_name, artifact_root=artifact_root_name)
     splits = _split_frames(full_data.split_df)
@@ -599,6 +631,11 @@ def run_isolation_forest(
     model_root_name: str,
     artifact_root_name: str,
 ) -> dict[str, object]:
+    """Run isolation forest for the Phase 1 detector modeling workflow.
+
+        Arguments and returned values follow the explicit type hints and are used by the surrounding pipeline contracts.
+        """
+
     model_name = "isolation_forest"
     paths = ensure_model_paths(model_name, root, model_root=model_root_name, artifact_root=artifact_root_name)
     splits = _split_frames(full_data.split_df)
@@ -733,6 +770,11 @@ def run_autoencoder(
     model_root_name: str,
     artifact_root_name: str,
 ) -> dict[str, object]:
+    """Run autoencoder for the Phase 1 detector modeling workflow.
+
+        Arguments and returned values follow the explicit type hints and are used by the surrounding pipeline contracts.
+        """
+
     model_name = "autoencoder"
     paths = ensure_model_paths(model_name, root, model_root=model_root_name, artifact_root=artifact_root_name)
     splits = _split_frames(full_data.split_df)
@@ -871,6 +913,11 @@ def run_sequence_model(
     model_root_name: str,
     artifact_root_name: str,
 ) -> dict[str, object]:
+    """Run sequence model for the Phase 1 detector modeling workflow.
+
+        Arguments and returned values follow the explicit type hints and are used by the surrounding pipeline contracts.
+        """
+
     paths = ensure_model_paths(model_name, root, model_root=model_root_name, artifact_root=artifact_root_name)
     splits = _split_frames(full_data.split_df)
     sweep_rows: list[dict[str, object]] = []
@@ -1053,6 +1100,11 @@ def build_sequence_dataset_segments(
     standardizer,
     discretizer=None,
 ) -> tuple[np.ndarray, np.ndarray, pd.DataFrame]:
+    """Build sequence dataset segments for the Phase 1 detector modeling workflow.
+
+        Arguments and returned values follow the explicit type hints and are used by the surrounding pipeline contracts.
+        """
+
     ordered = frame.sort_values("window_start_utc").reset_index(drop=True).copy()
     if ordered.empty:
         return np.empty((0, seq_len, len(feature_columns))), np.array([], dtype=np.float32), pd.DataFrame()
@@ -1092,6 +1144,11 @@ def build_sequence_dataset_segments(
 
 
 def calibrate_scores(scores: np.ndarray, y_true: np.ndarray) -> tuple[np.ndarray, LogisticRegression | None]:
+    """Handle calibrate scores within the Phase 1 detector modeling workflow.
+
+        Arguments and returned values follow the explicit type hints and are used by the surrounding pipeline contracts.
+        """
+
     scores = np.asarray(scores, dtype=float)
     y_true = np.asarray(y_true, dtype=int)
     if len(np.unique(y_true)) < 2:
@@ -1103,6 +1160,11 @@ def calibrate_scores(scores: np.ndarray, y_true: np.ndarray) -> tuple[np.ndarray
 
 
 def apply_calibrator(calibrator: LogisticRegression | None, scores: np.ndarray) -> np.ndarray:
+    """Handle apply calibrator within the Phase 1 detector modeling workflow.
+
+        Arguments and returned values follow the explicit type hints and are used by the surrounding pipeline contracts.
+        """
+
     scores = np.asarray(scores, dtype=float)
     if calibrator is None:
         return scores
@@ -1110,6 +1172,11 @@ def apply_calibrator(calibrator: LogisticRegression | None, scores: np.ndarray) 
 
 
 def choose_best_threshold(scores: np.ndarray, y_true: np.ndarray) -> tuple[float, dict[str, object]]:
+    """Handle choose best threshold within the Phase 1 detector modeling workflow.
+
+        Arguments and returned values follow the explicit type hints and are used by the surrounding pipeline contracts.
+        """
+
     candidate_thresholds = np.unique(np.quantile(scores, np.linspace(0.05, 0.995, 60)))
     best_threshold = float(candidate_thresholds[0]) if len(candidate_thresholds) else 0.5
     best_metrics: dict[str, object] | None = None
@@ -1248,6 +1315,11 @@ def generate_model_plots(
     predictions: pd.DataFrame,
     output_dir: Path,
 ) -> list[dict[str, object]]:
+    """Generate model plots for the Phase 1 detector modeling workflow.
+
+        Arguments and returned values follow the explicit type hints and are used by the surrounding pipeline contracts.
+        """
+
     output_dir.mkdir(parents=True, exist_ok=True)
     figure_manifest: list[dict[str, object]] = []
     display_name = display_model_name(model_name)

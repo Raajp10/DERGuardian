@@ -1,3 +1,11 @@
+"""Release-facing orchestration entrypoint for DERGuardian.
+
+This script prints or runs the main Phase 1, Phase 2, and Phase 3 commands in a
+single documented order. It is intentionally conservative: existing completion
+markers are respected by default so frozen benchmark artifacts are not rewritten
+during a normal release smoke run.
+"""
+
 from __future__ import annotations
 
 import argparse
@@ -12,6 +20,8 @@ ROOT = Path(__file__).resolve().parents[1]
 
 @dataclass(frozen=True)
 class PipelineStage:
+    """One reproducible pipeline command plus the files that prove completion."""
+
     name: str
     description: str
     command: list[str]
@@ -19,6 +29,8 @@ class PipelineStage:
 
 
 def project_path(path: str) -> Path:
+    """Resolve a repository-relative path without baking in machine paths."""
+
     return ROOT / path
 
 
@@ -145,10 +157,14 @@ STAGES: tuple[PipelineStage, ...] = (
 
 
 def markers_exist(stage: PipelineStage) -> bool:
+    """Return true when all completion markers exist and are non-empty."""
+
     return all(project_path(marker).exists() and project_path(marker).stat().st_size > 0 for marker in stage.completion_markers)
 
 
 def run_stage(stage: PipelineStage, *, dry_run: bool, force: bool) -> None:
+    """Print and optionally execute one stage while preserving existing outputs."""
+
     status = "ready"
     if markers_exist(stage) and not force:
         status = "skip-existing"
@@ -160,6 +176,8 @@ def run_stage(stage: PipelineStage, *, dry_run: bool, force: bool) -> None:
 
 
 def parse_args() -> argparse.Namespace:
+    """Parse release-runner options for dry runs, forced reruns, or one stage."""
+
     parser = argparse.ArgumentParser(description="Run the DERGuardian pipeline in phase order.")
     parser.add_argument("--stage", choices=[stage.name for stage in STAGES], default=None, help="Run only one stage.")
     parser.add_argument("--force", action="store_true", help="Run stages even if completion markers already exist.")
@@ -168,6 +186,8 @@ def parse_args() -> argparse.Namespace:
 
 
 def main() -> None:
+    """Run the selected pipeline stages in the documented phase order."""
+
     args = parse_args()
     selected = [stage for stage in STAGES if args.stage in {None, stage.name}]
     print("DERGuardian full pipeline orchestrator")

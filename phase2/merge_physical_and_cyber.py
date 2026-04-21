@@ -1,3 +1,11 @@
+"""Phase 2 scenario and attacked-dataset support for DERGuardian.
+
+This module implements merge physical and cyber logic for schema-bound synthetic attack
+scenarios, injection compilation, cyber logs, labels, validation, or reporting.
+Generated scenarios are heldout synthetic evidence and are not claimed as
+real-world zero-day proof.
+"""
+
 from __future__ import annotations
 
 from pathlib import Path
@@ -14,6 +22,11 @@ from phase1.build_windows import build_merged_windows
 
 
 def main() -> None:
+    """Run the command-line entrypoint for the Phase 2 scenario and attacked-dataset workflow.
+
+        Arguments and returned values follow the explicit type hints and are used by the surrounding pipeline contracts.
+        """
+
     parser = argparse.ArgumentParser(description="Merge attacked physical and cyber layers into model-ready windows.")
     parser.add_argument("--measured", required=True)
     parser.add_argument("--cyber", required=True)

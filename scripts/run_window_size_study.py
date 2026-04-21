@@ -1,3 +1,11 @@
+"""Run the Phase 1 detector window-size benchmark study.
+
+The script rebuilds residual windows for selected time scales, trains/evaluates
+the feasible detector set, writes benchmark artifacts, and packages the selected
+ready-model outputs. It operates on the canonical benchmark path and must remain
+separate from replay, heldout synthetic, and extension-only experiments.
+"""
+
 from __future__ import annotations
 
 import argparse
@@ -74,6 +82,8 @@ CANONICAL_SOURCE_PATHS = {
 
 
 def main() -> None:
+    """CLI entrypoint for the strict canonical window-size study."""
+
     parser = argparse.ArgumentParser(description="Run the strict canonical window-size study.")
     parser.add_argument("--window-sizes", default="5,10,60,300")
     parser.add_argument("--skip-existing", action="store_true")
@@ -120,6 +130,8 @@ def main() -> None:
                 min_attack_overlap_fraction=MIN_ATTACK_OVERLAP,
             ),
         )
+        # Clean and attacked windows are regenerated per window size, but the
+        # final comparison remains canonical benchmark evidence only.
         attacked_windows = build_merged_windows(
             measured_df=attacked_measured,
             cyber_df=attacked_cyber,
@@ -248,6 +260,11 @@ def main() -> None:
 
 
 def select_window_specs(window_sizes: str) -> list[dict[str, Any]]:
+    """Select window specs for the repository orchestration workflow.
+
+        Arguments and returned values follow the explicit type hints and are used by the surrounding pipeline contracts.
+        """
+
     requested = {int(item.strip()) for item in window_sizes.split(",") if item.strip()}
     specs = [spec for spec in WINDOW_SPECS if spec["window_seconds"] in requested]
     if not specs:
@@ -256,6 +273,11 @@ def select_window_specs(window_sizes: str) -> list[dict[str, Any]]:
 
 
 def write_run_manifest(selected_specs: list[dict[str, Any]], source_audit: dict[str, Any]) -> None:
+    """Write run manifest for the repository orchestration workflow.
+
+        Arguments and returned values follow the explicit type hints and are used by the surrounding pipeline contracts.
+        """
+
     write_json(
         {
             "selected_windows": selected_specs,
@@ -282,6 +304,11 @@ def write_run_manifest(selected_specs: list[dict[str, Any]], source_audit: dict[
 
 
 def validate_window_sources(selected_specs: list[dict[str, Any]]) -> dict[str, Any]:
+    """Validate window sources for the repository orchestration workflow.
+
+        Arguments and returned values follow the explicit type hints and are used by the surrounding pipeline contracts.
+        """
+
     minimum_window_seconds = min(int(spec["window_seconds"]) for spec in selected_specs)
     print(
         f"[window-size-study] validating canonical pre-window sources for minimum requested window {minimum_window_seconds}s",
@@ -350,6 +377,11 @@ def validate_window_sources(selected_specs: list[dict[str, Any]]) -> dict[str, A
 
 
 def audit_physical_source(path: Path) -> dict[str, Any]:
+    """Handle audit physical source within the repository orchestration workflow.
+
+        Arguments and returned values follow the explicit type hints and are used by the surrounding pipeline contracts.
+        """
+
     parquet = pq.ParquetFile(path)
     columns = parquet.schema.names
     probe_columns = [column for column in ["timestamp_utc", "simulation_index", "sample_rate_seconds", "window_start_utc", "window_end_utc"] if column in columns]
@@ -396,6 +428,11 @@ def audit_physical_source(path: Path) -> dict[str, Any]:
 
 
 def audit_event_source(path: Path) -> dict[str, Any]:
+    """Handle audit event source within the repository orchestration workflow.
+
+        Arguments and returned values follow the explicit type hints and are used by the surrounding pipeline contracts.
+        """
+
     parquet = pq.ParquetFile(path)
     columns = parquet.schema.names
     probe_columns = [column for column in ["timestamp_utc", "window_start_utc", "window_end_utc"] if column in columns]
@@ -425,6 +462,11 @@ def audit_event_source(path: Path) -> dict[str, Any]:
 
 
 def dataset_summary_row(spec: dict[str, Any], dataset_kind: str, frame: pd.DataFrame) -> dict[str, Any]:
+    """Handle dataset summary row within the repository orchestration workflow.
+
+        Arguments and returned values follow the explicit type hints and are used by the surrounding pipeline contracts.
+        """
+
     feature_columns = [column for column in frame.columns if column not in WINDOW_META_COLUMNS]
     attack_count = int(frame["attack_present"].sum()) if "attack_present" in frame.columns else 0
     return {
@@ -449,6 +491,11 @@ def build_full_run_data_for_window(
     attack_labels: pd.DataFrame,
     window_root: Path,
 ) -> full_eval.FullRunData:
+    """Build full run data for window for the repository orchestration workflow.
+
+        Arguments and returned values follow the explicit type hints and are used by the surrounding pipeline contracts.
+        """
+
     residual_df = build_aligned_residual_dataframe(clean_windows, attacked_windows, attack_labels)
     split_df = full_eval.assign_attack_aware_split(residual_df, attack_labels, buffer_windows=BUFFER_WINDOWS)
     residual_path = window_root / "residual_windows.parquet"
@@ -473,6 +520,11 @@ def run_models_for_window(
     full_data: full_eval.FullRunData,
     reports_root: Path,
 ) -> tuple[list[dict[str, Any]], list[dict[str, Any]], list[dict[str, Any]], list[dict[str, Any]], dict[str, Any] | None, pd.DataFrame, dict[str, list[float]]]:
+    """Run models for window for the repository orchestration workflow.
+
+        Arguments and returned values follow the explicit type hints and are used by the surrounding pipeline contracts.
+        """
+
     model_root_name = str(Path("window_size_study") / spec["tag"] / "models")
     artifact_root_name = str(Path("..") / "window_size_study" / spec["tag"] / "reports")
     ready_root_name = str(Path("window_size_study") / spec["tag"] / "ready_packages")
@@ -708,6 +760,11 @@ def load_existing_model_result(
     model_root_name: str,
     ready_root_name: str,
 ) -> dict[str, Any] | None:
+    """Load existing model result for the repository orchestration workflow.
+
+        Arguments and returned values follow the explicit type hints and are used by the surrounding pipeline contracts.
+        """
+
     model_dir = ROOT / "outputs" / "window_size_study" / spec["tag"] / "models" / model_name
     predictions_path = model_dir / "predictions.parquet"
     results_path = model_dir / "results.json"
@@ -771,6 +828,11 @@ def load_existing_model_result(
 
 @contextmanager
 def ready_model_root_override(temp_root: str):
+    """Handle ready model root override within the repository orchestration workflow.
+
+        Arguments and returned values follow the explicit type hints and are used by the surrounding pipeline contracts.
+        """
+
     previous = ready_package_utils.READY_MODEL_ROOT
     ready_package_utils.READY_MODEL_ROOT = temp_root
     try:
@@ -780,6 +842,11 @@ def ready_model_root_override(temp_root: str):
 
 
 def fix_threshold_baseline_inference_time(spec: dict[str, Any], full_data: full_eval.FullRunData) -> float:
+    """Handle fix threshold baseline inference time within the repository orchestration workflow.
+
+        Arguments and returned values follow the explicit type hints and are used by the surrounding pipeline contracts.
+        """
+
     model_path = ROOT / "outputs" / "window_size_study" / spec["tag"] / "models" / "threshold_baseline" / "model.pkl"
     if not model_path.exists():
         return math.nan
@@ -803,6 +870,11 @@ def fix_threshold_baseline_inference_time(spec: dict[str, Any], full_data: full_
 
 
 def append_window_fields(spec: dict[str, Any], rows: list[dict[str, Any]]) -> list[dict[str, Any]]:
+    """Handle append window fields within the repository orchestration workflow.
+
+        Arguments and returned values follow the explicit type hints and are used by the surrounding pipeline contracts.
+        """
+
     enriched: list[dict[str, Any]] = []
     for row in rows:
         payload = dict(row)
@@ -814,6 +886,11 @@ def append_window_fields(spec: dict[str, Any], rows: list[dict[str, Any]]) -> li
 
 
 def select_best_success(successful: list[dict[str, Any]]) -> dict[str, Any] | None:
+    """Select best success for the repository orchestration workflow.
+
+        Arguments and returned values follow the explicit type hints and are used by the surrounding pipeline contracts.
+        """
+
     if not successful:
         return None
     return max(
@@ -828,6 +905,11 @@ def select_best_success(successful: list[dict[str, Any]]) -> dict[str, Any] | No
 
 
 def select_best_model_row(model_summary: pd.DataFrame) -> dict[str, Any] | None:
+    """Select best model row for the repository orchestration workflow.
+
+        Arguments and returned values follow the explicit type hints and are used by the surrounding pipeline contracts.
+        """
+
     if model_summary.empty:
         return None
     successful = model_summary[model_summary["status"] == "completed"].copy()
@@ -838,6 +920,11 @@ def select_best_model_row(model_summary: pd.DataFrame) -> dict[str, Any] | None:
 
 
 def safe_float(value: Any) -> float:
+    """Handle safe float within the repository orchestration workflow.
+
+        Arguments and returned values follow the explicit type hints and are used by the surrounding pipeline contracts.
+        """
+
     try:
         numeric = float(value)
     except Exception:
@@ -846,16 +933,31 @@ def safe_float(value: Any) -> float:
 
 
 def safe_mean(series: pd.Series) -> float:
+    """Handle safe mean within the repository orchestration workflow.
+
+        Arguments and returned values follow the explicit type hints and are used by the surrounding pipeline contracts.
+        """
+
     cleaned = pd.to_numeric(series, errors="coerce").dropna()
     return float(cleaned.mean()) if not cleaned.empty else math.nan
 
 
 def safe_median(series: pd.Series) -> float:
+    """Handle safe median within the repository orchestration workflow.
+
+        Arguments and returned values follow the explicit type hints and are used by the surrounding pipeline contracts.
+        """
+
     cleaned = pd.to_numeric(series, errors="coerce").dropna()
     return float(cleaned.median()) if not cleaned.empty else math.nan
 
 
 def safe_std(series: pd.Series) -> float:
+    """Handle safe std within the repository orchestration workflow.
+
+        Arguments and returned values follow the explicit type hints and are used by the surrounding pipeline contracts.
+        """
+
     cleaned = pd.to_numeric(series, errors="coerce").dropna()
     return float(cleaned.std(ddof=0)) if not cleaned.empty else math.nan
 
@@ -866,6 +968,11 @@ def build_window_run_report(
     per_scenario_df: pd.DataFrame,
     latency_df: pd.DataFrame,
 ) -> str:
+    """Build window run report for the repository orchestration workflow.
+
+        Arguments and returned values follow the explicit type hints and are used by the surrounding pipeline contracts.
+        """
+
     lines = [f"# Window Run Report: {spec['tag']}", ""]
     lines.append(f"- window_seconds: `{spec['window_seconds']}`")
     lines.append(f"- step_seconds: `{spec['step_seconds']}`")
@@ -884,6 +991,11 @@ def build_window_run_report(
 
 
 def build_final_window_comparison_md(final_best_df: pd.DataFrame) -> str:
+    """Build final window comparison md for the repository orchestration workflow.
+
+        Arguments and returned values follow the explicit type hints and are used by the surrounding pipeline contracts.
+        """
+
     lines = ["# Final Window Comparison", ""]
     lines.append("## Best Model Per Window")
     lines.append(to_markdown(final_best_df))
@@ -892,6 +1004,11 @@ def build_final_window_comparison_md(final_best_df: pd.DataFrame) -> str:
 
 
 def build_window_size_interpretation(final_best_df: pd.DataFrame) -> str:
+    """Build window size interpretation for the repository orchestration workflow.
+
+        Arguments and returned values follow the explicit type hints and are used by the surrounding pipeline contracts.
+        """
+
     if final_best_df.empty:
         return "# Window Size Interpretation\n\nNo successful runs were available.\n"
     best_overall = final_best_df.sort_values(["f1", "recall", "precision", "average_precision"], ascending=False).iloc[0]
@@ -923,6 +1040,11 @@ def build_final_figures(
     best_curve_payloads: dict[str, dict[str, list[float]]],
     best_per_scenario_frames: dict[str, pd.DataFrame],
 ) -> list[dict[str, Any]]:
+    """Build final figures for the repository orchestration workflow.
+
+        Arguments and returned values follow the explicit type hints and are used by the surrounding pipeline contracts.
+        """
+
     manifest: list[dict[str, Any]] = []
     if not comparison_df.empty:
         performance_path = figures_root / "performance_vs_window_size.png"
@@ -1038,6 +1160,11 @@ def build_final_figures(
 
 
 def package_best_model(final_best_df: pd.DataFrame) -> dict[str, Any]:
+    """Handle package best model within the repository orchestration workflow.
+
+        Arguments and returned values follow the explicit type hints and are used by the surrounding pipeline contracts.
+        """
+
     if final_best_df.empty:
         return {}
     best_row = final_best_df.sort_values(["f1", "recall", "precision", "average_precision"], ascending=False).iloc[0].to_dict()
@@ -1092,6 +1219,11 @@ def package_best_model(final_best_df: pd.DataFrame) -> dict[str, Any]:
 
 
 def build_phase2_bundle_outputs(best_package_info: dict[str, Any]) -> tuple[pd.DataFrame, pd.DataFrame, str, list[dict[str, Any]]]:
+    """Build phase2 bundle outputs for the repository orchestration workflow.
+
+        Arguments and returned values follow the explicit type hints and are used by the surrounding pipeline contracts.
+        """
+
     inventory_rows: list[dict[str, Any]] = []
     manifests = sorted(ROOT.rglob("scenario_manifest.json"))
     bundle_manifests = [path for path in manifests if "outputs\\attacked" in str(path) or "outputs/attacked" in str(path)]
@@ -1173,6 +1305,11 @@ def build_phase2_bundle_outputs(best_package_info: dict[str, Any]) -> tuple[pd.D
 
 
 def build_phase2_bundle_figures(inventory_df: pd.DataFrame, comparison_df: pd.DataFrame) -> list[dict[str, Any]]:
+    """Build phase2 bundle figures for the repository orchestration workflow.
+
+        Arguments and returned values follow the explicit type hints and are used by the surrounding pipeline contracts.
+        """
+
     figure_root = OUTPUT_ROOT / "phase2_bundle_figures"
     figure_root.mkdir(parents=True, exist_ok=True)
     manifest: list[dict[str, Any]] = []
@@ -1221,6 +1358,11 @@ def write_top_level_deliverables(
     best_package_info: dict[str, Any],
     dataset_summary_df: pd.DataFrame,
 ) -> None:
+    """Write top level deliverables for the repository orchestration workflow.
+
+        Arguments and returned values follow the explicit type hints and are used by the surrounding pipeline contracts.
+        """
+
     window_size_report = build_window_size_study_report(final_best_df, all_model_rows, dataset_summary_df, phase2_comparison_df, best_package_info)
     (ROOT / "WINDOW_SIZE_STUDY_REPORT.md").write_text(window_size_report, encoding="utf-8")
 
@@ -1289,6 +1431,11 @@ def build_window_size_study_report(
     phase2_comparison_df: pd.DataFrame,
     best_package_info: dict[str, Any],
 ) -> str:
+    """Build window size study report for the repository orchestration workflow.
+
+        Arguments and returned values follow the explicit type hints and are used by the surrounding pipeline contracts.
+        """
+
     lines = ["# Window Size Study Report", ""]
     lines.append("## Scope")
     lines.append("- Canonical inputs were rebuilt into four window sizes: 5s, 10s, 60s, and 300s.")
@@ -1327,6 +1474,11 @@ def build_window_size_study_report(
 
 
 def to_markdown(df: pd.DataFrame) -> str:
+    """Handle to markdown within the repository orchestration workflow.
+
+        Arguments and returned values follow the explicit type hints and are used by the surrounding pipeline contracts.
+        """
+
     if df.empty:
         return "| empty |\n|---|\n"
     header = "| " + " | ".join(str(column) for column in df.columns) + " |"

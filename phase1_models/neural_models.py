@@ -1,3 +1,11 @@
+"""Phase 1 detector training and evaluation support for DERGuardian.
+
+This module implements neural models logic for residual-window model training,
+inference, packaging, metrics, or reporting. It supports the frozen benchmark
+path and related audits while keeping benchmark selection separate from replay,
+heldout synthetic zero-day-like, and extension contexts.
+"""
+
 from __future__ import annotations
 
 import torch
@@ -5,6 +13,8 @@ from torch import nn
 
 
 class MLPAutoencoder(nn.Module):
+    """Structured object used by the Phase 1 detector modeling workflow."""
+
     def __init__(self, input_dim: int, hidden_dim: int = 128, bottleneck_dim: int = 32) -> None:
         super().__init__()
         self.encoder = nn.Sequential(
@@ -24,6 +34,8 @@ class MLPAutoencoder(nn.Module):
 
 
 class GRUClassifier(nn.Module):
+    """Structured object used by the Phase 1 detector modeling workflow."""
+
     def __init__(self, input_dim: int, hidden_dim: int = 64) -> None:
         super().__init__()
         self.gru = nn.GRU(input_dim, hidden_dim, batch_first=True)
@@ -35,6 +47,8 @@ class GRUClassifier(nn.Module):
 
 
 class LSTMClassifier(nn.Module):
+    """Structured object used by the Phase 1 detector modeling workflow."""
+
     def __init__(self, input_dim: int, hidden_dim: int = 64) -> None:
         super().__init__()
         self.lstm = nn.LSTM(input_dim, hidden_dim, batch_first=True)
@@ -46,6 +60,8 @@ class LSTMClassifier(nn.Module):
 
 
 class TinyTransformerClassifier(nn.Module):
+    """Structured object used by the Phase 1 detector modeling workflow."""
+
     def __init__(self, input_dim: int, d_model: int = 64, nhead: int = 4, num_layers: int = 2) -> None:
         super().__init__()
         self.proj = nn.Linear(input_dim, d_model)
@@ -60,6 +76,8 @@ class TinyTransformerClassifier(nn.Module):
 
 
 class TokenBaselineClassifier(nn.Module):
+    """Structured object used by the Phase 1 detector modeling workflow."""
+
     def __init__(self, vocab_size: int, embed_dim: int = 32) -> None:
         super().__init__()
         self.embedding = nn.Embedding(vocab_size, embed_dim)

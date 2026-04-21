@@ -1,3 +1,11 @@
+"""Phase 1 detector training and evaluation support for DERGuardian.
+
+This module implements token timeseries model logic for residual-window model training,
+inference, packaging, metrics, or reporting. It supports the frozen benchmark
+path and related audits while keeping benchmark selection separate from replay,
+heldout synthetic zero-day-like, and extension contexts.
+"""
+
 from __future__ import annotations
 
 from pathlib import Path
@@ -30,6 +38,11 @@ TOKEN_BASELINE_NOTES = (
 
 
 def build_token_model(vocab_size: int = 16, embed_dim: int = 32) -> TokenBaselineClassifier:
+    """Build token model for the Phase 1 detector modeling workflow.
+
+        Arguments and returned values follow the explicit type hints and are used by the surrounding pipeline contracts.
+        """
+
     return TokenBaselineClassifier(vocab_size=vocab_size, embed_dim=embed_dim)
 
 
@@ -44,6 +57,11 @@ def train_token_timeseries_language_style_baseline(
     buffer_windows: int = 2,
     patience: int = 5,
 ) -> dict[str, object]:
+    """Handle train token timeseries language style baseline within the Phase 1 detector modeling workflow.
+
+        Arguments and returned values follow the explicit type hints and are used by the surrounding pipeline contracts.
+        """
+
     root = Path(project_root) if project_root is not None else ROOT
     if run_mode == "legacy-smoke":
         return _train_token_baseline_legacy(project_root=root, max_features=max_features, seq_len=seq_len, epochs=epochs)
@@ -150,6 +168,11 @@ def _build_token_sequences(tokens: np.ndarray, labels: np.ndarray, frame: pd.Dat
 
 
 def main() -> None:
+    """Run the command-line entrypoint for the Phase 1 detector modeling workflow.
+
+        Arguments and returned values follow the explicit type hints and are used by the surrounding pipeline contracts.
+        """
+
     parser = argparse.ArgumentParser(description="Train the tokenized time-series language-style baseline.")
     parser.add_argument("--project-root", default=str(ROOT))
     parser.add_argument("--max-features", type=int, default=48)

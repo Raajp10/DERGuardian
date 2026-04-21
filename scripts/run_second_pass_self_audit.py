@@ -1,3 +1,11 @@
+"""Repository orchestration script for DERGuardian.
+
+This script runs or rebuilds run second pass self audit artifacts for audits, figures,
+reports, or reproducibility checks. It is release-support code and must preserve
+the separation between canonical benchmark, replay, heldout synthetic, and
+extension experiment contexts.
+"""
+
 from __future__ import annotations
 
 import json
@@ -198,6 +206,11 @@ def _artifact_specific_check(path: Path, text: str | None = None) -> tuple[bool,
 
 
 def validate_artifact(path: Path) -> dict[str, object]:
+    """Validate artifact for the repository orchestration workflow.
+
+        Arguments and returned values follow the explicit type hints and are used by the surrounding pipeline contracts.
+        """
+
     exists = path.exists()
     nonempty = exists and path.stat().st_size > 0
     structurally_valid = False
@@ -278,6 +291,8 @@ def _numeric_tolerance(reported_str: str) -> float:
 
 @dataclass
 class NumericCandidate:
+    """Structured object used by the repository orchestration workflow."""
+
     claim_id: str
     report_path: str
     claim_label: str
@@ -287,6 +302,11 @@ class NumericCandidate:
 
 
 def build_numeric_candidates() -> list[NumericCandidate]:
+    """Build numeric candidates for the repository orchestration workflow.
+
+        Arguments and returned values follow the explicit type hints and are used by the surrounding pipeline contracts.
+        """
+
     benchmark = pd.read_csv(ROOT / "outputs" / "window_size_study" / "final_window_comparison.csv")
     inventory = pd.read_csv(ROOT / "phase2_scenario_master_inventory.csv")
     coverage = pd.read_csv(ROOT / "phase2_asset_signal_coverage.csv")
@@ -529,6 +549,11 @@ def build_numeric_candidates() -> list[NumericCandidate]:
 
 
 def run_numeric_spotchecks() -> pd.DataFrame:
+    """Run numeric spotchecks for the repository orchestration workflow.
+
+        Arguments and returned values follow the explicit type hints and are used by the surrounding pipeline contracts.
+        """
+
     candidates = build_numeric_candidates()
     rng = random.Random(20260420)
     selected = rng.sample(candidates, k=12)
@@ -559,6 +584,11 @@ def run_numeric_spotchecks() -> pd.DataFrame:
 
 
 def scan_claim_safety() -> tuple[list[dict[str, str]], list[dict[str, str]]]:
+    """Handle scan claim safety within the repository orchestration workflow.
+
+        Arguments and returned values follow the explicit type hints and are used by the surrounding pipeline contracts.
+        """
+
     suspicious_hits: list[dict[str, str]] = []
     reviewed_hits: list[dict[str, str]] = []
     seen_suspicious: set[tuple[str, int, str]] = set()
@@ -599,6 +629,11 @@ def scan_claim_safety() -> tuple[list[dict[str, str]], list[dict[str, str]]]:
 
 
 def verify_diagram_alignment() -> tuple[bool, str]:
+    """Handle verify diagram alignment within the repository orchestration workflow.
+
+        Arguments and returned values follow the explicit type hints and are used by the surrounding pipeline contracts.
+        """
+
     box_df = pd.read_csv(ROOT / "diagram_box_audit.csv")
     alignment_text = _read_text(ROOT / "FINAL_DIAGRAM_ALIGNMENT.md")
     safe_labels_text = _read_text(ROOT / "DIAGRAM_SAFE_LABELS.md")
@@ -626,6 +661,11 @@ def verify_diagram_alignment() -> tuple[bool, str]:
 
 
 def build_claim_safety_patch_md(suspicious_hits: list[dict[str, str]], reviewed_hits: list[dict[str, str]]) -> None:
+    """Build claim safety patch md for the repository orchestration workflow.
+
+        Arguments and returned values follow the explicit type hints and are used by the surrounding pipeline contracts.
+        """
+
     lines = [
         "# Second Pass Claim Safety Patches",
         "",
@@ -687,6 +727,11 @@ def build_second_pass_audit_md(
     diagram_ok: bool,
     diagram_note: str,
 ) -> None:
+    """Build second pass audit md for the repository orchestration workflow.
+
+        Arguments and returned values follow the explicit type hints and are used by the surrounding pipeline contracts.
+        """
+
     benchmark = pd.read_csv(ROOT / "outputs" / "window_size_study" / "final_window_comparison.csv")
     ttm_report = _read_text(ROOT / "phase1_ttm_eval_report.md")
     claims_report = _read_text(ROOT / "COMPLETE_PUBLICATION_SAFE_CLAIMS.md")
@@ -769,6 +814,11 @@ def build_second_pass_audit_md(
 
 
 def main() -> None:
+    """Run the command-line entrypoint for the repository orchestration workflow.
+
+        Arguments and returned values follow the explicit type hints and are used by the surrounding pipeline contracts.
+        """
+
     first_pass_status = pd.read_csv(FINAL_STATUS_CSV)
     pass_artifacts = first_pass_status[first_pass_status["status"] == "PASS"]["artifact_path"].tolist()
     artifact_rows = [validate_artifact(ROOT / rel_path) for rel_path in pass_artifacts]

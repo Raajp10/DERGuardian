@@ -1,0 +1,13 @@
+item,status,file_path,notes
+python_doc_coverage_audit,pass,docs/reports/internal_audits/PYTHON_DOC_COVERAGE_AUDIT.csv,Audits 110 Python files with module/public docstring coverage and comment quality.
+module_docstrings,pass,common/; phase1/; phase1_models/; phase2/; phase3/; phase3_explanations/; deployment_runtime/; scripts/; tests/,110 of 110 Python files have module docstrings.
+public_function_docstrings,pass,common/; phase1/; phase1_models/; phase2/; phase3/; phase3_explanations/; deployment_runtime/; scripts/; tests/,528 of 528 public top-level functions have docstrings.
+public_class_docstrings,pass,common/; phase1/; phase1_models/; phase2/; phase3/; phase3_explanations/; deployment_runtime/; scripts/; tests/,62 of 62 public top-level classes have docstrings.
+inline_comments,pass,phase1/build_clean_dataset.py; phase1/build_windows.py; phase2/generate_attacked_dataset.py; phase2/validate_attacked_dataset.py; phase3_explanations/build_explanation_packet.py; scripts/run_deployment_benchmark.py; scripts/run_window_size_study.py,Comments were added only where they clarify validation/windowing/context boundaries.
+repository_structure_guide,pass,docs/REPOSITORY_STRUCTURE_GUIDE.md,Explains top-level folders canonical-vs-extension boundaries artifacts generated/local folders and reader path.
+python_code_navigation,pass,docs/PYTHON_CODE_NAVIGATION.md,Explains common phase1 phase1_models phase2 phase3 explanations deployment runtime scripts and tests.
+readme_links,pass,README.md,README links to repository structure and Python code navigation guides.
+scientific_behavior_preserved,pass,n/a,No outputs metrics thresholds or benchmark decisions were changed.
+canonical_winner_preserved,pass,n/a,Canonical winner remains transformer @ 60s.
+claim_safety_preserved,pass,n/a,No AOI human-like RCA edge deployment real-world zero-day robustness or extension-overclaim wording introduced.
+syntax_verification,pass,n/a,compileall passed across release and local runtime Python packages.

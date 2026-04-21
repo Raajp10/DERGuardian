@@ -1,3 +1,10 @@
+"""Phase 3 evaluation and analysis support for DERGuardian.
+
+This module implements zero day splitter logic for detector evaluation, ablations,
+zero-day-like heldout synthetic analysis, latency sweeps, or final reporting.
+It keeps benchmark, replay, heldout synthetic, and extension results separated.
+"""
+
 from __future__ import annotations
 
 from pathlib import Path
@@ -15,6 +22,11 @@ from phase3.experiment_utils import infer_candidate_columns, prepare_window_bund
 
 
 def available_scenarios(labels_df: pd.DataFrame) -> list[str]:
+    """Handle available scenarios within the Phase 3 evaluation workflow.
+
+        Arguments and returned values follow the explicit type hints and are used by the surrounding pipeline contracts.
+        """
+
     if labels_df.empty or "scenario_id" not in labels_df.columns:
         return []
     return sorted(labels_df["scenario_id"].astype(str).unique().tolist())
@@ -28,6 +40,11 @@ def leave_one_scenario_out_split(
     benign_train_fraction: float = 0.8,
     scenario_train_fraction: float = 0.75,
 ) -> pd.DataFrame:
+    """Handle leave one scenario out split within the Phase 3 evaluation workflow.
+
+        Arguments and returned values follow the explicit type hints and are used by the surrounding pipeline contracts.
+        """
+
     frame = feature_df.sort_values("window_start_utc").reset_index(drop=True).copy()
     frame["split_name"] = ""
     position_map = {int(idx): pos for pos, idx in enumerate(frame.index)}
@@ -65,6 +82,11 @@ def build_zero_day_full_run_data(
     candidate_columns: list[str] | None = None,
     residual_artifact_path: Path | None = None,
 ) -> FullRunData:
+    """Build zero day full run data for the Phase 3 evaluation workflow.
+
+        Arguments and returned values follow the explicit type hints and are used by the surrounding pipeline contracts.
+        """
+
     split_df = leave_one_scenario_out_split(
         feature_df=feature_df,
         labels_df=labels_df,
@@ -86,6 +108,11 @@ def build_zero_day_full_run_data(
 
 
 def main() -> None:
+    """Run the command-line entrypoint for the Phase 3 evaluation workflow.
+
+        Arguments and returned values follow the explicit type hints and are used by the surrounding pipeline contracts.
+        """
+
     parser = argparse.ArgumentParser(description="Inspect leave-one-scenario-out splits for the DER Phase 3 evaluation.")
     parser.add_argument("--project-root", default=str(ROOT))
     parser.add_argument("--holdout-scenario", default="")

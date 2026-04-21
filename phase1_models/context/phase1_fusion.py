@@ -1,3 +1,10 @@
+"""Phase 1 context and fusion helper for DERGuardian.
+
+This module builds or consumes structured context artifacts around normal-system
+behavior, feature evidence, and detector outputs. It supports explanation and
+fusion workflows but is not the canonical detector-selection mechanism.
+"""
+
 from __future__ import annotations
 
 from dataclasses import dataclass
@@ -30,6 +37,8 @@ FUSION_MODES = (
 
 @dataclass(slots=True)
 class FusionModeArtifacts:
+    """Structured object used by the Phase 1 context and fusion support workflow."""
+
     mode_name: str
     val_predictions: pd.DataFrame
     test_predictions: pd.DataFrame
@@ -47,6 +56,11 @@ def build_fusion_inputs(
     token_val: pd.DataFrame | None = None,
     token_test: pd.DataFrame | None = None,
 ) -> tuple[pd.DataFrame, pd.DataFrame]:
+    """Build fusion inputs for the Phase 1 context and fusion support workflow.
+
+        Arguments and returned values follow the explicit type hints and are used by the surrounding pipeline contracts.
+        """
+
     reasoning_core = reasoning_table.copy()
     reasoning_core["window_start_utc"] = pd.to_datetime(reasoning_core["window_start_utc"], utc=True)
     reasoning_core["window_end_utc"] = pd.to_datetime(reasoning_core["window_end_utc"], utc=True)
@@ -84,6 +98,11 @@ def run_fusion_suite(
     token_test: pd.DataFrame | None = None,
     split_summary: dict[str, Any] | None = None,
 ) -> tuple[dict[str, FusionModeArtifacts], pd.DataFrame]:
+    """Run fusion suite for the Phase 1 context and fusion support workflow.
+
+        Arguments and returned values follow the explicit type hints and are used by the surrounding pipeline contracts.
+        """
+
     output_model_dir.mkdir(parents=True, exist_ok=True)
     output_report_dir.mkdir(parents=True, exist_ok=True)
     val_frame, test_frame = build_fusion_inputs(
@@ -170,6 +189,11 @@ def run_fusion_suite(
 
 
 def fusion_feature_names(mode_name: str) -> list[str]:
+    """Handle fusion feature names within the Phase 1 context and fusion support workflow.
+
+        Arguments and returned values follow the explicit type hints and are used by the surrounding pipeline contracts.
+        """
+
     if mode_name == "detector_only":
         return ["score"]
     if mode_name == "detector_plus_context":
@@ -188,6 +212,11 @@ def fit_fusion_mode(
     val_frame: pd.DataFrame,
     test_frame: pd.DataFrame,
 ) -> FusionModeArtifacts:
+    """Fit fusion mode for the Phase 1 context and fusion support workflow.
+
+        Arguments and returned values follow the explicit type hints and are used by the surrounding pipeline contracts.
+        """
+
     x_val = val_frame[feature_names].astype(float).fillna(0.0).to_numpy()
     y_val = val_frame["attack_present"].astype(int).to_numpy()
     calibrator: LogisticRegression | None
@@ -235,6 +264,11 @@ def fit_fusion_mode(
 
 
 def choose_best_threshold(scores: np.ndarray, y_true: np.ndarray) -> tuple[float, dict[str, Any]]:
+    """Handle choose best threshold within the Phase 1 context and fusion support workflow.
+
+        Arguments and returned values follow the explicit type hints and are used by the surrounding pipeline contracts.
+        """
+
     candidate_thresholds = np.unique(np.quantile(scores, np.linspace(0.05, 0.995, 60)))
     best_threshold = float(candidate_thresholds[0]) if len(candidate_thresholds) else 0.5
     best_metrics: dict[str, Any] | None = None
@@ -282,6 +316,11 @@ def _attach_token_scores(base_frame: pd.DataFrame, token_frame: pd.DataFrame) ->
 
 
 def main() -> None:
+    """Run the command-line entrypoint for the Phase 1 context and fusion support workflow.
+
+        Arguments and returned values follow the explicit type hints and are used by the surrounding pipeline contracts.
+        """
+
     parser = argparse.ArgumentParser(description="Phase 1 score fusion helper. Typically invoked by run_full_evaluation.py.")
     parser.add_argument("--project-root", default=str(ROOT))
     args = parser.parse_args()

@@ -1,3 +1,10 @@
+"""Phase 3 evaluation and analysis support for DERGuardian.
+
+This module implements run latency window sweep logic for detector evaluation, ablations,
+zero-day-like heldout synthetic analysis, latency sweeps, or final reporting.
+It keeps benchmark, replay, heldout synthetic, and extension results separated.
+"""
+
 from __future__ import annotations
 
 from pathlib import Path
@@ -26,6 +33,11 @@ from phase3.experiment_utils import (
 
 
 def main() -> None:
+    """Run the command-line entrypoint for the Phase 3 evaluation workflow.
+
+        Arguments and returned values follow the explicit type hints and are used by the surrounding pipeline contracts.
+        """
+
     parser = argparse.ArgumentParser(description="Run Phase 3 latency-vs-window-size experiments.")
     parser.add_argument("--project-root", default=str(ROOT))
     parser.add_argument("--configs", default="300:60,120:24,120:12")

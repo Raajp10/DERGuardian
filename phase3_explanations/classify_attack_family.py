@@ -1,3 +1,10 @@
+"""Phase 3 grounded explanation support for DERGuardian.
+
+This module implements classify attack family logic for post-alert explanation packets,
+family attribution, evidence grounding, or validation. It supports operator-facing
+explanation evidence and does not claim human-like root-cause analysis.
+"""
+
 from __future__ import annotations
 
 from typing import Any
@@ -7,6 +14,11 @@ from phase3_explanations.shared import ATTACK_FAMILY_TAXONOMY, confidence_band, 
 
 
 def classify_from_packet(packet: dict[str, Any], max_candidates: int = 4) -> dict[str, Any]:
+    """Handle classify from packet within the Phase 3 grounded explanation workflow.
+
+        Arguments and returned values follow the explicit type hints and are used by the surrounding pipeline contracts.
+        """
+
     scores = {label: 0.0 for label in ATTACK_FAMILY_TAXONOMY}
     reasons: dict[str, list[str]] = {label: [] for label in ATTACK_FAMILY_TAXONOMY}
 
@@ -146,6 +158,11 @@ def classify_from_packet(packet: dict[str, Any], max_candidates: int = 4) -> dic
 
 
 def main() -> None:
+    """Run the command-line entrypoint for the Phase 3 grounded explanation workflow.
+
+        Arguments and returned values follow the explicit type hints and are used by the surrounding pipeline contracts.
+        """
+
     parser = argparse.ArgumentParser(description="Rule-based closed-set attack-family preclassifier.")
     parser.add_argument("--packet", required=True, help="Explanation packet JSON.")
     parser.add_argument("--output", help="Optional JSON output path.")

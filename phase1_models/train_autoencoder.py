@@ -1,3 +1,11 @@
+"""Phase 1 detector training and evaluation support for DERGuardian.
+
+This module implements train autoencoder logic for residual-window model training,
+inference, packaging, metrics, or reporting. It supports the frozen benchmark
+path and related audits while keeping benchmark selection separate from replay,
+heldout synthetic zero-day-like, and extension contexts.
+"""
+
 from __future__ import annotations
 
 from pathlib import Path
@@ -68,6 +76,11 @@ def train_autoencoder_model(
     buffer_windows: int = 2,
     patience: int = 5,
 ) -> dict[str, object]:
+    """Handle train autoencoder model within the Phase 1 detector modeling workflow.
+
+        Arguments and returned values follow the explicit type hints and are used by the surrounding pipeline contracts.
+        """
+
     root = Path(project_root) if project_root is not None else ROOT
     if run_mode == "legacy-smoke":
         return _train_autoencoder_model_legacy(project_root=root, max_features=max_features, epochs=epochs)
@@ -87,6 +100,11 @@ def train_autoencoder_model(
 
 
 def main() -> None:
+    """Run the command-line entrypoint for the Phase 1 detector modeling workflow.
+
+        Arguments and returned values follow the explicit type hints and are used by the surrounding pipeline contracts.
+        """
+
     parser = argparse.ArgumentParser(description="Train the repaired MLP autoencoder reconstruction baseline.")
     parser.add_argument("--project-root", default=str(ROOT))
     parser.add_argument("--max-features", type=int, default=128)

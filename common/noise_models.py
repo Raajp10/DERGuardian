@@ -1,3 +1,12 @@
+"""Shared utility support for DERGuardian.
+
+This module provides noise models helpers used across the Phase 1 data
+pipeline, Phase 2 scenario pipeline, and Phase 3 evaluation/reporting layers.
+The functions here are infrastructure code: they prepare paths, metadata,
+profiles, graphs, units, or time alignment without changing canonical detector
+outputs or benchmark decisions.
+"""
+
 from __future__ import annotations
 
 from dataclasses import dataclass
@@ -12,6 +21,8 @@ from common.time_alignment import apply_clock_offset, apply_latency, apply_missi
 
 @dataclass(slots=True)
 class ImpairmentSummary:
+    """Structured object used by the shared DERGuardian utility workflow."""
+
     column: str
     noise_std: float
     missing_fraction: float
@@ -24,6 +35,11 @@ def build_measured_layer(
     config: PipelineConfig,
     rng: np.random.Generator,
 ) -> tuple[pd.DataFrame, list[ImpairmentSummary]]:
+    """Build measured layer for the shared DERGuardian utility workflow.
+
+        Arguments and returned values follow the explicit type hints and are used by the surrounding pipeline contracts.
+        """
+
     base_columns = [
         "timestamp_utc",
         "simulation_index",
@@ -69,6 +85,11 @@ def build_measured_layer(
 
 
 def impairment_summaries_to_frame(summaries: list[ImpairmentSummary]) -> pd.DataFrame:
+    """Handle impairment summaries to frame within the shared DERGuardian utility workflow.
+
+        Arguments and returned values follow the explicit type hints and are used by the surrounding pipeline contracts.
+        """
+
     return pd.DataFrame(
         [
             {

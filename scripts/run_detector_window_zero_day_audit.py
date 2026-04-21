@@ -1,3 +1,11 @@
+"""Audit detector coverage and heldout synthetic zero-day-like evaluation.
+
+This script builds detector/window coverage tables, extends Phase 1 comparison
+views, evaluates frozen detector packages on generated heldout bundles where
+feasible, and writes cross-context reports. Zero-day-like means heldout
+synthetic scenario evaluation only, not real-world zero-day robustness.
+"""
+
 from __future__ import annotations
 
 from dataclasses import dataclass
@@ -56,6 +64,8 @@ RAW_ZERO_DAY_ROOT = RAW_AUDIT_ROOT / "zero_day_full_matrix"
 
 @dataclass(frozen=True, slots=True)
 class WindowSpec:
+    """Window definition shared by benchmark and heldout synthetic audits."""
+
     label: str
     seconds: int
     step_seconds: int
@@ -63,6 +73,8 @@ class WindowSpec:
 
 @dataclass(frozen=True, slots=True)
 class BundleSource:
+    """Metadata needed to evaluate one generated scenario bundle."""
+
     generator_source: str
     dataset_id: str
     source_type: str
@@ -119,10 +131,20 @@ ZERO_DAY_REPORT_PATHS = [
 
 
 def write_markdown(path: Path, text: str) -> None:
+    """Write markdown for the repository orchestration workflow.
+
+        Arguments and returned values follow the explicit type hints and are used by the surrounding pipeline contracts.
+        """
+
     path.write_text(text.rstrip() + "\n", encoding="utf-8")
 
 
 def write_json(path: Path, payload: Any) -> None:
+    """Write json for the repository orchestration workflow.
+
+        Arguments and returned values follow the explicit type hints and are used by the surrounding pipeline contracts.
+        """
+
     path.parent.mkdir(parents=True, exist_ok=True)
     path.write_text(json.dumps(payload, indent=2, default=_json_default), encoding="utf-8")
 
@@ -224,6 +246,8 @@ def _benchmark_metrics(window_label: str, model_name: str) -> dict[str, Any] | N
 
 
 def _build_detector_window_model_coverage_audit() -> pd.DataFrame:
+    """Summarize which detector/window pairs have benchmark evidence."""
+
     rows: list[dict[str, Any]] = []
 
     for spec in WINDOW_SPECS:
@@ -1660,6 +1684,8 @@ def _write_zero_day_window_model_coverage_summary(audit_df: pd.DataFrame) -> Non
 
 
 def _run_zero_day_full_matrix() -> tuple[pd.DataFrame, pd.DataFrame]:
+    """Evaluate feasible frozen packages on heldout synthetic scenario bundles."""
+
     RAW_ZERO_DAY_ROOT.mkdir(parents=True, exist_ok=True)
     bundles = _build_heldout_bundle_sources()
     package_cache: dict[tuple[str, str], Any] = {}
@@ -2427,6 +2453,8 @@ def _build_final_verification() -> tuple[pd.DataFrame, pd.DataFrame]:
 
 
 def main() -> None:
+    """Run detector coverage, zero-day-like, and context-comparison reports."""
+
     detector_audit_df = _build_detector_window_model_coverage_audit()
     detector_audit_df.to_csv(ROOT / "detector_window_model_coverage_audit.csv", index=False)
     _write_detector_window_model_coverage_summary(detector_audit_df)

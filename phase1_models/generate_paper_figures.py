@@ -1,3 +1,11 @@
+"""Phase 1 detector training and evaluation support for DERGuardian.
+
+This module implements generate paper figures logic for residual-window model training,
+inference, packaging, metrics, or reporting. It supports the frozen benchmark
+path and related audits while keeping benchmark selection separate from replay,
+heldout synthetic zero-day-like, and extension contexts.
+"""
+
 from __future__ import annotations
 
 from pathlib import Path
@@ -50,6 +58,11 @@ METRIC_COLORS = {
 
 
 def main() -> None:
+    """Run the command-line entrypoint for the Phase 1 detector modeling workflow.
+
+        Arguments and returned values follow the explicit type hints and are used by the surrounding pipeline contracts.
+        """
+
     parser = argparse.ArgumentParser(description="Generate paper-ready Phase 1 figures from existing full-run artifacts.")
     parser.add_argument("--project-root", default=str(ROOT))
     args = parser.parse_args()

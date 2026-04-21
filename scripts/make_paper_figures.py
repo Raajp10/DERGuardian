@@ -1,3 +1,11 @@
+"""Repository orchestration script for DERGuardian.
+
+This script runs or rebuilds make paper figures artifacts for audits, figures,
+reports, or reproducibility checks. It is release-support code and must preserve
+the separation between canonical benchmark, replay, heldout synthetic, and
+extension experiment contexts.
+"""
+
 from __future__ import annotations
 
 from pathlib import Path
@@ -222,6 +230,11 @@ def _load_representative_case(artifacts: dict[str, object]) -> tuple[dict[str, o
 
 
 def make_benchmark_figure(metric_df: pd.DataFrame, artifacts: dict[str, object]) -> dict[str, object]:
+    """Handle make benchmark figure within the repository orchestration workflow.
+
+        Arguments and returned values follow the explicit type hints and are used by the surrounding pipeline contracts.
+        """
+
     spread = _scenario_spread()
     fp_counts = _false_positive_counts(artifacts)
     plot_df = metric_df.merge(spread, on="model_name", how="left").sort_values("F1", ascending=False).reset_index(drop=True)
@@ -299,6 +312,11 @@ def make_benchmark_figure(metric_df: pd.DataFrame, artifacts: dict[str, object])
 
 
 def make_physical_impact_figure(artifacts: dict[str, object]) -> dict[str, object]:
+    """Handle make physical impact figure within the repository orchestration workflow.
+
+        Arguments and returned values follow the explicit type hints and are used by the surrounding pipeline contracts.
+        """
+
     case, traces, pred = _load_representative_case(artifacts)
     attack_minutes = float((case["attack_end_utc"] - case["attack_start_utc"]).total_seconds() / 60.0)
     detection_minutes = float(case["detection_delay_s"] / 60.0)
@@ -350,6 +368,11 @@ def make_physical_impact_figure(artifacts: dict[str, object]) -> dict[str, objec
 
 
 def make_pr_curve_figure(artifacts: dict[str, object], metric_df: pd.DataFrame) -> None:
+    """Handle make pr curve figure within the repository orchestration workflow.
+
+        Arguments and returned values follow the explicit type hints and are used by the surrounding pipeline contracts.
+        """
+
     configure_matplotlib()
     fig, ax = plt.subplots(figsize=(6.8, 4.6), constrained_layout=True)
     _style_axes(ax, ygrid=False)
@@ -374,6 +397,11 @@ def make_pr_curve_figure(artifacts: dict[str, object], metric_df: pd.DataFrame) 
 
 
 def make_cross_llm_figure() -> pd.DataFrame:
+    """Handle make cross llm figure within the repository orchestration workflow.
+
+        Arguments and returned values follow the explicit type hints and are used by the surrounding pipeline contracts.
+        """
+
     validation = pd.read_csv(_record(LLM_VALIDATION_PATH)).rename(columns={"model_name": "llm_name"})
     diversity = pd.read_csv(_record(LLM_DIVERSITY_PATH)).rename(columns={"model_name": "llm_name"})
     detector = pd.read_csv(_record(DETECTOR_BY_LLM_PATH))
@@ -410,6 +438,11 @@ def make_cross_llm_figure() -> pd.DataFrame:
 
 
 def make_xai_figure() -> pd.DataFrame:
+    """Handle make xai figure within the repository orchestration workflow.
+
+        Arguments and returned values follow the explicit type hints and are used by the surrounding pipeline contracts.
+        """
+
     summary = pd.read_csv(_record(XAI_SUMMARY_PATH))
     summary["llm_name"] = pd.Categorical(summary["llm_name"], categories=LLM_ORDER, ordered=True)
     summary = summary.sort_values("llm_name").reset_index(drop=True)
@@ -442,6 +475,11 @@ def make_xai_figure() -> pd.DataFrame:
 
 
 def write_readme(benchmark_info: dict[str, object], physical_case: dict[str, object], cross_llm: pd.DataFrame, xai: pd.DataFrame) -> Path:
+    """Write readme for the repository orchestration workflow.
+
+        Arguments and returned values follow the explicit type hints and are used by the surrounding pipeline contracts.
+        """
+
     ordered_models = [MODEL_LABELS[name] for name in benchmark_info["ordered_models"]]
     lines = [
         "# DERGuardian Paper Figures",
@@ -488,6 +526,11 @@ def write_readme(benchmark_info: dict[str, object], physical_case: dict[str, obj
 
 
 def main() -> None:
+    """Run the command-line entrypoint for the repository orchestration workflow.
+
+        Arguments and returned values follow the explicit type hints and are used by the surrounding pipeline contracts.
+        """
+
     OUT_DIR.mkdir(parents=True, exist_ok=True)
     metric_df, artifacts = _load_metric_df()
     _validate_metric_table(metric_df)

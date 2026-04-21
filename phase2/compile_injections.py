@@ -1,3 +1,11 @@
+"""Phase 2 scenario and attacked-dataset support for DERGuardian.
+
+This module implements compile injections logic for schema-bound synthetic attack
+scenarios, injection compilation, cyber logs, labels, validation, or reporting.
+Generated scenarios are heldout synthetic evidence and are not claimed as
+real-world zero-day proof.
+"""
+
 from __future__ import annotations
 
 from pathlib import Path
@@ -68,6 +76,11 @@ def load_and_validate_scenarios(
 
 
 def load_scenario_bundle(source: str | Path) -> dict:
+    """Load scenario bundle for the Phase 2 scenario and attacked-dataset workflow.
+
+        Arguments and returned values follow the explicit type hints and are used by the surrounding pipeline contracts.
+        """
+
     src = Path(source)
     if src.is_file():
         payload = _normalize_payload(read_json(src), src.stem)
@@ -86,6 +99,11 @@ def load_scenario_bundle(source: str | Path) -> dict:
 
 
 def compile_scenarios(payload: dict, timeline: pd.DatetimeIndex) -> dict[str, object]:
+    """Handle compile scenarios within the Phase 2 scenario and attacked-dataset workflow.
+
+        Arguments and returned values follow the explicit type hints and are used by the surrounding pipeline contracts.
+        """
+
     override_df = pd.DataFrame({"timestamp_utc": timeline})
     measurement_actions: list[dict[str, object]] = []
     physical_actions: list[dict[str, object]] = []
@@ -213,6 +231,11 @@ def compile_scenarios(payload: dict, timeline: pd.DatetimeIndex) -> dict[str, ob
 
 
 def build_asset_bounds(config: PipelineConfig, inventory: CircuitInventory) -> dict[str, dict[str, object]]:
+    """Build asset bounds for the Phase 2 scenario and attacked-dataset workflow.
+
+        Arguments and returned values follow the explicit type hints and are used by the surrounding pipeline contracts.
+        """
+
     bounds: dict[str, dict[str, object]] = {}
     for asset in config.pv_assets:
         bounds[asset.name] = {
@@ -362,6 +385,11 @@ def _override_column_name(component: str, asset: str, signal: str) -> str:
 
 
 def main() -> None:
+    """Run the command-line entrypoint for the Phase 2 scenario and attacked-dataset workflow.
+
+        Arguments and returned values follow the explicit type hints and are used by the surrounding pipeline contracts.
+        """
+
     parser = argparse.ArgumentParser(description="Compile scenario JSON into physical overrides and measurement actions.")
     parser.add_argument("--scenarios", required=True, help="Scenario JSON file or folder containing scenario JSON files.")
     parser.add_argument("--schema", default=str(ROOT / "phase2" / "scenario_schema.json"))

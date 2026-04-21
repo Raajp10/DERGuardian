@@ -1,3 +1,10 @@
+"""Phase 3 evaluation and analysis support for DERGuardian.
+
+This module implements build final artifacts logic for detector evaluation, ablations,
+zero-day-like heldout synthetic analysis, latency sweeps, or final reporting.
+It keeps benchmark, replay, heldout synthetic, and extension results separated.
+"""
+
 from __future__ import annotations
 
 from pathlib import Path
@@ -24,6 +31,11 @@ from phase1_models.model_utils import apply_model_display_names, display_model_n
 
 
 def main() -> None:
+    """Run the command-line entrypoint for the Phase 3 evaluation workflow.
+
+        Arguments and returned values follow the explicit type hints and are used by the surrounding pipeline contracts.
+        """
+
     parser = argparse.ArgumentParser(description="Assemble final Phase 3 paper-ready artifacts and report.")
     parser.add_argument("--project-root", default=str(ROOT))
     args = parser.parse_args()

@@ -1,3 +1,12 @@
+"""Shared utility support for DERGuardian.
+
+This module provides io utils helpers used across the Phase 1 data
+pipeline, Phase 2 scenario pipeline, and Phase 3 evaluation/reporting layers.
+The functions here are infrastructure code: they prepare paths, metadata,
+profiles, graphs, units, or time alignment without changing canonical detector
+outputs or benchmark decisions.
+"""
+
 from __future__ import annotations
 
 from pathlib import Path
@@ -10,17 +19,32 @@ import numpy as np
 
 
 def ensure_dir(path: str | Path) -> Path:
+    """Handle ensure dir within the shared DERGuardian utility workflow.
+
+        Arguments and returned values follow the explicit type hints and are used by the surrounding pipeline contracts.
+        """
+
     resolved = Path(path)
     resolved.mkdir(parents=True, exist_ok=True)
     return resolved
 
 
 def slugify(text: str) -> str:
+    """Handle slugify within the shared DERGuardian utility workflow.
+
+        Arguments and returned values follow the explicit type hints and are used by the surrounding pipeline contracts.
+        """
+
     sanitized = re.sub(r"[^a-zA-Z0-9]+", "-", text.strip().lower()).strip("-")
     return sanitized or "artifact"
 
 
 def write_dataframe(df: pd.DataFrame, path: str | Path, fmt: str = "parquet") -> Path:
+    """Write dataframe for the shared DERGuardian utility workflow.
+
+        Arguments and returned values follow the explicit type hints and are used by the surrounding pipeline contracts.
+        """
+
     out_path = Path(path)
     out_path.parent.mkdir(parents=True, exist_ok=True)
     if fmt == "csv":
@@ -33,6 +57,11 @@ def write_dataframe(df: pd.DataFrame, path: str | Path, fmt: str = "parquet") ->
 
 
 def read_dataframe(path: str | Path) -> pd.DataFrame:
+    """Read dataframe for the shared DERGuardian utility workflow.
+
+        Arguments and returned values follow the explicit type hints and are used by the surrounding pipeline contracts.
+        """
+
     src = Path(path)
     if src.suffix.lower() == ".csv":
         return pd.read_csv(src)
@@ -42,6 +71,11 @@ def read_dataframe(path: str | Path) -> pd.DataFrame:
 
 
 def write_json(payload: Any, path: str | Path) -> Path:
+    """Write json for the shared DERGuardian utility workflow.
+
+        Arguments and returned values follow the explicit type hints and are used by the surrounding pipeline contracts.
+        """
+
     out_path = Path(path)
     out_path.parent.mkdir(parents=True, exist_ok=True)
     with out_path.open("w", encoding="utf-8") as handle:
@@ -50,11 +84,21 @@ def write_json(payload: Any, path: str | Path) -> Path:
 
 
 def read_json(path: str | Path) -> Any:
+    """Read json for the shared DERGuardian utility workflow.
+
+        Arguments and returned values follow the explicit type hints and are used by the surrounding pipeline contracts.
+        """
+
     with Path(path).open("r", encoding="utf-8") as handle:
         return json.load(handle)
 
 
 def write_jsonl(records: Iterable[dict[str, Any]], path: str | Path) -> Path:
+    """Write jsonl for the shared DERGuardian utility workflow.
+
+        Arguments and returned values follow the explicit type hints and are used by the surrounding pipeline contracts.
+        """
+
     out_path = Path(path)
     out_path.parent.mkdir(parents=True, exist_ok=True)
     with out_path.open("w", encoding="utf-8") as handle:
@@ -65,6 +109,11 @@ def write_jsonl(records: Iterable[dict[str, Any]], path: str | Path) -> Path:
 
 
 def list_relative_files(base: str | Path) -> list[str]:
+    """Handle list relative files within the shared DERGuardian utility workflow.
+
+        Arguments and returned values follow the explicit type hints and are used by the surrounding pipeline contracts.
+        """
+
     root = Path(base)
     if not root.exists():
         return []

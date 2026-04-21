@@ -1,3 +1,11 @@
+"""Phase 1 detector training and evaluation support for DERGuardian.
+
+This module implements neural training logic for residual-window model training,
+inference, packaging, metrics, or reporting. It supports the frozen benchmark
+path and related audits while keeping benchmark selection separate from replay,
+heldout synthetic zero-day-like, and extension contexts.
+"""
+
 from __future__ import annotations
 
 import copy
@@ -22,6 +30,11 @@ def train_autoencoder(
     patience: int | None = None,
     min_delta: float = 1e-4,
 ) -> tuple[nn.Module, dict[str, list[float]], float]:
+    """Handle train autoencoder within the Phase 1 detector modeling workflow.
+
+        Arguments and returned values follow the explicit type hints and are used by the surrounding pipeline contracts.
+        """
+
     model = model.to(DEVICE)
     train_loader = DataLoader(TensorDataset(torch.tensor(x_train, dtype=torch.float32)), batch_size=batch_size, shuffle=True)
     val_loader = DataLoader(TensorDataset(torch.tensor(x_val, dtype=torch.float32)), batch_size=batch_size, shuffle=False)
@@ -67,6 +80,11 @@ def train_autoencoder(
 
 
 def predict_autoencoder_errors(model: nn.Module, x: np.ndarray, batch_size: int = 128) -> np.ndarray:
+    """Handle predict autoencoder errors within the Phase 1 detector modeling workflow.
+
+        Arguments and returned values follow the explicit type hints and are used by the surrounding pipeline contracts.
+        """
+
     loader = DataLoader(TensorDataset(torch.tensor(x, dtype=torch.float32)), batch_size=batch_size, shuffle=False)
     model = model.to(DEVICE)
     model.eval()
@@ -94,6 +112,11 @@ def train_classifier(
     patience: int | None = None,
     min_delta: float = 1e-4,
 ) -> tuple[nn.Module, dict[str, list[float]], float]:
+    """Handle train classifier within the Phase 1 detector modeling workflow.
+
+        Arguments and returned values follow the explicit type hints and are used by the surrounding pipeline contracts.
+        """
+
     tensor_dtype = torch.long if token_input else torch.float32
     model = model.to(DEVICE)
     train_loader = DataLoader(
@@ -152,6 +175,11 @@ def train_classifier(
 
 
 def predict_classifier_scores(model: nn.Module, x: np.ndarray, batch_size: int = 128, token_input: bool = False) -> np.ndarray:
+    """Handle predict classifier scores within the Phase 1 detector modeling workflow.
+
+        Arguments and returned values follow the explicit type hints and are used by the surrounding pipeline contracts.
+        """
+
     tensor = torch.tensor(x, dtype=torch.long if token_input else torch.float32)
     loader = DataLoader(TensorDataset(tensor), batch_size=batch_size, shuffle=False)
     model = model.to(DEVICE)

@@ -1,3 +1,12 @@
+"""Shared utility support for DERGuardian.
+
+This module provides time alignment helpers used across the Phase 1 data
+pipeline, Phase 2 scenario pipeline, and Phase 3 evaluation/reporting layers.
+The functions here are infrastructure code: they prepare paths, metadata,
+profiles, graphs, units, or time alignment without changing canonical detector
+outputs or benchmark decisions.
+"""
+
 from __future__ import annotations
 
 from typing import Iterable
@@ -7,6 +16,11 @@ import pandas as pd
 
 
 def apply_latency(series: pd.Series, base_latency_steps: int, jitter_steps: int, rng: np.random.Generator) -> pd.Series:
+    """Handle apply latency within the shared DERGuardian utility workflow.
+
+        Arguments and returned values follow the explicit type hints and are used by the surrounding pipeline contracts.
+        """
+
     if base_latency_steps <= 0 and jitter_steps <= 0:
         return series.copy()
     jitters = rng.integers(-jitter_steps, jitter_steps + 1, size=len(series))
@@ -20,6 +34,11 @@ def apply_latency(series: pd.Series, base_latency_steps: int, jitter_steps: int,
 
 
 def apply_clock_offset(index: pd.DatetimeIndex, offset_seconds: float = 0.0, drift_ppm: float = 0.0) -> pd.DatetimeIndex:
+    """Handle apply clock offset within the shared DERGuardian utility workflow.
+
+        Arguments and returned values follow the explicit type hints and are used by the surrounding pipeline contracts.
+        """
+
     seconds = np.arange(len(index), dtype=float)
     drift_seconds = seconds * drift_ppm * 1e-6
     offset = pd.to_timedelta(offset_seconds + drift_seconds, unit="s")
@@ -27,6 +46,11 @@ def apply_clock_offset(index: pd.DatetimeIndex, offset_seconds: float = 0.0, dri
 
 
 def apply_missing_bursts(series: pd.Series, burst_probability: float, burst_length_range: tuple[int, int], rng: np.random.Generator) -> pd.Series:
+    """Handle apply missing bursts within the shared DERGuardian utility workflow.
+
+        Arguments and returned values follow the explicit type hints and are used by the surrounding pipeline contracts.
+        """
+
     values = series.copy()
     length = len(values)
     idx = 0
@@ -45,6 +69,11 @@ def align_events_to_index(
     timestamp_column: str = "timestamp_utc",
     tolerance: str = "2s",
 ) -> pd.DataFrame:
+    """Handle align events to index within the shared DERGuardian utility workflow.
+
+        Arguments and returned values follow the explicit type hints and are used by the surrounding pipeline contracts.
+        """
+
     if events.empty:
         return events.copy()
     frame = events.copy()
@@ -62,6 +91,11 @@ def align_events_to_index(
 
 
 def infer_sample_rate_seconds(index: Iterable[pd.Timestamp]) -> int:
+    """Handle infer sample rate seconds within the shared DERGuardian utility workflow.
+
+        Arguments and returned values follow the explicit type hints and are used by the surrounding pipeline contracts.
+        """
+
     series = pd.Index(index)
     if len(series) < 2:
         return 0
@@ -75,6 +109,11 @@ def reconstruct_nominal_timestamps(
     simulation_index_column: str = "simulation_index",
     sample_rate_column: str = "sample_rate_seconds",
 ) -> pd.Series:
+    """Handle reconstruct nominal timestamps within the shared DERGuardian utility workflow.
+
+        Arguments and returned values follow the explicit type hints and are used by the surrounding pipeline contracts.
+        """
+
     if timestamp_column not in frame.columns:
         raise KeyError(f"Missing timestamp column `{timestamp_column}`.")
     timestamps = pd.to_datetime(frame[timestamp_column], utc=True)

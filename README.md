@@ -48,6 +48,8 @@ Zero-day-like means heldout synthetic scenario evaluation on independently gener
 - `docs/methodology/` - methodology and diagram-alignment docs.
 - `docs/reports/` - publication-facing reports.
 - `docs/reports/internal_audits/` - detailed audit trail, legacy reports, and final verification records.
+- `docs/REPOSITORY_STRUCTURE_GUIDE.md` - guided map of folders, artifacts, and canonical-vs-extension boundaries.
+- `docs/PYTHON_CODE_NAVIGATION.md` - developer-oriented map of the Python codebase.
 - `docs/figures/` - selected final figures.
 - `artifacts/` - lightweight mirrored evidence artifacts by context.
 - `configs/` - release-facing pipeline, model, and data configs.
@@ -182,6 +184,8 @@ For a full professor-facing evidence pass, start with:
 
 - `GITHUB_READY_SUMMARY.md`
 - `docs/reports/PROFESSOR_READY_METHOD_SUMMARY.md`
+- `docs/REPOSITORY_STRUCTURE_GUIDE.md`
+- `docs/PYTHON_CODE_NAVIGATION.md`
 - `docs/reports/CANONICAL_VS_REPLAY_VS_ZERO_DAY.md`
 - `docs/reports/internal_audits/FINAL_PERFECTION_CHECKLIST.md`
 

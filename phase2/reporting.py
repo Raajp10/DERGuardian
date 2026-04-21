@@ -428,6 +428,11 @@ def _primary_changed_signals(
 
 
 def build_phase2_coverage_summary(payload: dict[str, Any]) -> dict[str, Any]:
+    """Build phase2 coverage summary for the Phase 2 scenario and attacked-dataset workflow.
+
+        Arguments and returned values follow the explicit type hints and are used by the surrounding pipeline contracts.
+        """
+
     scenarios = payload.get("scenarios", [])
     family_counter = Counter(scenario.get("attack_family", scenario.get("category", "unknown")) for scenario in scenarios)
     component_counter = Counter(scenario.get("target_component", "unknown") for scenario in scenarios)
@@ -450,6 +455,11 @@ def build_phase2_coverage_summary(payload: dict[str, Any]) -> dict[str, Any]:
 
 
 def build_phase2_label_summary(labels_df: pd.DataFrame) -> dict[str, Any]:
+    """Build phase2 label summary for the Phase 2 scenario and attacked-dataset workflow.
+
+        Arguments and returned values follow the explicit type hints and are used by the surrounding pipeline contracts.
+        """
+
     frame = _normalise_labels(labels_df)
     metadata_columns = [
         "scenario_id",
@@ -488,6 +498,11 @@ def build_phase2_effect_summary(
     *,
     epsilon: float = ANALYSIS_NUMERIC_EPSILON,
 ) -> list[dict[str, Any]]:
+    """Build phase2 effect summary for the Phase 2 scenario and attacked-dataset workflow.
+
+        Arguments and returned values follow the explicit type hints and are used by the surrounding pipeline contracts.
+        """
+
     scenarios = {scenario["scenario_id"]: scenario for scenario in _load_payload(payload)}
     labels = _normalise_labels(labels_df)
     effect_rows: list[dict[str, Any]] = []
@@ -568,6 +583,11 @@ def build_phase2_effect_summary(
 
 
 def build_phase2_scenario_difficulty(effect_summary: list[dict[str, Any]]) -> list[dict[str, Any]]:
+    """Build phase2 scenario difficulty for the Phase 2 scenario and attacked-dataset workflow.
+
+        Arguments and returned values follow the explicit type hints and are used by the surrounding pipeline contracts.
+        """
+
     if not effect_summary:
         return []
 
@@ -760,6 +780,11 @@ def write_phase2_summary_reports(
     clean_cyber_df: pd.DataFrame | None = None,
     attacked_cyber_df: pd.DataFrame | None = None,
 ) -> dict[str, str]:
+    """Write phase2 summary reports for the Phase 2 scenario and attacked-dataset workflow.
+
+        Arguments and returned values follow the explicit type hints and are used by the surrounding pipeline contracts.
+        """
+
     _ensure_directory(reports_root)
 
     coverage_summary = build_phase2_coverage_summary(payload)
@@ -855,6 +880,11 @@ def generate_phase2_analysis_reports(
     reports_root: Path,
     scenarios_path: Path | None = None,
 ) -> dict[str, str]:
+    """Generate phase2 analysis reports for the Phase 2 scenario and attacked-dataset workflow.
+
+        Arguments and returned values follow the explicit type hints and are used by the surrounding pipeline contracts.
+        """
+
     scenario_manifest_path = attacked_root / "scenario_manifest.json"
     payload = _read_json(scenarios_path) if scenarios_path else _read_json(scenario_manifest_path)
     if "scenarios" not in payload and "applied_scenarios" in payload:
@@ -893,6 +923,11 @@ def generate_phase2_analysis_reports(
 
 
 def main() -> None:
+    """Run the command-line entrypoint for the Phase 2 scenario and attacked-dataset workflow.
+
+        Arguments and returned values follow the explicit type hints and are used by the surrounding pipeline contracts.
+        """
+
     paths = ProjectPaths().ensure()
     parser = argparse.ArgumentParser(
         description=(

@@ -1,3 +1,11 @@
+"""Phase 1 detector training and evaluation support for DERGuardian.
+
+This module implements ready package utils logic for residual-window model training,
+inference, packaging, metrics, or reporting. It supports the frozen benchmark
+path and related audits while keeping benchmark selection separate from replay,
+heldout synthetic zero-day-like, and extension contexts.
+"""
+
 from __future__ import annotations
 
 from datetime import datetime, timezone
@@ -19,6 +27,11 @@ DEFAULT_SEED = 1729
 
 
 def build_split_summary(split_df: pd.DataFrame) -> dict[str, Any]:
+    """Build split summary for the Phase 1 detector modeling workflow.
+
+        Arguments and returned values follow the explicit type hints and are used by the surrounding pipeline contracts.
+        """
+
     frame = split_df.copy()
     summary = (
         frame.groupby(["split_name", "attack_present"], observed=False)
@@ -48,6 +61,11 @@ def serialize_calibration(
     *,
     input_names: list[str] | None = None,
 ) -> dict[str, Any]:
+    """Handle serialize calibration within the Phase 1 detector modeling workflow.
+
+        Arguments and returned values follow the explicit type hints and are used by the surrounding pipeline contracts.
+        """
+
     names = list(input_names or ["raw_score"])
     if calibrator is None:
         return {
@@ -67,6 +85,11 @@ def serialize_calibration(
 
 
 def apply_saved_calibration(feature_values: np.ndarray, calibration_payload: dict[str, Any]) -> np.ndarray:
+    """Handle apply saved calibration within the Phase 1 detector modeling workflow.
+
+        Arguments and returned values follow the explicit type hints and are used by the surrounding pipeline contracts.
+        """
+
     values = np.asarray(feature_values, dtype=float)
     if values.ndim == 1:
         values = values.reshape(-1, 1)
@@ -104,6 +127,11 @@ def export_ready_model_package(
     package_version: str = PACKAGE_VERSION,
     seed: int = DEFAULT_SEED,
 ) -> Path:
+    """Handle export ready model package within the Phase 1 detector modeling workflow.
+
+        Arguments and returned values follow the explicit type hints and are used by the surrounding pipeline contracts.
+        """
+
     package_dir = ensure_dir(root / "outputs" / READY_MODEL_ROOT / package_name)
     checkpoint_filename = "checkpoint.pt" if checkpoint_kind == "torch" else "checkpoint.pkl"
     preprocessing_filename = "preprocessing.pkl"
@@ -181,6 +209,11 @@ def export_ready_fusion_package(
     validation_predictions: pd.DataFrame,
     split_summary: dict[str, Any],
 ) -> Path:
+    """Handle export ready fusion package within the Phase 1 detector modeling workflow.
+
+        Arguments and returned values follow the explicit type hints and are used by the surrounding pipeline contracts.
+        """
+
     package_name = f"fusion_{mode_name}"
     package_dir = export_ready_model_package(
         root=root,
@@ -230,6 +263,11 @@ def export_ready_fusion_package(
 
 
 def build_input_schema_summary(feature_columns: list[str], config_payload: dict[str, Any]) -> dict[str, Any]:
+    """Build input schema summary for the Phase 1 detector modeling workflow.
+
+        Arguments and returned values follow the explicit type hints and are used by the surrounding pipeline contracts.
+        """
+
     return {
         "feature_count": int(len(feature_columns)),
         "feature_mode": config_payload.get("feature_mode", "aligned_residual"),
@@ -240,6 +278,11 @@ def build_input_schema_summary(feature_columns: list[str], config_payload: dict[
 
 
 def architecture_from_model(model: Any, model_name: str, *, input_dim: int, seq_len: int | None = None, token_bins: int | None = None) -> dict[str, Any]:
+    """Handle architecture from model within the Phase 1 detector modeling workflow.
+
+        Arguments and returned values follow the explicit type hints and are used by the surrounding pipeline contracts.
+        """
+
     if model_name == "autoencoder":
         return {
             "input_dim": int(input_dim),
@@ -281,12 +324,22 @@ def architecture_from_model(model: Any, model_name: str, *, input_dim: int, seq_
 
 
 def discretizer_bin_count(discretizer: Any) -> int:
+    """Handle discretizer bin count within the Phase 1 detector modeling workflow.
+
+        Arguments and returned values follow the explicit type hints and are used by the surrounding pipeline contracts.
+        """
+
     if discretizer is None or not getattr(discretizer, "edges", None):
         return 0
     return max(max(int(len(edges) - 1), 0) for edges in discretizer.edges.values())
 
 
 def json_safe_metrics(metrics_payload: dict[str, Any]) -> dict[str, Any]:
+    """Handle json safe metrics within the Phase 1 detector modeling workflow.
+
+        Arguments and returned values follow the explicit type hints and are used by the surrounding pipeline contracts.
+        """
+
     cleaned: dict[str, Any] = {}
     for key, value in metrics_payload.items():
         if isinstance(value, float) and (math.isnan(value) or math.isinf(value)):

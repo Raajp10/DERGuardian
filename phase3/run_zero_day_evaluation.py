@@ -1,3 +1,10 @@
+"""Phase 3 evaluation and analysis support for DERGuardian.
+
+This module implements run zero day evaluation logic for detector evaluation, ablations,
+zero-day-like heldout synthetic analysis, latency sweeps, or final reporting.
+It keeps benchmark, replay, heldout synthetic, and extension results separated.
+"""
+
 from __future__ import annotations
 
 from pathlib import Path
@@ -76,6 +83,11 @@ def _artifact_path_payload(paths: dict[str, Path | str | list[str]]) -> dict[str
 
 
 def main() -> None:
+    """Run the command-line entrypoint for the Phase 3 evaluation workflow.
+
+        Arguments and returned values follow the explicit type hints and are used by the surrounding pipeline contracts.
+        """
+
     parser = argparse.ArgumentParser(description="Run leave-one-scenario-out zero-day evaluation for the DER anomaly benchmark.")
     parser.add_argument("--project-root", default=str(ROOT))
     parser.add_argument("--holdout-scenarios", default="")
@@ -258,6 +270,11 @@ def run_saved_package_evaluation(
     seed: int,
     command: str,
 ) -> None:
+    """Run saved package evaluation for the Phase 3 evaluation workflow.
+
+        Arguments and returned values follow the explicit type hints and are used by the surrounding pipeline contracts.
+        """
+
     package_name = package_dir.name
     artifact_root = ensure_dir(root / "outputs" / "reports" / "phase3_package_reuse_artifacts" / package_name)
     summary_rows: list[dict[str, object]] = []

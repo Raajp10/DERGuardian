@@ -1,3 +1,12 @@
+"""Shared utility support for DERGuardian.
+
+This module provides graph builders helpers used across the Phase 1 data
+pipeline, Phase 2 scenario pipeline, and Phase 3 evaluation/reporting layers.
+The functions here are infrastructure code: they prepare paths, metadata,
+profiles, graphs, units, or time alignment without changing canonical detector
+outputs or benchmark decisions.
+"""
+
 from __future__ import annotations
 
 from pathlib import Path
@@ -24,6 +33,11 @@ def build_validation_graphs(
     impairment_df: pd.DataFrame | None = None,
     reference_profiles_df: pd.DataFrame | None = None,
 ) -> list[str]:
+    """Build validation graphs for the shared DERGuardian utility workflow.
+
+        Arguments and returned values follow the explicit type hints and are used by the surrounding pipeline contracts.
+        """
+
     out_dir = Path(output_dir)
     out_dir.mkdir(parents=True, exist_ok=True)
 

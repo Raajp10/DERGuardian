@@ -1,3 +1,9 @@
+"""Test coverage for DERGuardian test phase1 ready packages behavior.
+
+These tests exercise pipeline contracts, package readiness, or phase-level
+functionality without changing scientific outputs.
+"""
+
 from __future__ import annotations
 
 import json
@@ -12,6 +18,8 @@ READY_ROOT = ROOT / "outputs" / "phase1_ready_models"
 
 
 class Phase1ReadyPackageTests(unittest.TestCase):
+    """Structured object used by the test workflow."""
+
     def test_all_detector_packages_have_standardized_layout(self) -> None:
         required_files = {
             "preprocessing.pkl",

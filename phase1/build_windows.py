@@ -1,3 +1,12 @@
+"""Phase 1 clean-data and window-building support for DERGuardian.
+
+This module implements build windows logic for the canonical data-generation
+path. It reads OpenDSS/configuration inputs and writes clean physical, measured,
+cyber, validation, or window artifacts used later by detector benchmarks. It
+must not replace the frozen canonical benchmark result, where the selected
+winner remains transformer at 60 seconds.
+"""
+
 from __future__ import annotations
 
 from pathlib import Path
@@ -22,6 +31,13 @@ def build_merged_windows(
     labels_df: pd.DataFrame,
     windows: WindowConfig,
 ) -> pd.DataFrame:
+    """Build fixed-width model windows from measured telemetry and cyber events.
+
+    The output is the common detector input contract for clean and attacked
+    datasets: physical aggregates, cyber counters, and attack labels are kept in
+    one row per window while preserving the configured overlap rule.
+    """
+
     measured = measured_df.copy()
     measured["timestamp_utc"] = pd.to_datetime(measured["timestamp_utc"], utc=True)
     measured["analysis_timestamp_utc"] = reconstruct_nominal_timestamps(measured)
@@ -85,6 +101,9 @@ def build_merged_windows(
 
         if not labels.empty:
             overlapping = labels[(labels["start_time_utc"] < window_end) & (labels["end_time_utc"] > cursor)].copy()
+            # A label is positive only when enough of the attack overlaps this
+            # detector window; this keeps short boundary touches from becoming
+            # full anomaly labels.
             qualifying = _qualifying_labels(overlapping, cursor, window_end, windows.min_attack_overlap_fraction)
             record["attack_present"] = int(not qualifying.empty)
             record["attack_family"] = "|".join(sorted(set(qualifying.get("attack_family", pd.Series(dtype=str)).astype(str)))) if not qualifying.empty else "benign"
@@ -101,6 +120,8 @@ def build_merged_windows(
 
 
 def _robust_numeric_window_stats(series: pd.Series) -> tuple[float, float, float, float, float]:
+    """Return stable aggregate statistics after removing non-finite values."""
+
     numeric = pd.to_numeric(series, errors="coerce").replace([np.inf, -np.inf], np.nan)
     finite = numeric.dropna()
     if finite.empty:
@@ -131,6 +152,8 @@ def _qualifying_labels(
     window_end: pd.Timestamp,
     min_overlap_fraction: float,
 ) -> pd.DataFrame:
+    """Filter labels to attacks that materially overlap a detector window."""
+
     if labels.empty:
         return labels
     qualifying_mask = labels.apply(
@@ -152,6 +175,8 @@ def _overlap_fraction(
     window_start: pd.Timestamp,
     window_end: pd.Timestamp,
 ) -> float:
+    """Compute the fraction of a detector window covered by one attack span."""
+
     overlap_start = max(attack_start, window_start)
     overlap_end = min(attack_end, window_end)
     overlap_seconds = max((overlap_end - overlap_start).total_seconds(), 0.0)
@@ -160,6 +185,8 @@ def _overlap_fraction(
 
 
 def main() -> None:
+    """CLI entrypoint for producing merged clean or attacked window tables."""
+
     parser = argparse.ArgumentParser(description="Build model-ready merged windows from measured physical and cyber data.")
     parser.add_argument("--measured", required=True)
     parser.add_argument("--cyber", required=True)

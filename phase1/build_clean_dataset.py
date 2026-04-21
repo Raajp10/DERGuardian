@@ -1,3 +1,12 @@
+"""Build the clean Phase 1 DERGuardian dataset layers.
+
+This entrypoint creates the baseline IEEE 123-bus DER simulation artifacts:
+truth physical telemetry, measured telemetry with sensor impairments, baseline
+cyber events, clean windows, manifests, and validation reports. It prepares the
+canonical inputs used later by detector benchmarking but does not perform model
+selection itself.
+"""
+
 from __future__ import annotations
 
 from pathlib import Path
@@ -32,6 +41,8 @@ from phase2.cyber_log_generator import generate_baseline_cyber_events
 
 
 def main() -> None:
+    """CLI entrypoint for generating clean simulation, telemetry, and windows."""
+
     parser = argparse.ArgumentParser(description="Build the clean IEEE 123-bus DER cyber-physical dataset layers.")
     parser.add_argument("--config", default=None)
     parser.add_argument("--duration-hours", type=float, default=None)
@@ -74,6 +85,8 @@ def main() -> None:
     ).ensure()
     rng = np.random.default_rng(config.random_seed)
     inventory = extract_inventory(config, paths)
+    # The clean path is deterministic under the configured seed so benchmark
+    # windows can be reproduced without changing model-selection evidence.
     coarse_env, fine_env = generate_environmental_inputs(config, paths, rng)
     load_schedule, load_class_map = build_load_schedule(config, load_profile_specs(inventory), fine_env, paths, rng)
     pv_schedule = build_pv_schedule(config, inventory.pv_assets, fine_env, rng)
@@ -202,6 +215,8 @@ def main() -> None:
 
 
 def _write_validation_summary(checks: list, json_path: Path, md_path: Path, title: str) -> None:
+    """Write validation checks in both machine-readable and Markdown forms."""
+
     payload = [asdict(check) for check in checks]
     write_json(payload, json_path)
     lines = [f"# {title}", ""]

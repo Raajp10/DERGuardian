@@ -1,3 +1,5 @@
+"""Package marker for the phase3_explanations portion of DERGuardian."""
+
 from phase3_explanations.build_explanation_packet import build_packet
 from phase3_explanations.classify_attack_family import classify_from_packet
 from phase3_explanations.generate_explanations_llm import grounded_draft_explanation

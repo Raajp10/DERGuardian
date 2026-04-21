@@ -1,3 +1,11 @@
+"""Repository orchestration script for DERGuardian.
+
+This script runs or rebuilds build final audit reports artifacts for audits, figures,
+reports, or reproducibility checks. It is release-support code and must preserve
+the separation between canonical benchmark, replay, heldout synthetic, and
+extension experiment contexts.
+"""
+
 from __future__ import annotations
 
 import json
@@ -270,6 +278,11 @@ def _box_rows() -> list[dict[str, str]]:
 
 
 def main() -> None:
+    """Run the command-line entrypoint for the repository orchestration workflow.
+
+        Arguments and returned values follow the explicit type hints and are used by the surrounding pipeline contracts.
+        """
+
     benchmark = _read_csv(ROOT / "outputs" / "window_size_study" / "final_window_comparison.csv")
     all_model_rows = _load_all_model_summary_rows()
     phase2_inventory = _read_csv(ROOT / "phase2_scenario_master_inventory.csv")

@@ -1,3 +1,10 @@
+"""Phase 3 evaluation and analysis support for DERGuardian.
+
+This module implements run modality ablation logic for detector evaluation, ablations,
+zero-day-like heldout synthetic analysis, latency sweeps, or final reporting.
+It keeps benchmark, replay, heldout synthetic, and extension results separated.
+"""
+
 from __future__ import annotations
 
 from pathlib import Path
@@ -29,6 +36,11 @@ MODALITIES = ["physical_only", "cyber_only", "fused", "fused_plus_residual"]
 
 
 def main() -> None:
+    """Run the command-line entrypoint for the Phase 3 evaluation workflow.
+
+        Arguments and returned values follow the explicit type hints and are used by the surrounding pipeline contracts.
+        """
+
     parser = argparse.ArgumentParser(description="Run cyber-vs-physical modality ablations for Phase 3.")
     parser.add_argument("--project-root", default=str(ROOT))
     parser.add_argument("--epochs", type=int, default=10)

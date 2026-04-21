@@ -1,3 +1,12 @@
+"""Generate Phase 2 attacked datasets from validated scenario JSON.
+
+The module reads clean Phase 1 artifacts, schema-validated attack scenarios, and
+the OpenDSS inventory. It writes attacked truth/measured/cyber layers, labels,
+merged windows, validation summaries, and Phase 2 reports. These outputs support
+heldout synthetic and replay evaluation; they are not canonical benchmark
+selection artifacts.
+"""
+
 from __future__ import annotations
 
 from pathlib import Path
@@ -27,6 +36,8 @@ from phase2.validate_attacked_dataset import validate_attacked_layers
 
 
 def main() -> None:
+    """CLI entrypoint for compiling scenarios into attacked data layers."""
+
     parser = argparse.ArgumentParser(description="Generate attacked dataset layers from schema-validated Phase 2 scenario JSON using the canonical JSON-driven execution path.")
     parser.add_argument("--scenarios", default=str(ROOT / "phase2" / "example_scenarios.json"))
     parser.add_argument("--schema", default=str(ROOT / "phase2" / "scenario_schema.json"))
@@ -97,6 +108,9 @@ def main() -> None:
     measurement_actions = compiled["measurement_actions"]
     physical_actions = compiled["physical_actions"]
     labels_df = compiled["labels_df"]
+    # Physical actions modify the simulator schedule before OpenDSS replay;
+    # measurement actions are applied later so sensor-layer attacks stay
+    # distinguishable from actual physical effects.
     override_df, override_warnings = _apply_physical_actions(
         compiled["override_df"],
         physical_actions,
@@ -247,6 +261,8 @@ def _apply_physical_actions(
     pv_schedule_df: pd.DataFrame,
     bess_schedule_df: pd.DataFrame,
 ) -> tuple[pd.DataFrame, list[str]]:
+    """Apply schedule-level physical actions before attacked OpenDSS replay."""
+
     override = override_df.copy()
     override["timestamp_utc"] = pd.to_datetime(override["timestamp_utc"], utc=True)
     override = override.set_index("timestamp_utc")
@@ -365,6 +381,8 @@ def _sample_seconds(index: pd.DatetimeIndex) -> int:
 
 
 def _apply_measurement_actions(df: pd.DataFrame, actions: list[dict[str, object]]) -> pd.DataFrame:
+    """Apply measured-layer attacks after physical truth has been generated."""
+
     attacked = df.copy()
     attacked["timestamp_utc"] = pd.to_datetime(attacked["timestamp_utc"], utc=True)
     sample_seconds = _sample_seconds(pd.DatetimeIndex(attacked["timestamp_utc"]))

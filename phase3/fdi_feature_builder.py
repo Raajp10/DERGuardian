@@ -1,3 +1,10 @@
+"""Phase 3 evaluation and analysis support for DERGuardian.
+
+This module implements fdi feature builder logic for detector evaluation, ablations,
+zero-day-like heldout synthetic analysis, latency sweeps, or final reporting.
+It keeps benchmark, replay, heldout synthetic, and extension results separated.
+"""
+
 from __future__ import annotations
 
 from pathlib import Path
@@ -16,6 +23,11 @@ def augment_fdi_features(
     attacked_windows: pd.DataFrame,
     clean_windows: pd.DataFrame,
 ) -> tuple[pd.DataFrame, list[str]]:
+    """Handle augment fdi features within the Phase 3 evaluation workflow.
+
+        Arguments and returned values follow the explicit type hints and are used by the surrounding pipeline contracts.
+        """
+
     augmented = residual_df.copy()
     attacked = attacked_windows.copy().sort_values("window_start_utc").reset_index(drop=True)
     clean = clean_windows.copy().sort_values("window_start_utc").reset_index(drop=True)
@@ -87,6 +99,11 @@ def augment_fdi_features(
 
 
 def fdi_feature_candidates(frame: pd.DataFrame) -> list[str]:
+    """Handle fdi feature candidates within the Phase 3 evaluation workflow.
+
+        Arguments and returned values follow the explicit type hints and are used by the surrounding pipeline contracts.
+        """
+
     priority_columns = [
         column
         for column in frame.columns

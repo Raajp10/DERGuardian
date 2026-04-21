@@ -1,3 +1,11 @@
+"""Phase 2 scenario and attacked-dataset support for DERGuardian.
+
+This module implements contracts logic for schema-bound synthetic attack
+scenarios, injection compilation, cyber logs, labels, validation, or reporting.
+Generated scenarios are heldout synthetic evidence and are not claimed as
+real-world zero-day proof.
+"""
+
 from __future__ import annotations
 
 # Canonical executable Phase 2 components. Every target_component accepted by the
@@ -62,4 +70,9 @@ CANONICAL_PHASE2_EXECUTION_PATH: tuple[str, ...] = (
 
 
 def is_supported_target_component(component: str) -> bool:
+    """Handle is supported target component within the Phase 2 scenario and attacked-dataset workflow.
+
+        Arguments and returned values follow the explicit type hints and are used by the surrounding pipeline contracts.
+        """
+
     return component in CANONICAL_TARGET_COMPONENTS

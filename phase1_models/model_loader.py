@@ -1,3 +1,11 @@
+"""Phase 1 detector training and evaluation support for DERGuardian.
+
+This module implements model loader logic for residual-window model training,
+inference, packaging, metrics, or reporting. It supports the frozen benchmark
+path and related audits while keeping benchmark selection separate from replay,
+heldout synthetic zero-day-like, and extension contexts.
+"""
+
 from __future__ import annotations
 
 from dataclasses import dataclass
@@ -28,6 +36,8 @@ from phase1_models.run_full_evaluation import build_sequence_dataset_segments, p
 
 @dataclass(slots=True)
 class LoadedPhase1Package:
+    """In-memory representation of a saved Phase 1 detector package."""
+
     package_dir: Path
     manifest: dict[str, Any]
     config: dict[str, Any]
@@ -40,6 +50,8 @@ class LoadedPhase1Package:
 
 
 def load_phase1_package(package_dir: str | Path) -> LoadedPhase1Package:
+    """Load a frozen detector package from disk without retraining it."""
+
     package_path = Path(package_dir)
     manifest = read_json(package_path / "model_manifest.json")
     config = read_json(package_path / manifest["config_filename"])
@@ -65,6 +77,13 @@ def load_phase1_package(package_dir: str | Path) -> LoadedPhase1Package:
 
 
 def run_phase1_inference(package: LoadedPhase1Package, windows_df: pd.DataFrame) -> dict[str, Any]:
+    """Run detector inference using the package's saved preprocessing and threshold.
+
+    This function is used by replay, heldout synthetic, and deployment-style
+    audits. It does not alter canonical benchmark selection; it only reuses the
+    frozen package contract.
+    """
+
     package_name = str(package.manifest.get("model_name"))
     family = str(package.manifest.get("model_family"))
     threshold = float(
@@ -100,6 +119,8 @@ def run_phase1_inference(package: LoadedPhase1Package, windows_df: pd.DataFrame)
     elif package_name in {"gru", "lstm", "transformer", "llm_baseline"}:
         seq_len = int(package.config.get("sequence_length") or package.manifest.get("sequence_length") or 1)
         token_input = bool(package.config.get("token_input", False))
+        # Sequence detectors need the same segmentation contract they used
+        # during Phase 1 training so saved thresholds remain meaningful.
         x_values, _, meta = build_sequence_dataset_segments(
             frame,
             package.feature_columns,
@@ -132,6 +153,8 @@ def run_phase1_inference(package: LoadedPhase1Package, windows_df: pd.DataFrame)
 
 
 def verify_all_ready_packages(project_root: str | Path | None = None) -> dict[str, Any]:
+    """Recompute saved package predictions and report any score drift."""
+
     root = Path(project_root) if project_root is not None else ROOT
     ready_root = root / "outputs" / READY_MODEL_ROOT
     package_dirs = sorted(path for path in ready_root.iterdir() if path.is_dir())
@@ -326,6 +349,11 @@ def _linear_response(feature_values: np.ndarray, calibration_payload: dict[str, 
 
 
 def main() -> None:
+    """Run the command-line entrypoint for the Phase 1 detector modeling workflow.
+
+        Arguments and returned values follow the explicit type hints and are used by the surrounding pipeline contracts.
+        """
+
     parser = argparse.ArgumentParser(description="Load and verify standardized Phase 1 ready-model packages.")
     parser.add_argument("--project-root", default=str(ROOT))
     parser.add_argument("--package-dir", default="")

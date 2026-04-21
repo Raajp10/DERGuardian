@@ -1,3 +1,12 @@
+"""Shared utility support for DERGuardian.
+
+This module provides weather load generators helpers used across the Phase 1 data
+pipeline, Phase 2 scenario pipeline, and Phase 3 evaluation/reporting layers.
+The functions here are infrastructure code: they prepare paths, metadata,
+profiles, graphs, units, or time alignment without changing canonical detector
+outputs or benchmark decisions.
+"""
+
 from __future__ import annotations
 
 from dataclasses import dataclass
@@ -28,6 +37,8 @@ SEASON_MAP = {
 
 @dataclass(slots=True)
 class LoadProfileSpec:
+    """Structured object used by the shared DERGuardian utility workflow."""
+
     name: str
     bus: str
     base_kw: float
@@ -37,6 +48,11 @@ class LoadProfileSpec:
 
 
 def build_simulation_index(config: PipelineConfig) -> pd.DatetimeIndex:
+    """Build simulation index for the shared DERGuardian utility workflow.
+
+        Arguments and returned values follow the explicit type hints and are used by the surrounding pipeline contracts.
+        """
+
     total_steps = int(config.duration_hours * 3600 / config.simulation_resolution_seconds)
     return pd.date_range(
         start=pd.Timestamp(config.start_time_utc),
@@ -47,6 +63,11 @@ def build_simulation_index(config: PipelineConfig) -> pd.DatetimeIndex:
 
 
 def build_shape_index(config: PipelineConfig) -> pd.DatetimeIndex:
+    """Build shape index for the shared DERGuardian utility workflow.
+
+        Arguments and returned values follow the explicit type hints and are used by the surrounding pipeline contracts.
+        """
+
     total_steps = int(config.duration_hours * 3600 / config.shape_resolution_seconds)
     return pd.date_range(
         start=pd.Timestamp(config.start_time_utc),
@@ -61,6 +82,11 @@ def generate_environmental_inputs(
     paths: ProjectPaths,
     rng: np.random.Generator,
 ) -> tuple[pd.DataFrame, pd.DataFrame]:
+    """Generate environmental inputs for the shared DERGuardian utility workflow.
+
+        Arguments and returned values follow the explicit type hints and are used by the surrounding pipeline contracts.
+        """
+
     coarse_index = build_shape_index(config)
     sim_index = build_simulation_index(config)
     holidays = USFederalHolidayCalendar().holidays(start=coarse_index.min(), end=coarse_index.max())
@@ -109,6 +135,11 @@ def build_load_schedule(
     paths: ProjectPaths,
     rng: np.random.Generator,
 ) -> tuple[pd.DataFrame, pd.DataFrame]:
+    """Build load schedule for the shared DERGuardian utility workflow.
+
+        Arguments and returned values follow the explicit type hints and are used by the surrounding pipeline contracts.
+        """
+
     env = env_df.set_index("timestamp_utc")
     year_ref = _reference_loadshape(paths)
     timestamp_index = env.index
@@ -148,6 +179,11 @@ def build_pv_schedule(
     env_df: pd.DataFrame,
     rng: np.random.Generator,
 ) -> pd.DataFrame:
+    """Build pv schedule for the shared DERGuardian utility workflow.
+
+        Arguments and returned values follow the explicit type hints and are used by the surrounding pipeline contracts.
+        """
+
     env = env_df.set_index("timestamp_utc")
     schedule = pd.DataFrame(index=env.index)
     for asset in pv_assets:
@@ -174,6 +210,11 @@ def build_bess_schedule(
     env_df: pd.DataFrame,
     rng: np.random.Generator,
 ) -> pd.DataFrame:
+    """Build bess schedule for the shared DERGuardian utility workflow.
+
+        Arguments and returned values follow the explicit type hints and are used by the surrounding pipeline contracts.
+        """
+
     env = env_df.set_index("timestamp_utc")
     schedule = pd.DataFrame(index=env.index)
     for asset in bess_assets:
@@ -202,6 +243,11 @@ def generate_reference_profile_bundle(
     paths: ProjectPaths,
     base_seed: int,
 ) -> pd.DataFrame:
+    """Generate reference profile bundle for the shared DERGuardian utility workflow.
+
+        Arguments and returned values follow the explicit type hints and are used by the surrounding pipeline contracts.
+        """
+
     cases = [
         ("winter", "weekday", "2025-01-15T00:00:00Z"),
         ("winter", "weekend", "2025-01-18T00:00:00Z"),
@@ -236,6 +282,11 @@ def generate_reference_profile_bundle(
 
 
 def classify_load(base_kw: float, phases: int, bus: str) -> str:
+    """Handle classify load within the shared DERGuardian utility workflow.
+
+        Arguments and returned values follow the explicit type hints and are used by the surrounding pipeline contracts.
+        """
+
     if phases == 1 and base_kw <= 90.0:
         return "residential"
     if phases >= 3 and base_kw >= 180.0:

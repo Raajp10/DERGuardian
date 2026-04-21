@@ -1,3 +1,11 @@
+"""Repository orchestration script for DERGuardian.
+
+This script runs or rebuilds run phase1 ttm extension artifacts for audits, figures,
+reports, or reproducibility checks. It is release-support code and must preserve
+the separation between canonical benchmark, replay, heldout synthetic, and
+extension experiment contexts. TTM outputs are extension-only and do not replace the canonical benchmark winner.
+"""
+
 from __future__ import annotations
 
 import copy
@@ -63,12 +71,22 @@ FIG_TRADEOFF = ROOT / "phase1_accuracy_latency_tradeoff_extended.png"
 
 
 def set_seed(seed: int = SEED) -> None:
+    """Handle set seed within the repository orchestration workflow.
+
+        Arguments and returned values follow the explicit type hints and are used by the surrounding pipeline contracts.
+        """
+
     random.seed(seed)
     np.random.seed(seed)
     torch.manual_seed(seed)
 
 
 def calibrate_scores(scores: np.ndarray, y_true: np.ndarray) -> tuple[np.ndarray, LogisticRegression | None]:
+    """Handle calibrate scores within the repository orchestration workflow.
+
+        Arguments and returned values follow the explicit type hints and are used by the surrounding pipeline contracts.
+        """
+
     scores = np.asarray(scores, dtype=float)
     y_true = np.asarray(y_true, dtype=int)
     if len(np.unique(y_true)) < 2:
@@ -80,6 +98,11 @@ def calibrate_scores(scores: np.ndarray, y_true: np.ndarray) -> tuple[np.ndarray
 
 
 def apply_calibrator(calibrator: LogisticRegression | None, scores: np.ndarray) -> np.ndarray:
+    """Handle apply calibrator within the repository orchestration workflow.
+
+        Arguments and returned values follow the explicit type hints and are used by the surrounding pipeline contracts.
+        """
+
     scores = np.asarray(scores, dtype=float)
     if calibrator is None:
         return scores
@@ -87,6 +110,11 @@ def apply_calibrator(calibrator: LogisticRegression | None, scores: np.ndarray) 
 
 
 def choose_best_threshold(scores: np.ndarray, y_true: np.ndarray) -> tuple[float, dict[str, object]]:
+    """Handle choose best threshold within the repository orchestration workflow.
+
+        Arguments and returned values follow the explicit type hints and are used by the surrounding pipeline contracts.
+        """
+
     scores = np.asarray(scores, dtype=float)
     y_true = np.asarray(y_true, dtype=int)
     if scores.size == 0:
@@ -123,6 +151,11 @@ def build_forecasting_sequences(
     prediction_length: int,
     standardizer,
 ) -> tuple[np.ndarray, np.ndarray, pd.DataFrame]:
+    """Build forecasting sequences for the repository orchestration workflow.
+
+        Arguments and returned values follow the explicit type hints and are used by the surrounding pipeline contracts.
+        """
+
     ordered = frame.sort_values("window_start_utc").reset_index(drop=True).copy()
     if ordered.empty:
         return (
@@ -168,6 +201,11 @@ def evaluate_forecaster(
     y_values: np.ndarray,
     device: torch.device,
 ) -> tuple[np.ndarray, float]:
+    """Handle evaluate forecaster within the repository orchestration workflow.
+
+        Arguments and returned values follow the explicit type hints and are used by the surrounding pipeline contracts.
+        """
+
     if len(x_values) == 0:
         return np.array([], dtype=float), 0.0
     dataset = TensorDataset(torch.from_numpy(x_values), torch.from_numpy(y_values))
@@ -195,6 +233,11 @@ def train_ttm(
     y_val: np.ndarray,
     device: torch.device,
 ) -> tuple[TinyTimeMixerForPrediction, list[dict[str, float]], float]:
+    """Handle train ttm within the repository orchestration workflow.
+
+        Arguments and returned values follow the explicit type hints and are used by the surrounding pipeline contracts.
+        """
+
     train_loader = DataLoader(
         TensorDataset(torch.from_numpy(x_train), torch.from_numpy(y_train)),
         batch_size=BATCH_SIZE,
@@ -254,6 +297,11 @@ def train_ttm(
 
 
 def load_all_window_model_rows() -> pd.DataFrame:
+    """Load all window model rows for the repository orchestration workflow.
+
+        Arguments and returned values follow the explicit type hints and are used by the surrounding pipeline contracts.
+        """
+
     rows: list[pd.DataFrame] = []
     for model_summary_path in sorted(MODEL_SUMMARY_GLOB.glob("*/reports/model_summary.csv")):
         frame = pd.read_csv(model_summary_path)
@@ -265,6 +313,11 @@ def load_all_window_model_rows() -> pd.DataFrame:
 
 
 def build_comparison_table(ttm_row: dict[str, object]) -> pd.DataFrame:
+    """Build comparison table for the repository orchestration workflow.
+
+        Arguments and returned values follow the explicit type hints and are used by the surrounding pipeline contracts.
+        """
+
     full_model_rows = load_all_window_model_rows()
     comparison_rows: list[dict[str, object]] = []
     if not full_model_rows.empty:
@@ -365,6 +418,11 @@ def build_comparison_table(ttm_row: dict[str, object]) -> pd.DataFrame:
 
 
 def plot_comparison_figures(comparison_df: pd.DataFrame) -> None:
+    """Handle plot comparison figures within the repository orchestration workflow.
+
+        Arguments and returned values follow the explicit type hints and are used by the surrounding pipeline contracts.
+        """
+
     family_best = comparison_df[comparison_df["comparison_role"].isin(["family_best", "extension", "not_implemented"])].copy()
     plot_df = family_best[family_best["status"].isin(["completed"])].copy()
     plot_df["label"] = plot_df.apply(
@@ -420,6 +478,11 @@ def write_report(
     split_summary: dict[str, int],
     training_note: str,
 ) -> None:
+    """Write report for the repository orchestration workflow.
+
+        Arguments and returned values follow the explicit type hints and are used by the surrounding pipeline contracts.
+        """
+
     family_best = comparison_df[comparison_df["comparison_role"] == "family_best"].copy()
     family_best = family_best[family_best["status"] == "completed"].sort_values("f1", ascending=False)
     top_family = family_best.head(6)[["model_name", "window_label", "precision", "recall", "f1", "average_precision"]]
@@ -480,6 +543,11 @@ def write_report(
 
 
 def main() -> None:
+    """Run the command-line entrypoint for the repository orchestration workflow.
+
+        Arguments and returned values follow the explicit type hints and are used by the surrounding pipeline contracts.
+        """
+
     set_seed()
     ARTIFACT_ROOT.mkdir(parents=True, exist_ok=True)
 
