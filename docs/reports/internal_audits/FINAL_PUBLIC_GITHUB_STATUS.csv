@@ -1,0 +1,13 @@
+item,status,file_path,notes
+public_clone,pass,docs/reports/internal_audits/PUBLIC_CLONE_VERIFICATION.md,Public HTTPS clone succeeded on D: verification workspace.
+required_public_files,pass,docs/reports/internal_audits/PUBLIC_CLONE_VERIFICATION.md,README LICENSE gitignore requirements configs sample data entrypoint and key docs were present.
+pip_install,pass,docs/reports/internal_audits/PUBLIC_INSTALL_VERIFICATION.md,Fresh venv install from requirements.txt completed successfully.
+pip_check,pass,docs/reports/internal_audits/PUBLIC_INSTALL_VERIFICATION.md,pip check reported no broken requirements.
+pip_upgrade_warning,minor_warning,docs/reports/internal_audits/PUBLIC_INSTALL_ISSUES.csv,Local stale pip-24.0 metadata warning after pip self-upgrade; non-blocking.
+readme_render,pass,docs/reports/internal_audits/README_PUBLIC_RENDER_CHECKLIST.md,README commands and guide links are present.
+dry_run,pass,docs/reports/internal_audits/PUBLIC_DRY_RUN_VERIFICATION.md,python scripts/run_full_pipeline.py --dry-run passed from fresh clone.
+smoke_test,pass,docs/reports/internal_audits/PUBLIC_SMOKE_TEST.md,Sample parquet read compileall and key imports passed after config fix.
+yaml_runtime_config,fixed,common/config.py; configs/pipeline_config.yaml,Added YAML/runtime_config support so README/orchestrator config path is executable.
+doc_links,pass,docs/reports/internal_audits/PUBLIC_DOC_LINK_CHECK.md,Required public docs exist and README links are sensible.
+scientific_results_preserved,pass,n/a,No model outputs metrics thresholds or canonical benchmark decisions changed.
+public_ready,pass,docs/reports/internal_audits/FINAL_PUBLIC_GITHUB_VERIFICATION.md,Repository is public-ready for clone install dry-run and review.

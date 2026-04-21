@@ -1,0 +1,5 @@
+issue_id,severity,status,component,details,resolution
+dependency_conflicts,none,pass,requirements.txt,Fresh venv install completed and pip check reported no broken requirements,No change required
+pip_upgrade_warning,minor,non_blocking,local verification venv,pip check warned about stale pip-24.0.dist-info after pip self-upgrade,Documented as local pip upgrade artifact
+yaml_runtime_config,major,fixed,common/config.py and configs/pipeline_config.yaml,Smoke test found release YAML config was not loadable by load_pipeline_config,Added YAML support and runtime_config section without changing scientific outputs
+

@@ -1,3 +1,120 @@
+runtime_config:
+  run_id: public_release_clean
+  scenario_id: clean_baseline
+  split_id: train
+  random_seed: 1729
+  timezone: UTC
+  start_time_utc: '2025-06-01T00:00:00Z'
+  duration_hours: 24
+  shape_resolution_seconds: 60
+  simulation_resolution_seconds: 1
+  feeder_head_line: l115
+  selected_lines:
+    - l115
+    - l13
+    - l19
+    - l31
+    - l58
+    - l67
+    - sw4
+    - sw5
+  selected_switches:
+    - sw1
+    - sw2
+    - sw3
+    - sw4
+    - sw5
+    - sw6
+    - sw7
+    - sw8
+  critical_buses:
+    - '13'
+    - '18'
+    - '35'
+    - '48'
+    - '60'
+    - '83'
+    - '94'
+    - '108'
+    - '114'
+    - '150'
+  pv_assets:
+    - name: pv35
+      kind: pv
+      bus: '35'
+      phases: 3
+      kv: 4.16
+      kva: 550.0
+      pmpp_kw: 500.0
+    - name: pv60
+      kind: pv
+      bus: '60'
+      phases: 3
+      kv: 4.16
+      kva: 950.0
+      pmpp_kw: 880.0
+    - name: pv83
+      kind: pv
+      bus: '83'
+      phases: 3
+      kv: 4.16
+      kva: 700.0
+      pmpp_kw: 640.0
+  bess_assets:
+    - name: bess48
+      kind: bess
+      bus: '48'
+      phases: 3
+      kv: 4.16
+      kva: 600.0
+      kw_rated: 500.0
+      kwh_rated: 2000.0
+      base_soc: 0.58
+      reserve_soc: 0.20
+    - name: bess108
+      kind: bess
+      bus: '108'
+      phases: 3
+      kv: 4.16
+      kva: 450.0
+      kw_rated: 350.0
+      kwh_rated: 1400.0
+      base_soc: 0.63
+      reserve_soc: 0.15
+  measurement:
+    default_numeric_noise_std: 0.002
+    default_relative_noise_std: 0.005
+    default_missing_probability: 0.001
+    default_stale_probability: 0.0008
+    default_latency_seconds: 2
+    default_latency_jitter_seconds: 1
+    default_clock_drift_ppm: 20.0
+    sparse_observability_keep_fraction: 0.3
+  windows:
+    window_seconds: 300
+    step_seconds: 60
+    min_attack_overlap_fraction: 0.2
+  latitude_deg: 33.955
+  longitude_deg: -84.55
+  storage_charge_efficiency: 0.95
+  storage_discharge_efficiency: 0.94
+  nominal_voltage_limits_pu:
+    - 0.95
+    - 1.05
+  measured_bus_observability:
+    - '13'
+    - '35'
+    - '48'
+    - '60'
+    - '83'
+    - '94'
+    - '108'
+    - '114'
+    - '150'
+  cyber_telemetry_interval_seconds: 2
+  cyber_auth_interval_minutes: 30
+  output_format: parquet
+
 project:
   name: DERGuardian
   canonical_benchmark_winner: transformer_60s

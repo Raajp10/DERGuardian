@@ -15,6 +15,8 @@ from typing import Any
 import json
 import uuid
 
+import yaml
+
 
 PROJECT_ROOT = Path(__file__).resolve().parents[1]
 
@@ -183,16 +185,24 @@ def default_pipeline_config() -> PipelineConfig:
 
 
 def load_pipeline_config(config_path: str | Path | None = None) -> PipelineConfig:
-    """Load pipeline config for the shared DERGuardian utility workflow.
+    """Load a runtime pipeline config from JSON or YAML.
 
-        Arguments and returned values follow the explicit type hints and are used by the surrounding pipeline contracts.
-        """
+    Release configs may include documentation metadata around the actual runtime
+    settings. When a `runtime_config` section is present, only that section is
+    used to construct `PipelineConfig`; this keeps public-facing config files
+    readable without breaking the Phase 1 CLI.
+    """
 
     if config_path is None:
         return default_pipeline_config()
     path = Path(config_path)
     with path.open("r", encoding="utf-8") as handle:
-        data = json.load(handle)
+        if path.suffix.lower() in {".yaml", ".yml"}:
+            data = yaml.safe_load(handle) or {}
+        else:
+            data = json.load(handle)
+    if "runtime_config" in data:
+        data = data["runtime_config"] or {}
     return PipelineConfig.from_dict(data)
 
 
