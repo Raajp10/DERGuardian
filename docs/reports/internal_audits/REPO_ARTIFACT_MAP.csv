@@ -1,0 +1,20 @@
+source_artifact,publishable_artifact,context,artifact_type,exists,mirrored,size_bytes,description
+phase1_window_model_comparison_full.csv,artifacts/benchmark/phase1_window_model_comparison_full.csv,canonical_benchmark,csv,True,True,12884,Full detector benchmark window/model comparison.
+phase1_window_model_comparison_full.md,docs/reports/phase1_window_model_comparison_full.md,canonical_benchmark,md,True,True,9347,Readable detector benchmark report.
+phase1_window_comparison_5s_10s_60s_300s.png,docs/figures/phase1_window_comparison_5s_10s_60s_300s.png,canonical_benchmark,figure,True,True,70246,Benchmark F1 by window.
+phase1_model_vs_window_heatmap.png,docs/figures/phase1_model_vs_window_heatmap.png,canonical_benchmark,figure,True,True,65963,Benchmark model/window heatmap.
+benchmark_vs_replay_metrics.csv,artifacts/replay/benchmark_vs_replay_metrics.csv,heldout_replay,csv,True,True,2690,Benchmark vs replay separation metrics.
+multi_model_heldout_metrics.csv,artifacts/replay/multi_model_heldout_metrics.csv,heldout_replay,csv,True,True,8814,Existing frozen-candidate replay metrics.
+zero_day_model_window_results_full.csv,artifacts/zero_day_like/zero_day_model_window_results_full.csv,heldout_synthetic_zero_day_like,csv,True,True,104524,Heldout synthetic detector matrix.
+zero_day_model_window_results_full.md,docs/reports/zero_day_model_window_results_full.md,heldout_synthetic_zero_day_like,md,True,True,5610,Heldout synthetic detector report.
+zero_day_model_window_heatmap.png,docs/figures/zero_day_model_window_heatmap.png,heldout_synthetic_zero_day_like,figure,True,True,68388,Heldout synthetic heatmap.
+phase1_ttm_results.csv,artifacts/extensions/phase1_ttm_results.csv,extension_ttm,csv,True,True,1284,TTM 60s extension benchmark result.
+phase1_ttm_eval_report.md,docs/reports/phase1_ttm_eval_report.md,extension_ttm,md,True,True,4078,TTM extension report.
+phase3_lora_results.csv,artifacts/extensions/phase3_lora_results.csv,extension_lora,csv,True,True,1047,LoRA experimental result.
+phase3_lora_eval_report.md,docs/reports/phase3_lora_eval_report.md,extension_lora,md,True,True,2916,LoRA extension report.
+xai_case_level_audit.csv,artifacts/xai/xai_case_level_audit.csv,xai,csv,True,True,120542,Case-level explanation audit.
+xai_final_validation_report.md,docs/reports/xai_final_validation_report.md,xai,md,True,True,1741,Final XAI validation report.
+deployment_benchmark_results.csv,artifacts/deployment/deployment_benchmark_results.csv,deployment,csv,True,True,9442,Offline deployment benchmark metrics.
+deployment_benchmark_report.md,docs/reports/deployment_benchmark_report.md,deployment,md,True,True,15585,Offline deployment report.
+FINAL_MODEL_CONTEXT_COMPARISON.csv,artifacts/zero_day_like/FINAL_MODEL_CONTEXT_COMPARISON.csv,cross_context,csv,True,True,10248,Context-separated model comparison.
+FINAL_MODEL_CONTEXT_COMPARISON.md,docs/reports/FINAL_MODEL_CONTEXT_COMPARISON.md,cross_context,md,True,True,9789,Context-separated model comparison report.

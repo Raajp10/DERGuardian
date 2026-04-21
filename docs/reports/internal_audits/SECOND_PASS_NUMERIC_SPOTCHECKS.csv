@@ -1,0 +1,13 @@
+claim_id,report_path,claim_label,reported_value,source_path,source_value,tolerance,match,note
+complete_claims_transformer_benchmark_f1,COMPLETE_PUBLICATION_SAFE_CLAIMS.md,Safe claims transformer benchmark F1,0.818,outputs/window_size_study/final_window_comparison.csv,0.8181818181818182,0.0005,True,seed=20260420
+complete_results_inventory_rows,COMPLETE_RESULTS_AND_DISCUSSION.md,Phase 2 inventory row count,99,phase2_scenario_master_inventory.csv,99.0,0.5,True,seed=20260420
+complete_results_lora_family_accuracy,COMPLETE_RESULTS_AND_DISCUSSION.md,LoRA heldout test family accuracy,0.234,phase3_lora_results.csv,0.2340425531914893,0.0005,True,seed=20260420
+complete_results_original_precision,COMPLETE_RESULTS_AND_DISCUSSION.md,Original heldout replay mean precision,0.886,heldout_bundle_metrics.csv,0.886307579739148,0.0005,True,seed=20260420
+complete_results_repaired_f1,COMPLETE_RESULTS_AND_DISCUSSION.md,Repaired replay mean F1,0.680,balanced_heldout_metrics.csv,0.6798126972318717,0.0005,True,seed=20260420
+complete_results_repaired_precision,COMPLETE_RESULTS_AND_DISCUSSION.md,Repaired replay mean precision,0.879,balanced_heldout_metrics.csv,0.8785535738639961,0.0005,True,seed=20260420
+complete_results_repaired_recall,COMPLETE_RESULTS_AND_DISCUSSION.md,Repaired replay mean recall,0.562,balanced_heldout_metrics.csv,0.5616184510459706,0.0005,True,seed=20260420
+complete_results_transformer_benchmark_f1,COMPLETE_RESULTS_AND_DISCUSSION.md,Complete results canonical transformer benchmark F1,0.818182,outputs/window_size_study/final_window_comparison.csv,0.8181818181818182,5e-07,True,seed=20260420
+complete_results_validated_assets,COMPLETE_RESULTS_AND_DISCUSSION.md,Phase 2 validated asset count,18,phase2_asset_signal_coverage.csv,18.0,0.5,True,seed=20260420
+complete_results_validated_families,COMPLETE_RESULTS_AND_DISCUSSION.md,Phase 2 validated family count,8,phase2_scenario_master_inventory.csv,8.0,0.5,True,seed=20260420
+deployment_transformer_replay_f1,deployment_benchmark_report.md,Deployment report transformer replay F1,0.884354,deployment_benchmark_results.csv,0.884354,5e-07,True,seed=20260420
+phase2_coverage_validated_families,phase2_coverage_summary.md,Phase 2 coverage summary distinct validated families,8,phase2_attack_family_distribution.csv,8.0,0.5,True,seed=20260420

@@ -1,0 +1,8 @@
+context_name,definition,canonical_or_extension,primary_report,safe_claim
+canonical_benchmark,Frozen Phase 1 benchmark/test-split model selection.,canonical,docs/reports/phase1_window_model_comparison_full.md,Transformer @ 60s is the frozen canonical benchmark winner.
+heldout_replay,Frozen model replay on heldout/repaired bundles.,replay,docs/reports/CANONICAL_VS_REPLAY_VS_ZERO_DAY.md,Replay evaluates transfer separately from model selection.
+heldout_synthetic_zero_day_like,Heldout synthetic generated Phase 2 scenarios evaluated with frozen packages.,separate_evaluation,docs/reports/zero_day_model_window_results_full.md,"Bounded zero-day-like synthetic evaluation only, not real-world zero-day robustness."
+extension_ttm,TinyTimeMixer extension benchmark and heldout 60s extension evaluation.,extension,docs/reports/phase1_ttm_eval_report.md,TTM is extension-only.
+extension_lora,LoRA tiny-LLM explanation/classification experiment.,extension,docs/reports/phase3_lora_eval_report.md,"LoRA is experimental and weak, not detector benchmark evidence."
+xai,Grounded explanation validation and taxonomy.,support_layer,docs/reports/xai_final_validation_report.md,"Grounded operator support, not human-like root-cause analysis."
+deployment,Offline lightweight deployment benchmark on available workstation hardware.,offline_benchmark,docs/reports/deployment_benchmark_report.md,"Offline benchmark only, not field edge deployment."

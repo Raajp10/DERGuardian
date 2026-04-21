@@ -1,0 +1,46 @@
+experiment_name: phase1_ttm_extension
+branch_type: extension_benchmark_only
+canonical_status:
+  canonical_benchmark_winner: transformer @ 60s
+  canonical_source_of_truth: <repo>/outputs\window_size_study\final_window_comparison.csv
+  overwritten: false
+data:
+  residual_path: <repo>/outputs\window_size_study\60s\residual_windows.parquet
+  feature_columns_source: <repo>/outputs\window_size_study\60s\ready_packages\transformer\feature_columns.json
+  feature_count: 64
+  split_policy: existing scenario-aware split_name from canonical residual dataset
+  train_subset: train benign only
+  validation_subset: all val windows for threshold calibration; benign val subset
+    for early stopping
+  test_subset: all test windows
+model:
+  implementation: tsfm_public.TinyTimeMixerForPrediction
+  initialization: random_init_local
+  context_length: 12
+  prediction_length: 1
+  patch_length: 2
+  patch_stride: 2
+  num_input_channels: 64
+  d_model: 16
+  decoder_d_model: 16
+  num_layers: 3
+  decoder_num_layers: 2
+  dropout: 0.2
+  head_dropout: 0.2
+  loss: mse
+  scaling: std
+training:
+  batch_size: 128
+  max_epochs: 24
+  patience: 5
+  learning_rate: 0.001
+  weight_decay: 0.0001
+  device: cpu
+  seed: 1729
+notes:
+- The public IBM Granite TTM package was installed locally from source.
+- No compatible repo-native public pre-trained TTM checkpoint matched the short 12->1
+  residual-window contract, so this run uses a locally trained randomly initialized
+  tiny TTM.
+- This output is extension evidence only and does not replace the canonical benchmark
+  winner.

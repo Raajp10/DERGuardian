@@ -1,0 +1,18 @@
+file_path,exists,nonempty,structurally_usable,needs_rewrite,notes
+README.md,True,True,True,False,Markdown has a top-level heading
+.gitignore,True,True,True,False,Text file is readable and non-empty
+LICENSE,True,True,True,False,Text file is readable and non-empty
+requirements.txt,True,True,True,False,Text file is readable and non-empty
+environment.yml,True,True,True,False,YAML-like content detected
+FINAL_PUBLISHABLE_REPO_DECISION.md,True,True,True,False,Markdown has a top-level heading
+FINAL_REPO_PUBLISHABILITY_CHECKLIST.md,True,True,True,False,Markdown has a top-level heading
+FINAL_REPO_PUBLISHABILITY_STATUS.csv,True,True,True,False,CSV readable with 37 rows and 4 columns
+REPO_CLEAN_TREE.txt,True,True,True,False,Text file is readable and non-empty
+CLAIM_SAFETY_FINAL_AUDIT.md,True,True,True,False,Markdown has a top-level heading
+REPO_ARTIFACT_MAP.csv,True,True,True,False,CSV readable with 19 rows and 8 columns
+EXPERIMENT_REGISTRY.csv,True,True,True,False,CSV readable with 76 rows and 8 columns
+docs/methodology/METHODOLOGY_OVERVIEW.md,True,True,True,False,Markdown has a top-level heading
+docs/reports/CANONICAL_VS_REPLAY_VS_ZERO_DAY.md,True,True,True,False,Markdown has a top-level heading
+docs/reports/EXTENSION_BRANCHES.md,True,True,True,False,Markdown has a top-level heading
+docs/reports/PUBLICATION_SAFE_CLAIMS.md,True,True,True,False,Markdown has a top-level heading
+docs/reports/ARTIFACT_REPRODUCIBILITY_GUIDE.md,True,True,True,False,Markdown has a top-level heading

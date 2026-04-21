@@ -1,0 +1,207 @@
+file_path,phase,category,purpose,input_or_output,canonical_or_extension,required_for_reproduction,recommended_for_git,recommended_to_ignore,notes
+common/__init__.py,shared,configs,"Shared configuration, IO, telemetry, unit, graph, noise, timing, and OpenDSS support code",source,support,yes,yes,no,69 bytes
+common/config.py,shared,configs,"Shared configuration, IO, telemetry, unit, graph, noise, timing, and OpenDSS support code",source,support,yes,yes,no,6378 bytes
+common/dss_runner.py,shared,configs,"Shared configuration, IO, telemetry, unit, graph, noise, timing, and OpenDSS support code",source,support,yes,yes,no,25667 bytes
+common/graph_builders.py,shared,configs,"Shared configuration, IO, telemetry, unit, graph, noise, timing, and OpenDSS support code",source,support,yes,yes,no,23228 bytes
+common/io_utils.py,shared,configs,"Shared configuration, IO, telemetry, unit, graph, noise, timing, and OpenDSS support code",source,support,yes,yes,no,2476 bytes
+common/metadata_schema.py,shared,configs,"Shared configuration, IO, telemetry, unit, graph, noise, timing, and OpenDSS support code",source,support,yes,yes,no,2206 bytes
+common/noise_models.py,shared,configs,"Shared configuration, IO, telemetry, unit, graph, noise, timing, and OpenDSS support code",source,support,yes,yes,no,6707 bytes
+common/time_alignment.py,shared,configs,"Shared configuration, IO, telemetry, unit, graph, noise, timing, and OpenDSS support code",source,support,yes,yes,no,3743 bytes
+common/units_and_channel_dictionary.py,shared,configs,"Shared configuration, IO, telemetry, unit, graph, noise, timing, and OpenDSS support code",source,support,yes,yes,no,9789 bytes
+common/weather_load_generators.py,shared,configs,"Shared configuration, IO, telemetry, unit, graph, noise, timing, and OpenDSS support code",source,support,yes,yes,no,14835 bytes
+opendss/DER_Assets.dss,phase1,simulation,"IEEE 123-bus OpenDSS feeder, DER assets, controls, monitors, and topology validation inputs",source,support,yes,yes,no,845 bytes
+opendss/DER_Controls.dss,phase1,simulation,"IEEE 123-bus OpenDSS feeder, DER assets, controls, monitors, and topology validation inputs",source,support,yes,yes,no,376 bytes
+opendss/ieee123_base/BusCoords.dat,phase1,simulation,"IEEE 123-bus OpenDSS feeder, DER assets, controls, monitors, and topology validation inputs",source,support,yes,yes,no,2858 bytes
+opendss/ieee123_base/CircuitPlottingScripts.dss,phase1,simulation,"IEEE 123-bus OpenDSS feeder, DER assets, controls, monitors, and topology validation inputs",source,support,yes,yes,no,1165 bytes
+opendss/ieee123_base/IEEE123Loads.DSS,phase1,simulation,"IEEE 123-bus OpenDSS feeder, DER assets, controls, monitors, and topology validation inputs",source,support,yes,yes,no,8289 bytes
+opendss/ieee123_base/IEEE123Master.dss,phase1,simulation,"IEEE 123-bus OpenDSS feeder, DER assets, controls, monitors, and topology validation inputs",source,support,yes,yes,no,15574 bytes
+opendss/ieee123_base/IEEE123Regulators.DSS,phase1,simulation,"IEEE 123-bus OpenDSS feeder, DER assets, controls, monitors, and topology validation inputs",source,support,yes,yes,no,1861 bytes
+opendss/ieee123_base/IEEELineCodes.DSS,phase1,simulation,"IEEE 123-bus OpenDSS feeder, DER assets, controls, monitors, and topology validation inputs",source,support,yes,yes,no,11851 bytes
+opendss/ieee123_base/P174_Run_SolarRamp.DSS,phase1,simulation,"IEEE 123-bus OpenDSS feeder, DER assets, controls, monitors, and topology validation inputs",source,support,yes,yes,no,1439 bytes
+opendss/ieee123_base/P174_Run_VoltageProfile.DSS,phase1,simulation,"IEEE 123-bus OpenDSS feeder, DER assets, controls, monitors, and topology validation inputs",source,support,yes,yes,no,1034 bytes
+opendss/ieee123_base/PaperLoadShape.txt,phase1,simulation,"IEEE 123-bus OpenDSS feeder, DER assets, controls, monitors, and topology validation inputs",source,support,yes,yes,no,61318 bytes
+opendss/ieee123_base/PV5sdata1.csv,phase1,simulation,"IEEE 123-bus OpenDSS feeder, DER assets, controls, monitors, and topology validation inputs",source,support,yes,yes,no,28794 bytes
+opendss/ieee123_base/RevRegTest.dss,phase1,simulation,"IEEE 123-bus OpenDSS feeder, DER assets, controls, monitors, and topology validation inputs",source,support,yes,yes,no,1753 bytes
+opendss/ieee123_base/Run_IEEE123Bus.DSS,phase1,simulation,"IEEE 123-bus OpenDSS feeder, DER assets, controls, monitors, and topology validation inputs",source,support,yes,yes,no,4764 bytes
+opendss/ieee123_base/Run_YearlySim.dss,phase1,simulation,"IEEE 123-bus OpenDSS feeder, DER assets, controls, monitors, and topology validation inputs",source,support,yes,yes,no,1744 bytes
+opendss/ieee123_base/SetDailyLoadShape.DSS,phase1,simulation,"IEEE 123-bus OpenDSS feeder, DER assets, controls, monitors, and topology validation inputs",source,support,yes,yes,no,2277 bytes
+opendss/ieee123_base/SolarRamp-Mack.DSS,phase1,simulation,"IEEE 123-bus OpenDSS feeder, DER assets, controls, monitors, and topology validation inputs",source,support,yes,yes,no,2230 bytes
+opendss/ieee123_base/SolarRamp.csv,phase1,simulation,"IEEE 123-bus OpenDSS feeder, DER assets, controls, monitors, and topology validation inputs",source,support,yes,yes,no,1202 bytes
+opendss/ieee123_base/SolarRamp.DSS,phase1,simulation,"IEEE 123-bus OpenDSS feeder, DER assets, controls, monitors, and topology validation inputs",source,support,yes,yes,no,1940 bytes
+opendss/ieee123_base/StorageRamp.CSV,phase1,simulation,"IEEE 123-bus OpenDSS feeder, DER assets, controls, monitors, and topology validation inputs",source,support,yes,yes,no,1202 bytes
+opendss/ieee123_base/WindRamp.DSS,phase1,simulation,"IEEE 123-bus OpenDSS feeder, DER assets, controls, monitors, and topology validation inputs",source,support,yes,yes,no,1432 bytes
+opendss/ieee123_base/WindRampRevRegTest.DSS,phase1,simulation,"IEEE 123-bus OpenDSS feeder, DER assets, controls, monitors, and topology validation inputs",source,support,yes,yes,no,1992 bytes
+opendss/Monitor_Config.dss,phase1,simulation,"IEEE 123-bus OpenDSS feeder, DER assets, controls, monitors, and topology validation inputs",source,support,yes,yes,no,507 bytes
+opendss/Research_IEEE123_Master.dss,phase1,simulation,"IEEE 123-bus OpenDSS feeder, DER assets, controls, monitors, and topology validation inputs",source,support,yes,yes,no,185 bytes
+opendss/validate_ieee123_topology.py,phase1,simulation,"IEEE 123-bus OpenDSS feeder, DER assets, controls, monitors, and topology validation inputs",source,support,yes,yes,no,15847 bytes
+phase1/__init__.py,phase1,preprocessing,"Clean data generation, validation, channel extraction, and window construction code",source,support,yes,yes,no,49 bytes
+phase1/build_clean_dataset.py,phase1,preprocessing,"Clean data generation, validation, channel extraction, and window construction code",source,support,yes,yes,no,11297 bytes
+phase1/build_windows.py,phase1,preprocessing,"Clean data generation, validation, channel extraction, and window construction code",source,support,yes,yes,no,8209 bytes
+phase1/extract_channels.py,phase1,preprocessing,"Clean data generation, validation, channel extraction, and window construction code",source,support,yes,yes,no,1155 bytes
+phase1/validate_clean_dataset.py,phase1,preprocessing,"Clean data generation, validation, channel extraction, and window construction code",source,support,yes,yes,no,6894 bytes
+phase1_models/__init__.py,phase1,windows,"Detector feature construction, training, evaluation, metrics, and ready-package code",source,support,yes,yes,no,36 bytes
+phase1_models/dataset_loader.py,phase1,windows,"Detector feature construction, training, evaluation, metrics, and ready-package code",source,support,yes,yes,no,2170 bytes
+phase1_models/evaluate_all_models.py,phase1,windows,"Detector feature construction, training, evaluation, metrics, and ready-package code",source,support,yes,yes,no,18792 bytes
+phase1_models/export_model_report.py,phase1,windows,"Detector feature construction, training, evaluation, metrics, and ready-package code",source,support,yes,yes,no,4789 bytes
+phase1_models/feature_builder.py,phase1,windows,"Detector feature construction, training, evaluation, metrics, and ready-package code",source,support,yes,yes,no,4639 bytes
+phase1_models/generate_paper_figures.py,phase1,windows,"Detector feature construction, training, evaluation, metrics, and ready-package code",source,support,yes,yes,no,15029 bytes
+phase1_models/metrics.py,phase1,windows,"Detector feature construction, training, evaluation, metrics, and ready-package code",source,support,yes,yes,no,8216 bytes
+phase1_models/model_utils.py,phase1,windows,"Detector feature construction, training, evaluation, metrics, and ready-package code",source,support,yes,yes,no,3712 bytes
+phase1_models/neural_models.py,phase1,windows,"Detector feature construction, training, evaluation, metrics, and ready-package code",source,support,yes,yes,no,2669 bytes
+phase1_models/neural_training.py,phase1,windows,"Detector feature construction, training, evaluation, metrics, and ready-package code",source,support,yes,yes,no,6289 bytes
+phase1_models/PHASE1_UPGRADED_PIPELINE.md,phase1,windows,"Detector feature construction, training, evaluation, metrics, and ready-package code",source,support,yes,yes,no,7049 bytes
+phase1_models/ready_package_utils.py,phase1,windows,"Detector feature construction, training, evaluation, metrics, and ready-package code",source,support,yes,yes,no,11778 bytes
+phase1_models/residual_dataset.py,phase1,windows,"Detector feature construction, training, evaluation, metrics, and ready-package code",source,support,yes,yes,no,7739 bytes
+phase1_models/run_full_evaluation.py,phase1,windows,"Detector feature construction, training, evaluation, metrics, and ready-package code",source,support,yes,yes,no,77772 bytes
+phase1_models/sequence_train_utils.py,phase1,windows,"Detector feature construction, training, evaluation, metrics, and ready-package code",source,support,yes,yes,no,2985 bytes
+phase1_models/thresholds.py,phase1,windows,"Detector feature construction, training, evaluation, metrics, and ready-package code",source,support,yes,yes,no,463 bytes
+phase1_models/train_autoencoder.py,phase1,windows,"Detector feature construction, training, evaluation, metrics, and ready-package code",source,support,yes,yes,no,5638 bytes
+phase1_models/train_gru.py,phase1,windows,"Detector feature construction, training, evaluation, metrics, and ready-package code",source,support,yes,yes,no,2681 bytes
+phase1_models/train_isolation_forest.py,phase1,windows,"Detector feature construction, training, evaluation, metrics, and ready-package code",source,support,yes,yes,no,4954 bytes
+phase1_models/train_llm_baseline.py,phase1,windows,"Detector feature construction, training, evaluation, metrics, and ready-package code",source,support,yes,yes,no,2379 bytes
+phase1_models/train_lstm.py,phase1,windows,"Detector feature construction, training, evaluation, metrics, and ready-package code",source,support,yes,yes,no,2689 bytes
+phase1_models/train_threshold_baseline.py,phase1,windows,"Detector feature construction, training, evaluation, metrics, and ready-package code",source,support,yes,yes,no,5068 bytes
+phase1_models/train_transformer.py,phase1,windows,"Detector feature construction, training, evaluation, metrics, and ready-package code",source,support,yes,yes,no,2809 bytes
+phase2/__init__.py,phase2,attacked dataset generation,"Scenario validation, injection compilation, cyber log generation, attacked data generation, and reporting code",source,support,yes,yes,no,52 bytes
+phase2/compile_injections.py,phase2,attacked dataset generation,"Scenario validation, injection compilation, cyber log generation, attacked data generation, and reporting code",source,support,yes,yes,no,19346 bytes
+phase2/contracts.py,phase2,attacked dataset generation,"Scenario validation, injection compilation, cyber log generation, attacked data generation, and reporting code",source,support,yes,yes,no,1872 bytes
+phase2/cyber_log_generator.py,phase2,attacked dataset generation,"Scenario validation, injection compilation, cyber log generation, attacked data generation, and reporting code",source,support,yes,yes,no,16604 bytes
+phase2/example_scenario_bundle/01_pv60_bias.json,phase2,scenarios,"Scenario definitions, schema, or example bundles",input,support,yes,yes,no,830 bytes
+phase2/example_scenario_bundle/02_bess48_unauthorized_command.json,phase2,scenarios,"Scenario definitions, schema, or example bundles",input,support,yes,yes,no,844 bytes
+phase2/example_scenario_bundle/03_bess108_command_suppression.json,phase2,scenarios,"Scenario definitions, schema, or example bundles",input,support,yes,yes,no,937 bytes
+phase2/example_scenarios.json,phase2,scenarios,"Scenario definitions, schema, or example bundles",input,support,yes,yes,no,7050 bytes
+phase2/generate_attacked_dataset.py,phase2,attacked dataset generation,"Scenario validation, injection compilation, cyber log generation, attacked data generation, and reporting code",source,support,yes,yes,no,22097 bytes
+phase2/merge_physical_and_cyber.py,phase2,attacked dataset generation,"Scenario validation, injection compilation, cyber log generation, attacked data generation, and reporting code",source,support,yes,yes,no,1305 bytes
+phase2/reporting.py,phase2,attacked dataset generation,"Scenario validation, injection compilation, cyber log generation, attacked data generation, and reporting code",source,support,yes,yes,no,39169 bytes
+phase2/research_attack_scenarios.json,phase2,scenarios,"Scenario definitions, schema, or example bundles",input,support,yes,yes,no,13682 bytes
+phase2/scenario_schema.json,phase2,scenarios,"Scenario definitions, schema, or example bundles",input,support,yes,yes,no,3809 bytes
+phase2/validate_attacked_dataset.py,phase2,attacked dataset generation,"Scenario validation, injection compilation, cyber log generation, attacked data generation, and reporting code",source,support,yes,yes,no,12695 bytes
+phase2/validate_scenarios.py,phase2,attacked dataset generation,"Scenario validation, injection compilation, cyber log generation, attacked data generation, and reporting code",source,support,yes,yes,no,3236 bytes
+phase3/__init__.py,phase3,zero_day_like,"Zero-day-like evaluation, splitting, ablations, latency sweeps, and final artifact assembly code",source,support,yes,yes,no,36 bytes
+phase3/build_final_artifacts.py,phase3,zero_day_like,"Zero-day-like evaluation, splitting, ablations, latency sweeps, and final artifact assembly code",source,support,yes,yes,no,19210 bytes
+phase3/error_analysis.py,phase3,zero_day_like,"Zero-day-like evaluation, splitting, ablations, latency sweeps, and final artifact assembly code",source,support,yes,yes,no,27993 bytes
+phase3/experiment_utils.py,phase3,zero_day_like,"Zero-day-like evaluation, splitting, ablations, latency sweeps, and final artifact assembly code",source,support,yes,yes,no,23130 bytes
+phase3/fdi_feature_builder.py,phase3,zero_day_like,"Zero-day-like evaluation, splitting, ablations, latency sweeps, and final artifact assembly code",source,support,yes,yes,no,6574 bytes
+phase3/run_fdi_ablation.py,phase3,zero_day_like,"Zero-day-like evaluation, splitting, ablations, latency sweeps, and final artifact assembly code",source,support,yes,yes,no,4740 bytes
+phase3/run_latency_window_sweep.py,phase3,zero_day_like,"Zero-day-like evaluation, splitting, ablations, latency sweeps, and final artifact assembly code",source,support,yes,yes,no,4356 bytes
+phase3/run_modality_ablation.py,phase3,zero_day_like,"Zero-day-like evaluation, splitting, ablations, latency sweeps, and final artifact assembly code",source,support,yes,yes,no,4287 bytes
+phase3/run_sequence_model_sweep.py,phase3,zero_day_like,"Zero-day-like evaluation, splitting, ablations, latency sweeps, and final artifact assembly code",source,support,yes,yes,no,3615 bytes
+phase3/run_zero_day_evaluation.py,phase3,zero_day_like,"Zero-day-like evaluation, splitting, ablations, latency sweeps, and final artifact assembly code",source,separate_evaluation,yes,yes,no,15837 bytes
+phase3/zero_day_report.py,phase3,zero_day_like,"Zero-day-like evaluation, splitting, ablations, latency sweeps, and final artifact assembly code",source,separate_evaluation,yes,yes,no,2479 bytes
+phase3/zero_day_splitter.py,phase3,zero_day_like,"Zero-day-like evaluation, splitting, ablations, latency sweeps, and final artifact assembly code",source,separate_evaluation,yes,yes,no,5667 bytes
+phase3_explanations/__init__.py,phase3,xai,"Grounded explanation packet, prompting, validation, and rationale-evaluation code",source,support_layer,yes,yes,no,431 bytes
+phase3_explanations/build_explanation_packet.py,phase3,xai,"Grounded explanation packet, prompting, validation, and rationale-evaluation code",source,support_layer,yes,yes,no,24577 bytes
+phase3_explanations/classify_attack_family.py,phase3,xai,"Grounded explanation packet, prompting, validation, and rationale-evaluation code",source,support_layer,yes,yes,no,8060 bytes
+phase3_explanations/docs/explanation_contract.md,phase3,xai,"Grounded explanation packet, prompting, validation, and rationale-evaluation code",source,support_layer,yes,yes,no,1376 bytes
+phase3_explanations/docs/explanation_usage.md,phase3,xai,"Grounded explanation packet, prompting, validation, and rationale-evaluation code",source,support_layer,yes,yes,no,1927 bytes
+phase3_explanations/examples/example_explanation_output.json,phase3,xai,"Grounded explanation packet, prompting, validation, and rationale-evaluation code",source,support_layer,yes,yes,no,3994 bytes
+phase3_explanations/examples/example_explanation_packet.json,phase3,xai,"Grounded explanation packet, prompting, validation, and rationale-evaluation code",source,support_layer,yes,yes,no,13076 bytes
+phase3_explanations/examples/example_incident_summary.md,phase3,xai,"Grounded explanation packet, prompting, validation, and rationale-evaluation code",source,support_layer,yes,yes,no,2359 bytes
+phase3_explanations/explanation_prompt_system.txt,phase3,xai,"Grounded explanation packet, prompting, validation, and rationale-evaluation code",source,support_layer,yes,yes,no,1189 bytes
+phase3_explanations/explanation_prompt_user_template.txt,phase3,xai,"Grounded explanation packet, prompting, validation, and rationale-evaluation code",source,support_layer,yes,yes,no,421 bytes
+phase3_explanations/explanation_schema.json,phase3,xai,"Grounded explanation packet, prompting, validation, and rationale-evaluation code",source,support_layer,yes,yes,no,2126 bytes
+phase3_explanations/generate_explanations_llm.py,phase3,xai,"Grounded explanation packet, prompting, validation, and rationale-evaluation code",source,support_layer,yes,yes,no,10621 bytes
+phase3_explanations/rationale_evaluator.py,phase3,xai,"Grounded explanation packet, prompting, validation, and rationale-evaluation code",source,support_layer,yes,yes,no,6983 bytes
+phase3_explanations/README.md,phase3,xai,"Grounded explanation packet, prompting, validation, and rationale-evaluation code",source,support_layer,yes,yes,no,4553 bytes
+phase3_explanations/shared.py,phase3,xai,"Grounded explanation packet, prompting, validation, and rationale-evaluation code",source,support_layer,yes,yes,no,10767 bytes
+phase3_explanations/validate_explanations.py,phase3,xai,"Grounded explanation packet, prompting, validation, and rationale-evaluation code",source,support_layer,yes,yes,no,6009 bytes
+scripts/build_final_audit_reports.py,cross_project,reports,"Reproducibility, audit, benchmark, extension, deployment, and publication-cleanup scripts",source,support,yes,yes,no,39479 bytes
+scripts/build_master_project_release_report.py,cross_project,reports,"Reproducibility, audit, benchmark, extension, deployment, and publication-cleanup scripts",source,support,yes,yes,no,55457 bytes
+scripts/build_phase1_lineage_audit.py,cross_project,reports,"Reproducibility, audit, benchmark, extension, deployment, and publication-cleanup scripts",source,support,yes,yes,no,14912 bytes
+scripts/build_phase2_extensions.py,cross_project,reports,"Reproducibility, audit, benchmark, extension, deployment, and publication-cleanup scripts",source,support,yes,yes,no,45014 bytes
+scripts/build_xai_and_final_reports.py,phase3,xai,"Reproducibility, audit, benchmark, extension, deployment, and publication-cleanup scripts",source,support_layer,yes,yes,no,28886 bytes
+scripts/final_repo_publication_cleanup.py,cross_project,reports,"Reproducibility, audit, benchmark, extension, deployment, and publication-cleanup scripts",source,support,yes,yes,no,69536 bytes
+scripts/generate_final_combined_results_figure.py,cross_project,reports,"Reproducibility, audit, benchmark, extension, deployment, and publication-cleanup scripts",source,support,yes,yes,no,13643 bytes
+scripts/generate_professor_graph_package.py,cross_project,reports,"Reproducibility, audit, benchmark, extension, deployment, and publication-cleanup scripts",source,support,yes,yes,no,113532 bytes
+scripts/make_paper_figures.py,cross_project,reports,"Reproducibility, audit, benchmark, extension, deployment, and publication-cleanup scripts",source,support,yes,yes,no,24243 bytes
+scripts/methodology_alignment_common.py,cross_project,reports,"Reproducibility, audit, benchmark, extension, deployment, and publication-cleanup scripts",source,support,yes,yes,no,20550 bytes
+scripts/run_deployment_benchmark.py,phase3,deployment,"Reproducibility, audit, benchmark, extension, deployment, and publication-cleanup scripts",source,offline_benchmark,yes,yes,no,16595 bytes
+scripts/run_detector_window_zero_day_audit.py,phase3,zero_day_like,"Reproducibility, audit, benchmark, extension, deployment, and publication-cleanup scripts",source,separate_evaluation,yes,yes,no,114706 bytes
+scripts/run_final_triple_verification.py,cross_project,reports,"Reproducibility, audit, benchmark, extension, deployment, and publication-cleanup scripts",source,support,yes,yes,no,11518 bytes
+scripts/run_heldout_phase3_pipeline.py,cross_project,replay,"Reproducibility, audit, benchmark, extension, deployment, and publication-cleanup scripts",source,replay,yes,yes,no,69804 bytes
+scripts/run_improved_phase3_suite.py,cross_project,reports,"Reproducibility, audit, benchmark, extension, deployment, and publication-cleanup scripts",source,support,yes,yes,no,107086 bytes
+scripts/run_phase1_ttm_extension.py,cross_project,ttm,"Reproducibility, audit, benchmark, extension, deployment, and publication-cleanup scripts",source,extension,yes,yes,no,30381 bytes
+scripts/run_phase3_lora_extension.py,cross_project,lora,"Reproducibility, audit, benchmark, extension, deployment, and publication-cleanup scripts",source,extension,yes,yes,no,40753 bytes
+scripts/run_repo_audit_pass01.py,cross_project,reports,"Reproducibility, audit, benchmark, extension, deployment, and publication-cleanup scripts",source,support,yes,yes,no,55819 bytes
+scripts/run_second_pass_self_audit.py,cross_project,reports,"Reproducibility, audit, benchmark, extension, deployment, and publication-cleanup scripts",source,support,yes,yes,no,35291 bytes
+scripts/run_window_size_study.py,cross_project,reports,"Reproducibility, audit, benchmark, extension, deployment, and publication-cleanup scripts",source,support,yes,yes,no,66109 bytes
+docs/figures/phase1_model_vs_window_heatmap.png,cross_project,figures,"Publication-facing methodology, report, or figure artifact",output,support,yes,yes,no,65963 bytes
+docs/figures/phase1_window_comparison_5s_10s_60s_300s.png,cross_project,figures,"Publication-facing methodology, report, or figure artifact",output,support,yes,yes,no,70246 bytes
+docs/figures/zero_day_model_window_heatmap.png,phase3,figures,"Publication-facing methodology, report, or figure artifact",output,separate_evaluation,yes,yes,no,68388 bytes
+docs/methodology/FINAL_PHASE123_BOX_TEXT.csv,cross_project,docs,"Publication-facing methodology, report, or figure artifact",output,support,yes,yes,no,5308 bytes
+docs/methodology/FINAL_PHASE123_DIAGRAM_SPEC.md,cross_project,docs,"Publication-facing methodology, report, or figure artifact",output,support,yes,yes,no,6380 bytes
+docs/methodology/FINAL_PHASE123_OVERCLAIM_PATCHES.md,cross_project,docs,"Publication-facing methodology, report, or figure artifact",output,support,yes,yes,no,1231 bytes
+docs/methodology/FINAL_PHASE123_SLIDE_TEXT.md,cross_project,docs,"Publication-facing methodology, report, or figure artifact",output,support,yes,yes,no,1187 bytes
+docs/methodology/METHODOLOGY_OVERVIEW.md,cross_project,docs,"Publication-facing methodology, report, or figure artifact",output,support,yes,yes,no,963 bytes
+docs/reports/ARTIFACT_REPRODUCIBILITY_GUIDE.md,cross_project,docs,"Publication-facing methodology, report, or figure artifact",output,support,yes,yes,no,794 bytes
+docs/reports/CANONICAL_VS_REPLAY_VS_ZERO_DAY.md,phase3,replay,"Publication-facing methodology, report, or figure artifact",output,replay,yes,yes,no,6741 bytes
+docs/reports/deployment_benchmark_report.md,phase3,deployment,"Publication-facing methodology, report, or figure artifact",output,offline_benchmark,yes,yes,no,15585 bytes
+docs/reports/EXTENSION_BRANCHES.md,cross_project,docs,"Publication-facing methodology, report, or figure artifact",output,support,yes,yes,no,5669 bytes
+docs/reports/FINAL_MODEL_CONTEXT_COMPARISON.md,cross_project,docs,"Publication-facing methodology, report, or figure artifact",output,support,yes,yes,no,9789 bytes
+docs/reports/phase1_ttm_eval_report.md,cross_project,ttm,"Publication-facing methodology, report, or figure artifact",output,extension,yes,yes,no,4078 bytes
+docs/reports/phase1_window_model_comparison_full.md,cross_project,docs,"Publication-facing methodology, report, or figure artifact",output,support,yes,yes,no,9347 bytes
+docs/reports/phase3_lora_eval_report.md,cross_project,lora,"Publication-facing methodology, report, or figure artifact",output,extension,yes,yes,no,2916 bytes
+docs/reports/PUBLICATION_SAFE_CLAIMS.md,cross_project,docs,"Publication-facing methodology, report, or figure artifact",output,support,yes,yes,no,772 bytes
+docs/reports/xai_final_validation_report.md,phase3,xai,"Publication-facing methodology, report, or figure artifact",output,support_layer,yes,yes,no,1741 bytes
+docs/reports/zero_day_model_window_results_full.md,phase3,zero_day_like,"Publication-facing methodology, report, or figure artifact",output,separate_evaluation,yes,yes,no,5610 bytes
+artifacts/benchmark/MANIFEST.md,cross_project,reports,Git-friendly mirrored evidence artifact grouped by evaluation context,output,support,yes,yes,no,746 bytes
+artifacts/benchmark/phase1_window_model_comparison_full.csv,cross_project,reports,Git-friendly mirrored evidence artifact grouped by evaluation context,output,support,yes,yes,no,12884 bytes
+artifacts/deployment/deployment_benchmark_results.csv,phase3,deployment,Git-friendly mirrored evidence artifact grouped by evaluation context,output,offline_benchmark,yes,yes,no,9442 bytes
+artifacts/deployment/MANIFEST.md,phase3,deployment,Git-friendly mirrored evidence artifact grouped by evaluation context,output,offline_benchmark,yes,yes,no,648 bytes
+artifacts/extensions/MANIFEST.md,cross_project,reports,Git-friendly mirrored evidence artifact grouped by evaluation context,output,support,yes,yes,no,784 bytes
+artifacts/extensions/phase1_ttm_results.csv,cross_project,ttm,Git-friendly mirrored evidence artifact grouped by evaluation context,output,extension,yes,yes,no,1284 bytes
+artifacts/extensions/phase3_lora_results.csv,cross_project,lora,Git-friendly mirrored evidence artifact grouped by evaluation context,output,extension,yes,yes,no,1047 bytes
+artifacts/replay/benchmark_vs_replay_metrics.csv,cross_project,replay,Git-friendly mirrored evidence artifact grouped by evaluation context,output,replay,yes,yes,no,2690 bytes
+artifacts/replay/MANIFEST.md,cross_project,replay,Git-friendly mirrored evidence artifact grouped by evaluation context,output,replay,yes,yes,no,854 bytes
+artifacts/replay/multi_model_heldout_metrics.csv,cross_project,replay,Git-friendly mirrored evidence artifact grouped by evaluation context,output,replay,yes,yes,no,8814 bytes
+artifacts/xai/MANIFEST.md,phase3,xai,Git-friendly mirrored evidence artifact grouped by evaluation context,output,support_layer,yes,yes,no,535 bytes
+artifacts/xai/xai_case_level_audit.csv,phase3,xai,Git-friendly mirrored evidence artifact grouped by evaluation context,output,support_layer,yes,yes,no,120542 bytes
+artifacts/zero_day_like/FINAL_MODEL_CONTEXT_COMPARISON.csv,phase3,zero_day_like,Git-friendly mirrored evidence artifact grouped by evaluation context,output,separate_evaluation,yes,yes,no,10248 bytes
+artifacts/zero_day_like/MANIFEST.md,phase3,zero_day_like,Git-friendly mirrored evidence artifact grouped by evaluation context,output,separate_evaluation,yes,yes,no,999 bytes
+artifacts/zero_day_like/zero_day_model_window_results_full.csv,phase3,zero_day_like,Git-friendly mirrored evidence artifact grouped by evaluation context,output,separate_evaluation,yes,yes,no,104524 bytes
+configs/README.md,cross_project,configs,Configuration documentation,source,support,yes,yes,no,183 bytes
+data/sample_or_manifest_only/README.md,cross_project,configs,Data-release manifest or sample-data policy,source,support,yes,yes,no,352 bytes
+tests/models.ipynb,cross_project,tests,Regression or pipeline test,source,support,yes,yes,no,0 bytes
+tests/test_phase1_code_completion.py,cross_project,tests,Regression or pipeline test,source,support,yes,yes,no,9866 bytes
+tests/test_phase1_ready_packages.py,cross_project,tests,Regression or pipeline test,source,support,yes,yes,no,2994 bytes
+tests/test_phase1_upgrade_pipeline.py,cross_project,tests,Regression or pipeline test,source,support,yes,yes,no,4548 bytes
+tests/test_phase2_remediation.py,cross_project,tests,Regression or pipeline test,source,support,yes,yes,no,13259 bytes
+tests/test_phase3_pipeline.py,cross_project,tests,Regression or pipeline test,source,support,yes,yes,no,14374 bytes
+README.md,cross_project,docs,GitHub front page and fastest reader entry point,output,support,yes,yes,no,Top-level publication/release artifact
+LICENSE,cross_project,configs,Repository license placeholder requiring owner confirmation,source,support,yes,yes,no,Top-level publication/release artifact
+.gitignore,cross_project,configs,Git hygiene rules for excluding generated/local artifacts,source,support,yes,yes,no,Top-level publication/release artifact
+requirements.txt,cross_project,configs,Python pip dependency list,source,support,yes,yes,no,Top-level publication/release artifact
+environment.yml,cross_project,configs,Conda environment definition,source,support,yes,yes,no,Top-level publication/release artifact
+REPO_ARTIFACT_MAP.csv,cross_project,reports,Maps source artifacts to publishable mirrored artifacts,output,support,yes,yes,no,Top-level publication/release artifact
+REPO_CONTEXT_INDEX.csv,cross_project,reports,"Defines benchmark, replay, zero-day-like, extension, XAI, and deployment contexts",output,support,yes,yes,no,Top-level publication/release artifact
+EXPERIMENT_REGISTRY.csv,cross_project,reports,Master registry of model/window/context outputs,output,support,yes,yes,no,Top-level publication/release artifact
+PUBLISHABLE_REPORT_INDEX.md,cross_project,reports,Index of normalized publication-facing reports,output,support,yes,yes,no,Top-level publication/release artifact
+REPO_CLEAN_TREE.txt,cross_project,reports,Clean tree view for public release,output,support,yes,yes,no,Top-level publication/release artifact
+FINAL_PHASE123_DIAGRAM_SPEC.md,cross_project,docs,Final methodology diagram implementation/overclaim classification,output,support,yes,yes,no,Top-level publication/release artifact
+FINAL_PHASE123_BOX_TEXT.csv,cross_project,docs,CSV version of safe diagram box labels,output,support,yes,yes,no,Top-level publication/release artifact
+FINAL_PHASE123_SLIDE_TEXT.md,cross_project,docs,Slide-ready Phase 1/2/3 wording,output,support,yes,yes,no,Top-level publication/release artifact
+FINAL_PHASE123_OVERCLAIM_PATCHES.md,cross_project,docs,Overclaim replacement table,output,support,yes,yes,no,Top-level publication/release artifact
+GITHUB_READY_SUMMARY.md,cross_project,docs,Short GitHub-facing summary,output,support,yes,yes,no,Top-level publication/release artifact
+PROFESSOR_READY_METHOD_SUMMARY.md,cross_project,docs,Short professor-facing method summary,output,support,yes,yes,no,Top-level publication/release artifact
+FINAL_PUBLISHABLE_REPO_DECISION.md,cross_project,reports,Final publishability/professor-readiness decision,output,support,yes,yes,no,Top-level publication/release artifact
+CLAIM_SAFETY_FINAL_AUDIT.md,cross_project,reports,Final claim-safety sweep,output,support,yes,yes,no,Top-level publication/release artifact
+outputs/clean/truth_physical_timeseries.parquet,phase1,simulation,Clean physical truth time series from OpenDSS/QSTS,output,canonical,yes,no,yes,Generated/source-of-truth artifact; keep out of Git unless publishing controlled sample or release asset
+outputs/clean/measured_physical_timeseries.parquet,phase1,simulation,Clean measured physical telemetry,output,canonical,yes,no,yes,Generated/source-of-truth artifact; keep out of Git unless publishing controlled sample or release asset
+outputs/clean/cyber_events.parquet,phase1,simulation,Clean cyber event stream,output,canonical,yes,no,yes,Generated/source-of-truth artifact; keep out of Git unless publishing controlled sample or release asset
+outputs/clean/input_environment_timeseries.parquet,phase1,simulation,Environmental driver time series,input,canonical,yes,no,yes,Generated/source-of-truth artifact; keep out of Git unless publishing controlled sample or release asset
+outputs/clean/input_load_schedule.parquet,phase1,simulation,Load schedule used to drive clean simulation,input,canonical,yes,no,yes,Generated/source-of-truth artifact; keep out of Git unless publishing controlled sample or release asset
+outputs/clean/input_pv_schedule.parquet,phase1,simulation,PV schedule used to drive clean simulation,input,canonical,yes,no,yes,Generated/source-of-truth artifact; keep out of Git unless publishing controlled sample or release asset
+outputs/clean/input_bess_schedule.parquet,phase1,simulation,BESS schedule used to drive clean simulation,input,canonical,yes,no,yes,Generated/source-of-truth artifact; keep out of Git unless publishing controlled sample or release asset
+outputs/attacked/truth_physical_timeseries.parquet,phase2,attacked dataset generation,Attacked physical truth time series,output,canonical,yes,no,yes,Generated/source-of-truth artifact; keep out of Git unless publishing controlled sample or release asset
+outputs/attacked/measured_physical_timeseries.parquet,phase2,attacked dataset generation,Attacked measured telemetry,output,canonical,yes,no,yes,Generated/source-of-truth artifact; keep out of Git unless publishing controlled sample or release asset
+outputs/attacked/cyber_events.parquet,phase2,attacked dataset generation,Attacked cyber event stream,output,canonical,yes,no,yes,Generated/source-of-truth artifact; keep out of Git unless publishing controlled sample or release asset
+outputs/attacked/attack_labels.parquet,phase2,attacked dataset generation,Window/interval labels for attacks,output,canonical,yes,no,yes,Generated/source-of-truth artifact; keep out of Git unless publishing controlled sample or release asset
+outputs/attacked/scenario_manifest.json,phase2,scenarios,Manifest of canonical attacked scenarios,output,canonical,yes,no,yes,Generated/source-of-truth artifact; keep out of Git unless publishing controlled sample or release asset
+outputs/windows/merged_windows_clean.parquet,phase1,windows,Clean merged window artifact,output,canonical,yes,no,yes,Generated/source-of-truth artifact; keep out of Git unless publishing controlled sample or release asset
+outputs/windows/merged_windows_attacked.parquet,phase2,windows,Attacked merged window artifact,output,canonical,yes,no,yes,Generated/source-of-truth artifact; keep out of Git unless publishing controlled sample or release asset
+outputs/window_size_study/final_window_comparison.csv,phase1,reports,Frozen canonical benchmark model-selection source of truth,output,canonical,yes,no,yes,Generated/source-of-truth artifact; keep out of Git unless publishing controlled sample or release asset
+outputs/window_size_study/run_manifest.json,phase1,configs,Window-size study run manifest,output,canonical,yes,no,yes,Generated/source-of-truth artifact; keep out of Git unless publishing controlled sample or release asset
+outputs/window_size_study/window_dataset_summary.csv,phase1,reports,Window-size study dataset summary,output,canonical,yes,no,yes,Generated/source-of-truth artifact; keep out of Git unless publishing controlled sample or release asset
+outputs/window_size_study/60s/ready_packages/transformer,phase1,windows,Frozen canonical transformer @ 60s ready package directory,output,canonical,yes,no,yes,Generated/source-of-truth artifact; keep out of Git unless publishing controlled sample or release asset
+outputs/phase1_ttm_extension/ttm_extension_checkpoint.pt,phase1,ttm,TTM extension checkpoint,output,extension,yes,no,yes,Generated/source-of-truth artifact; keep out of Git unless publishing controlled sample or release asset
+outputs/phase1_ttm_extension/ttm_extension_predictions.parquet,phase1,ttm,TTM extension predictions,output,extension,yes,no,yes,Generated/source-of-truth artifact; keep out of Git unless publishing controlled sample or release asset

@@ -1,0 +1,4 @@
+file_path,patch_type,description
+README.md,rewrite,"Rebuilt front page with context-separated, conservative claims."
+FINAL_PROJECT_DECISION.md,append_or_replace,Kept detector-window addendum idempotent and safe.
+COMPLETE_RESULTS_AND_DISCUSSION.md,append_or_replace,Added detector-window addendum with 5s blocker and AOI non-claim.

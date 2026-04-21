@@ -1,0 +1,15 @@
+item,status,file_path,notes
+MASTER_PROJECT_FILE_AUDIT.csv,pass,MASTER_PROJECT_FILE_AUDIT.csv,37620 bytes
+MASTER_PROJECT_UNDERSTANDING_REPORT.md,pass,MASTER_PROJECT_UNDERSTANDING_REPORT.md,29248 bytes
+GIT_INCLUDE_LIST.md,pass,GIT_INCLUDE_LIST.md,3201 bytes
+GIT_IGNORE_LIST.md,pass,GIT_IGNORE_LIST.md,1837 bytes
+GIT_RELEASE_PRIORITY_ORDER.md,pass,GIT_RELEASE_PRIORITY_ORDER.md,1341 bytes
+MASTER_PROJECT_FINAL_VERIFICATION.md,pass,MASTER_PROJECT_FINAL_VERIFICATION.md,1604 bytes
+MASTER_PROJECT_FINAL_STATUS.csv,pass,MASTER_PROJECT_FINAL_STATUS.csv,1242 bytes
+PROFESSOR_READING_GUIDE.md,pass,PROFESSOR_READING_GUIDE.md,1251 bytes
+audit_row_count,pass,MASTER_PROJECT_FILE_AUDIT.csv,206 audited rows
+missing_referenced_files,pass,MASTER_PROJECT_UNDERSTANDING_REPORT.md,No missing final-doc references found
+canonical_winner_preserved,pass,outputs/window_size_study/final_window_comparison.csv,Canonical winner remains transformer @ 60s.
+context_separation,pass,REPO_CONTEXT_INDEX.csv,"Canonical benchmark, replay, heldout synthetic zero-day-like, and extensions are separated."
+git_ready,pass,.git,Git metadata exists
+manual_judgment,manual_action,LICENSE,Confirm license/copyright owner and data-sharing policy before public upload.

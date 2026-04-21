@@ -1,0 +1,7 @@
+item,status,notes
+repo_readable_in_5_min,pass,"README, professor guide, and master report provide a short reader path."
+pipeline_reproducible,pass,Single release-facing pipeline entrypoint exists.
+no_overclaims,pass,"Docs preserve no AOI, no human-like RCA, no edge deployment, TTM extension-only, LoRA experimental/weak."
+clean_structure,pass,Root extra files: none
+git_ready,pass,Git metadata and .gitignore are present.
+no_machine_paths,pass,No local Windows path prefix appears in public text files.

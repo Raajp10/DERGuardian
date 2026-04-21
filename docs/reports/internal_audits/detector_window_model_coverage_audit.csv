@@ -1,0 +1,60 @@
+evaluation_context,window_seconds,model_name,artifact_exists,metrics_exist,figure_exists,split_type,canonical_or_extension,needs_rerun,notes
+canonical_benchmark_test_split,5,arima,False,False,False,canonical_test_split,extension_blocked,True,No ARIMA detector implementation exists in the repository.
+canonical_benchmark_test_split,5,autoencoder,True,True,True,canonical_test_split,canonical,False,Real canonical benchmark package and test-split metrics.
+canonical_benchmark_test_split,5,gru,True,True,True,canonical_test_split,canonical,False,Real canonical benchmark package and test-split metrics.
+canonical_benchmark_test_split,5,isolation_forest,True,True,True,canonical_test_split,canonical,False,Real canonical benchmark package and test-split metrics.
+canonical_benchmark_test_split,5,lstm,True,True,True,canonical_test_split,canonical,False,Real canonical benchmark package and test-split metrics.
+canonical_benchmark_test_split,5,lstm_ae,False,False,False,canonical_test_split,blocked,True,No LSTM autoencoder detector implementation exists; repo has an MLP autoencoder reported as `autoencoder`.
+canonical_benchmark_test_split,5,threshold_baseline,True,True,True,canonical_test_split,canonical,False,Real canonical benchmark package and test-split metrics.
+canonical_benchmark_test_split,5,transformer,True,True,True,canonical_test_split,canonical,False,Real canonical benchmark package and test-split metrics.
+canonical_benchmark_test_split,10,arima,False,False,False,canonical_test_split,extension_blocked,True,No ARIMA detector implementation exists in the repository.
+canonical_benchmark_test_split,10,autoencoder,True,True,True,canonical_test_split,canonical,False,Real canonical benchmark package and test-split metrics.
+canonical_benchmark_test_split,10,gru,True,True,True,canonical_test_split,canonical,False,Real canonical benchmark package and test-split metrics.
+canonical_benchmark_test_split,10,isolation_forest,True,True,True,canonical_test_split,canonical,False,Real canonical benchmark package and test-split metrics.
+canonical_benchmark_test_split,10,lstm,True,True,True,canonical_test_split,canonical,False,Real canonical benchmark package and test-split metrics.
+canonical_benchmark_test_split,10,lstm_ae,False,False,False,canonical_test_split,blocked,True,No LSTM autoencoder detector implementation exists; repo has an MLP autoencoder reported as `autoencoder`.
+canonical_benchmark_test_split,10,threshold_baseline,True,True,True,canonical_test_split,canonical,False,Real canonical benchmark package and test-split metrics.
+canonical_benchmark_test_split,10,transformer,True,True,True,canonical_test_split,canonical,False,Real canonical benchmark package and test-split metrics.
+canonical_benchmark_test_split,60,arima,False,False,False,canonical_test_split,extension_blocked,True,No ARIMA detector implementation exists in the repository.
+canonical_benchmark_test_split,60,autoencoder,True,True,True,canonical_test_split,canonical,False,Real canonical benchmark package and test-split metrics.
+canonical_benchmark_test_split,60,gru,True,True,True,canonical_test_split,canonical,False,Real canonical benchmark package and test-split metrics.
+canonical_benchmark_test_split,60,isolation_forest,True,True,True,canonical_test_split,canonical,False,Real canonical benchmark package and test-split metrics.
+canonical_benchmark_test_split,60,lstm,True,True,True,canonical_test_split,canonical,False,Real canonical benchmark package and test-split metrics.
+canonical_benchmark_test_split,60,lstm_ae,False,False,False,canonical_test_split,blocked,True,No LSTM autoencoder detector implementation exists; repo has an MLP autoencoder reported as `autoencoder`.
+canonical_benchmark_test_split,60,threshold_baseline,True,True,True,canonical_test_split,canonical,False,Real canonical benchmark package and test-split metrics.
+canonical_benchmark_test_split,60,transformer,True,True,True,canonical_test_split,canonical,False,Real canonical benchmark package and test-split metrics.
+canonical_benchmark_test_split,300,arima,False,False,False,canonical_test_split,extension_blocked,True,No ARIMA detector implementation exists in the repository.
+canonical_benchmark_test_split,300,autoencoder,True,True,True,canonical_test_split,canonical,False,Real canonical benchmark package and test-split metrics.
+canonical_benchmark_test_split,300,gru,True,True,True,canonical_test_split,canonical,False,Real canonical benchmark package and test-split metrics.
+canonical_benchmark_test_split,300,isolation_forest,True,True,True,canonical_test_split,canonical,False,Real canonical benchmark package and test-split metrics.
+canonical_benchmark_test_split,300,lstm,True,True,True,canonical_test_split,canonical,False,Real canonical benchmark package and test-split metrics.
+canonical_benchmark_test_split,300,lstm_ae,False,False,False,canonical_test_split,blocked,True,No LSTM autoencoder detector implementation exists; repo has an MLP autoencoder reported as `autoencoder`.
+canonical_benchmark_test_split,300,threshold_baseline,True,True,True,canonical_test_split,canonical,False,Real canonical benchmark package and test-split metrics.
+canonical_benchmark_test_split,300,transformer,True,True,True,canonical_test_split,canonical,False,Real canonical benchmark package and test-split metrics.
+existing_improved_phase3_frozen_candidate_replay,10,threshold_baseline,True,True,True,heldout_bundle_replay,replay,False,Existing improved replay includes `canonical_bundle`.
+existing_improved_phase3_frozen_candidate_replay,10,threshold_baseline,True,True,True,heldout_bundle_replay,replay,False,Existing improved replay includes `chatgpt`.
+existing_improved_phase3_frozen_candidate_replay,10,threshold_baseline,True,True,True,heldout_bundle_replay,replay,False,Existing improved replay includes `claude`.
+existing_improved_phase3_frozen_candidate_replay,10,threshold_baseline,True,True,True,heldout_bundle_replay,replay,False,Existing improved replay includes `gemini`.
+existing_improved_phase3_frozen_candidate_replay,10,threshold_baseline,True,True,True,heldout_bundle_replay,replay,False,Existing improved replay includes `grok`.
+existing_improved_phase3_frozen_candidate_replay,10,threshold_baseline,True,True,True,heldout_bundle_replay,replay,False,Existing improved replay includes `human_authored`.
+existing_improved_phase3_frozen_candidate_replay,60,transformer,True,True,True,heldout_bundle_replay,replay,False,Existing improved replay includes `canonical_bundle`.
+existing_improved_phase3_frozen_candidate_replay,60,transformer,True,True,True,heldout_bundle_replay,replay,False,Existing improved replay includes `chatgpt`.
+existing_improved_phase3_frozen_candidate_replay,60,transformer,True,True,True,heldout_bundle_replay,replay,False,Existing improved replay includes `claude`.
+existing_improved_phase3_frozen_candidate_replay,60,transformer,True,True,True,heldout_bundle_replay,replay,False,Existing improved replay includes `gemini`.
+existing_improved_phase3_frozen_candidate_replay,60,transformer,True,True,True,heldout_bundle_replay,replay,False,Existing improved replay includes `grok`.
+existing_improved_phase3_frozen_candidate_replay,60,transformer,True,True,True,heldout_bundle_replay,replay,False,Existing improved replay includes `human_authored`.
+existing_improved_phase3_frozen_candidate_replay,300,lstm,True,True,True,heldout_bundle_replay,replay,False,Existing improved replay includes `canonical_bundle`.
+existing_improved_phase3_frozen_candidate_replay,300,lstm,True,True,True,heldout_bundle_replay,replay,False,Existing improved replay includes `chatgpt`.
+existing_improved_phase3_frozen_candidate_replay,300,lstm,True,True,True,heldout_bundle_replay,replay,False,Existing improved replay includes `claude`.
+existing_improved_phase3_frozen_candidate_replay,300,lstm,True,True,True,heldout_bundle_replay,replay,False,Existing improved replay includes `gemini`.
+existing_improved_phase3_frozen_candidate_replay,300,lstm,True,True,True,heldout_bundle_replay,replay,False,Existing improved replay includes `grok`.
+existing_improved_phase3_frozen_candidate_replay,300,lstm,True,True,True,heldout_bundle_replay,replay,False,Existing improved replay includes `human_authored`.
+existing_phase3_saved_transformer_replay,60,transformer,True,True,True,heldout_bundle_replay,replay,False,Existing saved-transformer replay for bundle `canonical_bundle`.
+existing_phase3_saved_transformer_replay,60,transformer,True,True,True,heldout_bundle_replay,replay,False,Existing saved-transformer replay for bundle `chatgpt`.
+existing_phase3_saved_transformer_replay,60,transformer,True,True,True,heldout_bundle_replay,replay,False,Existing saved-transformer replay for bundle `claude`.
+existing_phase3_saved_transformer_replay,60,transformer,True,True,True,heldout_bundle_replay,replay,False,Existing saved-transformer replay for bundle `gemini`.
+existing_phase3_saved_transformer_replay,60,transformer,True,True,True,heldout_bundle_replay,replay,False,Existing saved-transformer replay for bundle `grok`.
+ttm_extension_benchmark,5,ttm_extension,False,False,False,canonical_test_split,extension,True,No TTM benchmark artifact exists for this window.
+ttm_extension_benchmark,10,ttm_extension,False,False,False,canonical_test_split,extension,True,No TTM benchmark artifact exists for this window.
+ttm_extension_benchmark,60,ttm_extension,True,True,True,canonical_test_split,extension,False,Real TinyTimeMixer extension benchmark exists at 60s only.
+ttm_extension_benchmark,300,ttm_extension,False,False,False,canonical_test_split,extension,True,No TTM benchmark artifact exists for this window.

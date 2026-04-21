@@ -1,0 +1,51 @@
+canonical_model_selection:
+  winner: transformer
+  window_label: 60s
+  source_file: outputs/window_size_study/final_window_comparison.csv
+  f1: 0.818182
+  precision: 0.692308
+  recall: 1.0
+  primary_threshold: 0.036731202658812634
+  threshold_source: outputs/window_size_study/60s/ready_packages/transformer/thresholds.json
+
+models:
+  threshold_baseline:
+    status: implemented
+    canonical_or_extension: canonical_comparator
+    threshold_example_10s: 0.0541499647985949
+    threshold_source_10s: outputs/window_size_study/10s/ready_packages/threshold_baseline/thresholds.json
+  isolation_forest:
+    status: implemented
+    canonical_or_extension: canonical_comparator
+  autoencoder:
+    status: implemented
+    architecture_note: MLP autoencoder, not LSTM autoencoder
+    canonical_or_extension: canonical_comparator
+  gru:
+    status: implemented
+    canonical_or_extension: canonical_comparator
+  lstm:
+    status: implemented
+    canonical_or_extension: canonical_comparator
+  transformer:
+    status: implemented
+    canonical_or_extension: canonical_winner_at_60s
+  ttm_extension:
+    status: implemented_60s_only
+    canonical_or_extension: extension_only
+    source_file: artifacts/extensions/phase1_ttm_results.csv
+  lora_finetuned:
+    status: experimental_weak
+    canonical_or_extension: explanation_classification_extension_only
+    source_file: artifacts/extensions/phase3_lora_results.csv
+  lstm_ae:
+    status: not_implemented
+    note: requested diagram/model label is not backed by repo code
+  arima:
+    status: not_implemented
+    note: retained as blocked comparator only
+
+threshold_policy:
+  calibration_split: validation
+  canonical_thresholds_live_in_ready_packages: true
+  do_not_relabel_replay_thresholds_as_benchmark_thresholds: true

@@ -1,0 +1,103 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Phase 3 Grounded Explanation",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "incident_id",
+    "summary",
+    "suspected_attack_family",
+    "family_confidence",
+    "why_flagged",
+    "physical_evidence_used",
+    "cyber_evidence_used",
+    "operator_actions",
+    "confidence_note",
+    "limitations"
+  ],
+  "properties": {
+    "incident_id": {
+      "type": "string"
+    },
+    "summary": {
+      "type": "string",
+      "minLength": 1
+    },
+    "suspected_attack_family": {
+      "type": "string",
+      "enum": [
+        "false_data_injection",
+        "unauthorized_command",
+        "command_suppression",
+        "telemetry_corruption",
+        "curtailment_inconsistency",
+        "coordinated_campaign",
+        "physical_dispatch_anomaly",
+        "cyber_physical_mismatch",
+        "unknown_anomaly"
+      ]
+    },
+    "family_confidence": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "level",
+        "score"
+      ],
+      "properties": {
+        "level": {
+          "type": "string",
+          "enum": [
+            "low",
+            "medium",
+            "high"
+          ]
+        },
+        "score": {
+          "type": "number",
+          "minimum": 0.0,
+          "maximum": 1.0
+        }
+      }
+    },
+    "why_flagged": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "string"
+      }
+    },
+    "physical_evidence_used": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": true
+      }
+    },
+    "cyber_evidence_used": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": true
+      }
+    },
+    "operator_actions": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "string"
+      }
+    },
+    "confidence_note": {
+      "type": "string",
+      "minLength": 1
+    },
+    "limitations": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "string"
+      }
+    }
+  }
+}

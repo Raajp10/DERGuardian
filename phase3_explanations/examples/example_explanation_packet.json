@@ -1,0 +1,369 @@
+{
+  "incident_id": "incident-threshold_baseline-20250601T131001Z",
+  "window": {
+    "start_time_utc": "2025-06-01T13:10:01Z",
+    "end_time_utc": "2025-06-01T13:15:01Z",
+    "duration_seconds": 300,
+    "cyber_lookback_seconds": 900
+  },
+  "model_name": "threshold_baseline",
+  "anomaly_score": 1.0,
+  "threshold": 0.021936,
+  "score_margin": 0.978064,
+  "predicted_alert": true,
+  "severity": "critical",
+  "affected_assets": [
+    "creg4a",
+    "pv83",
+    "bus83"
+  ],
+  "top_features": [
+    {
+      "feature": "delta__bus_83_angle_deg_phase_a__mean",
+      "signal": "bus_83_angle_deg_phase_a",
+      "aggregation": "mean",
+      "attacked_value": -1.434485,
+      "baseline_value": -0.958981,
+      "delta": -0.475504,
+      "relative_change": -0.331481,
+      "ranking_score": 0.673917,
+      "global_effect_size": 1.033051,
+      "description": "bus 83 angle deg phase a / mean"
+    },
+    {
+      "feature": "delta__bus_83_angle_deg_phase_a__last",
+      "signal": "bus_83_angle_deg_phase_a",
+      "aggregation": "last",
+      "attacked_value": -1.483254,
+      "baseline_value": -1.019199,
+      "delta": -0.464056,
+      "relative_change": -0.312863,
+      "ranking_score": 0.650499,
+      "global_effect_size": 1.079182,
+      "description": "bus 83 angle deg phase a / last"
+    },
+    {
+      "feature": "delta__bus_83_angle_deg_phase_a__min",
+      "signal": "bus_83_angle_deg_phase_a",
+      "aggregation": "min",
+      "attacked_value": -1.508723,
+      "baseline_value": -1.080683,
+      "delta": -0.428039,
+      "relative_change": -0.28371,
+      "ranking_score": 0.638167,
+      "global_effect_size": 1.249367,
+      "description": "bus 83 angle deg phase a / min"
+    },
+    {
+      "feature": "delta__feeder_i_angle_deg_phase_b__std",
+      "signal": "feeder_i_angle_deg_phase_b",
+      "aggregation": "std",
+      "attacked_value": 1.702184,
+      "baseline_value": 4.093372,
+      "delta": -2.391189,
+      "relative_change": -0.584161,
+      "ranking_score": 0.584161,
+      "global_effect_size": 0.0,
+      "description": "feeder i angle deg phase b / std"
+    },
+    {
+      "feature": "delta__line_l115_p_kw_phase_b__max",
+      "signal": "line_l115_p_kw_phase_b",
+      "aggregation": "max",
+      "attacked_value": 334.584351,
+      "baseline_value": 233.087146,
+      "delta": 101.497206,
+      "relative_change": 0.303353,
+      "ranking_score": 0.579246,
+      "global_effect_size": 0.909477,
+      "description": "line l115 P kW phase b / max"
+    },
+    {
+      "feature": "delta__line_l115_p_kw_receiving_phase_b__min",
+      "signal": "line_l115_p_kw_receiving_phase_b",
+      "aggregation": "min",
+      "attacked_value": -334.555656,
+      "baseline_value": -232.554696,
+      "delta": -102.000961,
+      "relative_change": -0.304885,
+      "ranking_score": 0.578262,
+      "global_effect_size": 0.896658,
+      "description": "line l115 P kW receiving phase b / min"
+    },
+    {
+      "feature": "delta__feeder_p_kw_phase_b__max",
+      "signal": "feeder_p_kw_phase_b",
+      "aggregation": "max",
+      "attacked_value": 331.799496,
+      "baseline_value": 232.295713,
+      "delta": 99.503783,
+      "relative_change": 0.299891,
+      "ranking_score": 0.570122,
+      "global_effect_size": 0.901094,
+      "description": "feeder P kW phase b / max"
+    },
+    {
+      "feature": "delta__feeder_i_angle_deg_phase_c__std",
+      "signal": "feeder_i_angle_deg_phase_c",
+      "aggregation": "std",
+      "attacked_value": 1.134118,
+      "baseline_value": 2.374842,
+      "delta": -1.240724,
+      "relative_change": -0.522445,
+      "ranking_score": 0.522445,
+      "global_effect_size": 0.0,
+      "description": "feeder i angle deg phase c / std"
+    },
+    {
+      "feature": "delta__feeder_p_kw_phase_b__min",
+      "signal": "feeder_p_kw_phase_b",
+      "aggregation": "min",
+      "attacked_value": 259.039063,
+      "baseline_value": 141.50108,
+      "delta": 117.537982,
+      "relative_change": 0.453746,
+      "ranking_score": 0.453746,
+      "global_effect_size": 0.0,
+      "description": "feeder P kW phase b / min"
+    },
+    {
+      "feature": "delta__line_l115_p_kw_phase_b__min",
+      "signal": "line_l115_p_kw_phase_b",
+      "aggregation": "min",
+      "attacked_value": 260.432606,
+      "baseline_value": 143.15122,
+      "delta": 117.281385,
+      "relative_change": 0.450333,
+      "ranking_score": 0.450333,
+      "global_effect_size": 0.0,
+      "description": "line l115 P kW phase b / min"
+    }
+  ],
+  "physical_evidence": [
+    {
+      "asset": "bus83",
+      "signal": "bus_83_angle_deg_phase_a",
+      "category": "voltage_angle_shift",
+      "aggregation": "mean",
+      "observed_value": -1.434485,
+      "baseline_value": -0.958981,
+      "delta": -0.475504,
+      "relative_change": -0.331481,
+      "direction": "decrease",
+      "source_feature": "delta__bus_83_angle_deg_phase_a__mean"
+    },
+    {
+      "asset": "bus83",
+      "signal": "bus_83_angle_deg_phase_a",
+      "category": "voltage_angle_shift",
+      "aggregation": "last",
+      "observed_value": -1.483254,
+      "baseline_value": -1.019199,
+      "delta": -0.464056,
+      "relative_change": -0.312863,
+      "direction": "decrease",
+      "source_feature": "delta__bus_83_angle_deg_phase_a__last"
+    },
+    {
+      "asset": "bus83",
+      "signal": "bus_83_angle_deg_phase_a",
+      "category": "voltage_angle_shift",
+      "aggregation": "min",
+      "observed_value": -1.508723,
+      "baseline_value": -1.080683,
+      "delta": -0.428039,
+      "relative_change": -0.28371,
+      "direction": "decrease",
+      "source_feature": "delta__bus_83_angle_deg_phase_a__min"
+    },
+    {
+      "asset": "feeder",
+      "signal": "feeder_i_angle_deg_phase_b",
+      "category": "feeder_power_shift",
+      "aggregation": "std",
+      "observed_value": 1.702184,
+      "baseline_value": 4.093372,
+      "delta": -2.391189,
+      "relative_change": -0.584161,
+      "direction": "decrease",
+      "source_feature": "delta__feeder_i_angle_deg_phase_b__std"
+    },
+    {
+      "asset": "feeder",
+      "signal": "line_l115_p_kw_phase_b",
+      "category": "physical_signal_shift",
+      "aggregation": "max",
+      "observed_value": 334.584351,
+      "baseline_value": 233.087146,
+      "delta": 101.497206,
+      "relative_change": 0.303353,
+      "direction": "increase",
+      "source_feature": "delta__line_l115_p_kw_phase_b__max"
+    },
+    {
+      "asset": "feeder",
+      "signal": "line_l115_p_kw_receiving_phase_b",
+      "category": "physical_signal_shift",
+      "aggregation": "min",
+      "observed_value": -334.555656,
+      "baseline_value": -232.554696,
+      "delta": -102.000961,
+      "relative_change": -0.304885,
+      "direction": "decrease",
+      "source_feature": "delta__line_l115_p_kw_receiving_phase_b__min"
+    }
+  ],
+  "cyber_evidence": [
+    {
+      "kind": "attack_event",
+      "timestamp_utc": "2025-06-01T12:59:45Z",
+      "family": null,
+      "actor": "intruder",
+      "protocol": "tls",
+      "resource": null,
+      "campaign_id": null,
+      "detail": "Precursor to scn_coordinated_pv83_reg4a_disturbance"
+    },
+    {
+      "kind": "attack_event",
+      "timestamp_utc": "2025-06-01T13:00:00Z",
+      "family": "coordinated_campaign",
+      "actor": "intruder",
+      "protocol": "mqtt",
+      "resource": "curtailment_frac",
+      "campaign_id": "campaign-scn_coordinated_pv83_reg4a_disturbance",
+      "detail": "PV output drops while downstream voltage profile and regulator activity depart materially from baseline."
+    },
+    {
+      "kind": "auth_failure",
+      "timestamp_utc": "2025-06-01T12:59:45Z",
+      "actor": "intruder",
+      "protocol": "tls",
+      "detail": "Precursor to scn_coordinated_pv83_reg4a_disturbance"
+    },
+    {
+      "kind": "suspicious_command",
+      "timestamp_utc": "2025-06-01T13:00:00Z",
+      "actor": "intruder",
+      "protocol": "mqtt",
+      "resource": "curtailment_frac",
+      "command_type": "command_override",
+      "campaign_id": "campaign-scn_coordinated_pv83_reg4a_disturbance",
+      "detail": "PV output drops while downstream voltage profile and regulator activity depart materially from baseline."
+    }
+  ],
+  "detector_evidence": {
+    "prediction_source": "C:\\Users\\raajp\\Desktop\\Final_Project\\outputs\\models_full_run\\threshold_baseline\\predictions.parquet",
+    "results_source": "C:\\Users\\raajp\\Desktop\\Final_Project\\outputs\\models_full_run\\threshold_baseline\\results.json",
+    "modality_type": "fused",
+    "candidate_family_hints": [
+      {
+        "label": "coordinated_campaign",
+        "weight": 0.22,
+        "reason": "Multiple assets appear in the strongest evidence list."
+      },
+      {
+        "label": "coordinated_campaign",
+        "weight": 0.18,
+        "reason": "Campaign-tagged cyber evidence is present."
+      }
+    ],
+    "family_hint_confidence": "low",
+    "operator_action_starter": [
+      "Inspect command logs for creg4a and verify that recent issued setpoints match the approved schedule.",
+      "Compare operator-facing telemetry against local device logs or historian data for the same window.",
+      "Review authentication, protocol source, and actor identity for suspicious writes or campaign-tagged events.",
+      "Verify DER dispatch policy, curtailment policy, or charge-discharge schedule against expected operating conditions.",
+      "Escalate the event as a potentially coordinated anomaly because multiple assets show concurrent disturbance evidence."
+    ]
+  },
+  "offline_evaluation": {
+    "scenario_label": {
+      "scenario_id": "scn_coordinated_pv83_reg4a_disturbance",
+      "scenario_name": "Coordinated PV83 Curtailment and Regulator Shift",
+      "attack_family": "coordinated_campaign",
+      "severity": "critical",
+      "start_time_utc": "2025-06-01T13:00:00Z",
+      "end_time_utc": "2025-06-01T13:15:00Z",
+      "affected_assets": [
+        "creg4a",
+        "pv83"
+      ],
+      "affected_signals": [
+        "pv_pv83_curtailment_frac",
+        "regulator_creg4a_vreg"
+      ],
+      "target_component": "pv",
+      "causal_metadata": {
+        "delay_seconds": 0,
+        "description": "A coordinated multi-asset campaign curtails PV83 and perturbs CREG4A to amplify feeder stress.",
+        "expected_effect": "PV output drops while downstream voltage profile and regulator activity depart materially from baseline.",
+        "injection_type": "command_override",
+        "notes": "Coordinated multi-asset disturbance for DER cyber-physical evaluation.",
+        "observable_signals": [
+          "pv_pv83_p_kw",
+          "regulator_creg4a_tap_pos",
+          "feeder_p_kw_total",
+          "bus_83_v_pu_phase_a"
+        ],
+        "protocol": "mqtt",
+        "source_offset_seconds": 0
+      }
+    },
+    "scenario_metadata": {
+      "scenario_id": "scn_coordinated_pv83_reg4a_disturbance",
+      "scenario_name": "Coordinated PV83 Curtailment and Regulator Shift",
+      "category": "coordinated_campaign",
+      "description": "A coordinated multi-asset campaign curtails PV83 and perturbs CREG4A to amplify feeder stress.",
+      "target_component": "pv",
+      "target_asset": "pv83",
+      "target_signal": "curtailment_frac",
+      "start_time_utc": "2025-06-01T13:00:00Z",
+      "duration_seconds": 900,
+      "injection_type": "command_override",
+      "magnitude_value": 0.75,
+      "magnitude_units": "fraction",
+      "temporal_pattern": "step",
+      "expected_effect": "PV output drops while downstream voltage profile and regulator activity depart materially from baseline.",
+      "observable_signals": [
+        "pv_pv83_p_kw",
+        "regulator_creg4a_tap_pos",
+        "feeder_p_kw_total",
+        "bus_83_v_pu_phase_a"
+      ],
+      "severity": "critical",
+      "protocol": "mqtt",
+      "additional_targets": [
+        {
+          "target_component": "regulator",
+          "target_asset": "creg4a",
+          "target_signal": "vreg",
+          "injection_type": "command_override",
+          "magnitude_value": 126.0,
+          "magnitude_units": "volts"
+        }
+      ],
+      "notes": "Coordinated multi-asset disturbance for DER cyber-physical evaluation."
+    }
+  },
+  "candidate_families": [
+    {
+      "label": "coordinated_campaign",
+      "score": 1.0,
+      "confidence": "high",
+      "reasoning": [
+        "Multiple assets appear in the strongest evidence list.",
+        "Campaign-tagged cyber evidence is present.",
+        "Multiple assets or campaign-linked cyber evidence indicate coordinated behavior."
+      ]
+    },
+    {
+      "label": "unauthorized_command",
+      "score": 0.92,
+      "confidence": "high",
+      "reasoning": [
+        "Suspicious command activity aligns with a physical DER response."
+      ]
+    }
+  ]
+}

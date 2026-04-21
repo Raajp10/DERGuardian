@@ -1,0 +1,10 @@
+! Research DER overlay for the IEEE 123-bus feeder.
+! PV systems are controlled by the Python simulation pipeline through setpoint updates.
+! Storage elements use DispMode=EXTERNAL so scenario-driven commands can be injected cleanly.
+
+New PVSystem.pv35 phases=3 bus1=35.1.2.3 kv=4.16 conn=wye kva=550.0 Pmpp=500.0 %Pmpp=100 pf=1.0 irradiance=1
+New PVSystem.pv60 phases=3 bus1=60.1.2.3 kv=4.16 conn=wye kva=950.0 Pmpp=880.0 %Pmpp=100 pf=1.0 irradiance=1
+New PVSystem.pv83 phases=3 bus1=83.1.2.3 kv=4.16 conn=wye kva=700.0 Pmpp=640.0 %Pmpp=100 pf=1.0 irradiance=1
+
+New Storage.bess48 phases=3 bus1=48.1.2.3 kv=4.16 conn=wye kva=600.0 kWrated=500.0 kWhrated=2000.0 %stored=58 %reserve=20 DispMode=EXTERNAL
+New Storage.bess108 phases=3 bus1=108.1.2.3 kv=4.16 conn=wye kva=450.0 kWrated=350.0 kWhrated=1400.0 %stored=63 %reserve=15 DispMode=EXTERNAL

@@ -1,0 +1,25 @@
+Phase 3 LoRA run log
+run_started_utc: 2026-04-20T22:52:26.634333+00:00
+run_finished_utc: 2026-04-20T23:07:04.104295+00:00
+run_mode: fresh_retrain
+base_model: google/flan-t5-small
+train_examples: 63
+aux_in_domain_holdout_examples: 16
+validation_generator_examples: 29
+test_generator_examples: 47
+adapter_root: <repo>/outputs\phase3_lora_extension\adapter
+tokenizer_root: <repo>/outputs\phase3_lora_extension\tokenizer
+training_info_path: <repo>/outputs\phase3_lora_extension\training_info.json
+trainable_params: 344064
+total_params: 77305216
+adapter_size_mb: 1.3310203552246094
+model_memory_footprint_mb: 294.89599609375
+
+results_snapshot:
+ model_variant                        split  example_count  family_accuracy  asset_accuracy  evidence_grounding_quality  confidence_accuracy  parse_rate  mean_latency_ms  median_latency_ms  p95_latency_ms  adapter_size_mb  model_memory_footprint_mb
+base_zero_shot        aux_in_domain_holdout             16         0.000000             0.0                     0.00000             0.000000         1.0       506.154925           486.1442      726.685925              NaN                     293.58
+base_zero_shot validation_generator_heldout             29         0.000000             0.0                     0.00000             0.000000         1.0       557.506648           583.6798      617.064360              NaN                     293.58
+base_zero_shot       test_generator_heldout             47         0.000000             0.0                     0.00000             0.000000         1.0       592.287572           585.5590      635.421710              NaN                     293.58
+lora_finetuned        aux_in_domain_holdout             16         0.562500             0.0                     0.00000             0.250000         1.0      3401.772312          3430.6121     3833.820900             1.33                     294.90
+lora_finetuned validation_generator_heldout             29         0.000000             0.0                     0.08046             0.172414         1.0      3507.078428          3538.2970     3730.886540             1.33                     294.90
+lora_finetuned       test_generator_heldout             47         0.234043             0.0                     0.00000             0.425532         1.0      3507.033866          3551.4457     3779.755920             1.33                     294.90

@@ -1,0 +1,19 @@
+{
+  "scenario_id": "scn_command_suppression_bess108_charge",
+  "scenario_name": "Suppressed BESS108 Charge Command",
+  "category": "command_suppression",
+  "description": "A scheduled BESS108 charging command is suppressed, leaving the battery closer to idle during a pre-dawn charging interval.",
+  "target_component": "bess",
+  "target_asset": "bess108",
+  "target_signal": "target_kw",
+  "start_time_utc": "2025-06-01T02:30:00Z",
+  "duration_seconds": 600,
+  "injection_type": "command_suppression",
+  "magnitude_units": "kW",
+  "temporal_pattern": "step",
+  "expected_effect": "BESS108 charges less than baseline, feeder demand remains slightly higher, and SOC rises more slowly than expected.",
+  "observable_signals": ["bess_bess108_p_kw", "bess_bess108_soc", "feeder_p_kw_total"],
+  "severity": "high",
+  "protocol": "mqtt",
+  "notes": "Representative command suppression case using reusable schedule-aware physical injection."
+}

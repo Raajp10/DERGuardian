@@ -1,0 +1,26 @@
+name: derguardian
+channels:
+  - conda-forge
+  - pytorch
+dependencies:
+  - python=3.11
+  - pip
+  - numpy
+  - pandas
+  - pyarrow
+  - matplotlib
+  - scikit-learn
+  - pytorch
+  - pyyaml
+  - jsonschema
+  - psutil
+  - pytest
+  - tqdm
+  - pip:
+      - opendssdirect.py
+      - transformers
+      - peft
+      - accelerate
+      - datasets
+      - safetensors
+      - sentencepiece

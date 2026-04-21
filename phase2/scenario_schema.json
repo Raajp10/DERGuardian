@@ -1,0 +1,93 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "DER Cyber-Physical Phase 2 Scenario Schema",
+  "description": "Canonical executable schema for the JSON-driven Phase 2 attacked-dataset pipeline. This schema defines bounded synthetic scenario metadata only; it does not describe exploit instructions or raw time-series payloads.",
+  "type": "object",
+  "required": ["dataset_id", "scenarios"],
+  "properties": {
+    "dataset_id": {
+      "type": "string"
+    },
+    "scenarios": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "$ref": "#/$defs/scenario"
+      }
+    }
+  },
+  "$defs": {
+    "target": {
+      "type": "object",
+      "required": ["target_component", "target_asset", "target_signal", "injection_type", "magnitude_units"],
+      "properties": {
+        "target_component": {
+          "type": "string",
+          "enum": ["pv", "bess", "regulator", "capacitor", "switch", "measured_layer"]
+        },
+        "target_asset": { "type": "string" },
+        "target_signal": { "type": "string" },
+        "injection_type": {
+          "type": "string",
+          "enum": ["bias", "scale", "replay", "freeze", "delay", "dropout", "command_override", "command_delay", "command_suppression", "mode_change"]
+        },
+        "magnitude_value": { "type": "number" },
+        "magnitude_text": { "type": "string" },
+        "magnitude_units": { "type": "string" }
+      }
+    },
+    "scenario": {
+      "type": "object",
+      "required": ["scenario_id", "scenario_name", "category", "description", "target_component", "target_asset", "target_signal", "start_time_utc", "duration_seconds", "injection_type", "magnitude_units", "temporal_pattern", "expected_effect", "observable_signals", "severity"],
+      "properties": {
+        "scenario_id": { "type": "string" },
+        "scenario_name": { "type": "string" },
+        "category": {
+          "type": "string",
+          "enum": ["false_data_injection", "replay", "unauthorized_command", "telemetry_corruption", "command_delay", "command_suppression", "degradation", "coordinated_campaign"]
+        },
+        "description": { "type": "string" },
+        "target_component": {
+          "type": "string",
+          "enum": ["pv", "bess", "regulator", "capacitor", "switch", "measured_layer"]
+        },
+        "target_asset": { "type": "string" },
+        "target_signal": { "type": "string" },
+        "start_time_utc": { "type": "string", "format": "date-time" },
+        "start_offset_seconds": { "type": "integer", "minimum": 0 },
+        "duration_seconds": { "type": "integer", "minimum": 1 },
+        "injection_type": {
+          "type": "string",
+          "enum": ["bias", "scale", "replay", "freeze", "delay", "dropout", "command_override", "command_delay", "command_suppression", "mode_change"]
+        },
+        "magnitude_value": { "type": "number" },
+        "magnitude_text": { "type": "string" },
+        "magnitude_units": { "type": "string" },
+        "delay_seconds": { "type": "integer", "minimum": 0 },
+        "temporal_pattern": {
+          "type": "string",
+          "enum": ["step", "ramp", "pulse", "staircase", "sine", "replay", "freeze", "burst"]
+        },
+        "expected_effect": { "type": "string" },
+        "observable_signals": {
+          "type": "array",
+          "minItems": 1,
+          "items": { "type": "string" }
+        },
+        "severity": {
+          "type": "string",
+          "enum": ["low", "medium", "high", "critical"]
+        },
+        "protocol": { "type": "string" },
+        "notes": { "type": "string" },
+        "source_offset_seconds": { "type": "integer", "minimum": 0 },
+        "additional_targets": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/target"
+          }
+        }
+      }
+    }
+  }
+}

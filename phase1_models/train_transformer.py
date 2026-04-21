@@ -1,0 +1,61 @@
+from __future__ import annotations
+
+from pathlib import Path
+import argparse
+import sys
+
+ROOT = Path(__file__).resolve().parents[1]
+if str(ROOT) not in sys.path:
+    sys.path.insert(0, str(ROOT))
+
+from phase1_models.neural_models import TinyTransformerClassifier
+from phase1_models.run_full_evaluation import prepare_full_run_data, run_sequence_model
+from phase1_models.sequence_train_utils import train_sequence_classifier_model
+
+
+def main() -> None:
+    parser = argparse.ArgumentParser(description="Train the repaired lightweight transformer sequence classifier.")
+    parser.add_argument("--project-root", default=str(ROOT))
+    parser.add_argument("--max-features", type=int, default=96)
+    parser.add_argument("--seq-len", type=int, default=8)
+    parser.add_argument("--epochs", type=int, default=6)
+    parser.add_argument("--run-mode", default="full", choices=["full", "legacy-smoke"])
+    parser.add_argument("--feature-counts", default="")
+    parser.add_argument("--seq-lens", default="")
+    parser.add_argument("--buffer-windows", type=int, default=2)
+    parser.add_argument("--patience", type=int, default=5)
+    args = parser.parse_args()
+    root = Path(args.project_root)
+    if args.run_mode == "legacy-smoke":
+        result = train_sequence_classifier_model(
+            model_name="transformer",
+            model_ctor=lambda input_dim: TinyTransformerClassifier(input_dim=input_dim, d_model=64, nhead=4, num_layers=2),
+            project_root=root,
+            max_features=args.max_features,
+            seq_len=args.seq_len,
+            epochs=args.epochs,
+        )
+    else:
+        feature_counts = [int(item) for item in args.feature_counts.split(",") if item.strip()] if args.feature_counts else [args.max_features]
+        seq_lens = [int(item) for item in args.seq_lens.split(",") if item.strip()] if args.seq_lens else [args.seq_len]
+        full_data = prepare_full_run_data(root, buffer_windows=args.buffer_windows)
+        full_result = run_sequence_model(
+            root=root,
+            full_data=full_data,
+            model_name="transformer",
+            model_ctor=lambda input_dim: TinyTransformerClassifier(input_dim=input_dim, d_model=64, nhead=4, num_layers=2),
+            feature_counts=feature_counts,
+            seq_lens=seq_lens,
+            epochs=args.epochs,
+            patience=args.patience,
+            token_input=False,
+            report_root=root / "outputs" / "reports" / "model_full_run_artifacts",
+            model_root_name="models_full_run",
+            artifact_root_name="model_full_run_artifacts",
+        )
+        result = {"model_name": "transformer", "metrics": full_result["summary"], "info": full_result["summary"]}
+    print(f"Saved transformer artifacts for {result['model_name']}")
+
+
+if __name__ == "__main__":
+    main()

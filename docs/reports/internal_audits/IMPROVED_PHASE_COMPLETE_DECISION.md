@@ -1,0 +1,6 @@
+# Improved Phase Complete Decision
+
+- Is the heldout replay now cleaner scientifically? yes. The improved pass separates benchmark vs replay, removes the old finite-value clipping confound from default replay, and documents repaired/balanced heldout counts explicitly.
+- Is the residual pipeline fixed enough? yes for paper-safe reporting. The replay-stage non-finite issue was mostly a misclassification of finite clipping, and the source-level window-builder hygiene fix removes a real upstream NaN-propagation risk for new heldout/repaired windows.
+- Is transformer still the best final model for the paper? yes for canonical benchmark-driven model selection, but not for heldout replay mean F1 alone; the 300s LSTM transferred better across the bounded heldout bundles while the 60s transformer remained much faster.
+- What exact wording should be used in the paper and presentation? 'The canonical Phase 1 benchmark selected a 60-second transformer, while frozen-package heldout replay across independently produced synthetic bundles showed variable cross-generator transfer. We report these replay results separately from benchmark test-split metrics. The explanation layer is presented as a grounded, post-alert operator-facing aid with evidence-grounded family attribution rather than human-level root-cause analysis.'

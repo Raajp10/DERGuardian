@@ -1,0 +1,58 @@
+project:
+  name: DERGuardian
+  canonical_benchmark_winner: transformer_60s
+  canonical_benchmark_source: outputs/window_size_study/final_window_comparison.csv
+  preserve_canonical_outputs: true
+
+phases:
+  phase1:
+    purpose: clean_data_generation_windowing_and_detector_training
+    clean_data_command: python -m phase1.build_clean_dataset --config configs/pipeline_config.yaml
+    validation_command: python -m phase1.validate_clean_dataset
+    window_study_command: python scripts/run_window_size_study.py --window-sizes 5,10,60,300 --skip-existing
+  phase2:
+    purpose: scenario_validation_and_attacked_dataset_generation
+    scenario_source: phase2/research_attack_scenarios.json
+    schema: phase2/scenario_schema.json
+    validation_command: python -m phase2.validate_scenarios
+    attacked_generation_command: python -m phase2.generate_attacked_dataset --scenarios phase2/research_attack_scenarios.json
+  phase3:
+    purpose: frozen_detector_replay_zero_day_like_xai_and_deployment_evidence
+    detector_audit_command: python scripts/run_detector_window_zero_day_audit.py
+    xai_report_command: python scripts/build_xai_and_final_reports.py
+    deployment_benchmark_command: python scripts/run_deployment_benchmark.py
+
+windowing:
+  min_attack_overlap_fraction: 0.2
+  window_specs:
+    - label: 5s
+      window_seconds: 5
+      step_seconds: 1
+    - label: 10s
+      window_seconds: 10
+      step_seconds: 2
+    - label: 60s
+      window_seconds: 60
+      step_seconds: 12
+    - label: 300s
+      window_seconds: 300
+      step_seconds: 60
+
+evaluation_contexts:
+  canonical_benchmark:
+    source: outputs/window_size_study/final_window_comparison.csv
+    meaning: frozen_phase1_model_selection
+  heldout_replay:
+    source: artifacts/replay/
+    meaning: frozen_package_transfer_replay
+  heldout_synthetic_zero_day_like:
+    source: artifacts/zero_day_like/
+    meaning: heldout_synthetic_generated_attack_evaluation_only
+  extensions:
+    source: artifacts/extensions/
+    meaning: secondary_ttm_and_lora_evidence
+
+reporting:
+  public_docs_root: docs/
+  internal_audit_root: docs/reports/internal_audits/
+  public_artifact_root: artifacts/

@@ -1,0 +1,217 @@
+window_seconds,model_name,scenario_bundle,zero_day_eval_exists,metrics_exist,report_exists,needs_rerun,notes
+5,arima,canonical_bundle,False,False,False,True,"ARIMA detector is not implemented in the repository. Canonical bundle is in-domain replay reference, not counted as heldout zero-day-like evidence."
+5,autoencoder,canonical_bundle,False,False,False,True,"No pre-existing heldout synthetic evaluation artifact found. Canonical bundle is in-domain replay reference, not counted as heldout zero-day-like evidence."
+5,gru,canonical_bundle,False,False,False,True,"No pre-existing heldout synthetic evaluation artifact found. Canonical bundle is in-domain replay reference, not counted as heldout zero-day-like evidence."
+5,isolation_forest,canonical_bundle,False,False,False,True,"No pre-existing heldout synthetic evaluation artifact found. Canonical bundle is in-domain replay reference, not counted as heldout zero-day-like evidence."
+5,lstm,canonical_bundle,False,False,False,True,"No pre-existing heldout synthetic evaluation artifact found. Canonical bundle is in-domain replay reference, not counted as heldout zero-day-like evidence."
+5,lstm_ae,canonical_bundle,False,False,False,True,"No LSTM autoencoder detector implementation exists; MLP autoencoder is reported separately as `autoencoder`. Canonical bundle is in-domain replay reference, not counted as heldout zero-day-like evidence."
+5,threshold_baseline,canonical_bundle,False,False,False,True,"No pre-existing heldout synthetic evaluation artifact found. Canonical bundle is in-domain replay reference, not counted as heldout zero-day-like evidence."
+5,transformer,canonical_bundle,False,False,False,True,"No pre-existing heldout synthetic evaluation artifact found. Canonical bundle is in-domain replay reference, not counted as heldout zero-day-like evidence."
+5,ttm_extension,canonical_bundle,False,False,False,True,"No pre-existing heldout TTM evaluation artifact was found. Canonical bundle is in-domain replay reference, not counted as heldout zero-day-like evidence."
+10,arima,canonical_bundle,False,False,False,True,"ARIMA detector is not implemented in the repository. Canonical bundle is in-domain replay reference, not counted as heldout zero-day-like evidence."
+10,autoencoder,canonical_bundle,False,False,False,True,"No pre-existing heldout synthetic evaluation artifact found. Canonical bundle is in-domain replay reference, not counted as heldout zero-day-like evidence."
+10,gru,canonical_bundle,False,False,False,True,"No pre-existing heldout synthetic evaluation artifact found. Canonical bundle is in-domain replay reference, not counted as heldout zero-day-like evidence."
+10,isolation_forest,canonical_bundle,False,False,False,True,"No pre-existing heldout synthetic evaluation artifact found. Canonical bundle is in-domain replay reference, not counted as heldout zero-day-like evidence."
+10,lstm,canonical_bundle,False,False,False,True,"No pre-existing heldout synthetic evaluation artifact found. Canonical bundle is in-domain replay reference, not counted as heldout zero-day-like evidence."
+10,lstm_ae,canonical_bundle,False,False,False,True,"No LSTM autoencoder detector implementation exists; MLP autoencoder is reported separately as `autoencoder`. Canonical bundle is in-domain replay reference, not counted as heldout zero-day-like evidence."
+10,threshold_baseline,canonical_bundle,True,True,True,False,"Existing improved frozen-candidate replay artifact. Canonical bundle is in-domain replay reference, not counted as heldout zero-day-like evidence."
+10,transformer,canonical_bundle,False,False,False,True,"No pre-existing heldout synthetic evaluation artifact found. Canonical bundle is in-domain replay reference, not counted as heldout zero-day-like evidence."
+10,ttm_extension,canonical_bundle,False,False,False,True,"No pre-existing heldout TTM evaluation artifact was found. Canonical bundle is in-domain replay reference, not counted as heldout zero-day-like evidence."
+60,arima,canonical_bundle,False,False,False,True,"ARIMA detector is not implemented in the repository. Canonical bundle is in-domain replay reference, not counted as heldout zero-day-like evidence."
+60,autoencoder,canonical_bundle,False,False,False,True,"No pre-existing heldout synthetic evaluation artifact found. Canonical bundle is in-domain replay reference, not counted as heldout zero-day-like evidence."
+60,gru,canonical_bundle,False,False,False,True,"No pre-existing heldout synthetic evaluation artifact found. Canonical bundle is in-domain replay reference, not counted as heldout zero-day-like evidence."
+60,isolation_forest,canonical_bundle,False,False,False,True,"No pre-existing heldout synthetic evaluation artifact found. Canonical bundle is in-domain replay reference, not counted as heldout zero-day-like evidence."
+60,lstm,canonical_bundle,False,False,False,True,"No pre-existing heldout synthetic evaluation artifact found. Canonical bundle is in-domain replay reference, not counted as heldout zero-day-like evidence."
+60,lstm_ae,canonical_bundle,False,False,False,True,"No LSTM autoencoder detector implementation exists; MLP autoencoder is reported separately as `autoencoder`. Canonical bundle is in-domain replay reference, not counted as heldout zero-day-like evidence."
+60,threshold_baseline,canonical_bundle,False,False,False,True,"No pre-existing heldout synthetic evaluation artifact found. Canonical bundle is in-domain replay reference, not counted as heldout zero-day-like evidence."
+60,transformer,canonical_bundle,True,True,True,False,"Existing improved frozen-candidate replay artifact. Canonical bundle is in-domain replay reference, not counted as heldout zero-day-like evidence."
+60,ttm_extension,canonical_bundle,False,False,False,True,"No pre-existing heldout TTM evaluation artifact was found. Canonical bundle is in-domain replay reference, not counted as heldout zero-day-like evidence."
+300,arima,canonical_bundle,False,False,False,True,"ARIMA detector is not implemented in the repository. Canonical bundle is in-domain replay reference, not counted as heldout zero-day-like evidence."
+300,autoencoder,canonical_bundle,False,False,False,True,"No pre-existing heldout synthetic evaluation artifact found. Canonical bundle is in-domain replay reference, not counted as heldout zero-day-like evidence."
+300,gru,canonical_bundle,False,False,False,True,"No pre-existing heldout synthetic evaluation artifact found. Canonical bundle is in-domain replay reference, not counted as heldout zero-day-like evidence."
+300,isolation_forest,canonical_bundle,False,False,False,True,"No pre-existing heldout synthetic evaluation artifact found. Canonical bundle is in-domain replay reference, not counted as heldout zero-day-like evidence."
+300,lstm,canonical_bundle,True,True,True,False,"Existing improved frozen-candidate replay artifact. Canonical bundle is in-domain replay reference, not counted as heldout zero-day-like evidence."
+300,lstm_ae,canonical_bundle,False,False,False,True,"No LSTM autoencoder detector implementation exists; MLP autoencoder is reported separately as `autoencoder`. Canonical bundle is in-domain replay reference, not counted as heldout zero-day-like evidence."
+300,threshold_baseline,canonical_bundle,False,False,False,True,"No pre-existing heldout synthetic evaluation artifact found. Canonical bundle is in-domain replay reference, not counted as heldout zero-day-like evidence."
+300,transformer,canonical_bundle,False,False,False,True,"No pre-existing heldout synthetic evaluation artifact found. Canonical bundle is in-domain replay reference, not counted as heldout zero-day-like evidence."
+300,ttm_extension,canonical_bundle,False,False,False,True,"No pre-existing heldout TTM evaluation artifact was found. Canonical bundle is in-domain replay reference, not counted as heldout zero-day-like evidence."
+5,arima,chatgpt,False,False,False,True,ARIMA detector is not implemented in the repository.
+5,autoencoder,chatgpt,False,False,False,True,No pre-existing heldout synthetic evaluation artifact found.
+5,gru,chatgpt,False,False,False,True,No pre-existing heldout synthetic evaluation artifact found.
+5,isolation_forest,chatgpt,False,False,False,True,No pre-existing heldout synthetic evaluation artifact found.
+5,lstm,chatgpt,False,False,False,True,No pre-existing heldout synthetic evaluation artifact found.
+5,lstm_ae,chatgpt,False,False,False,True,No LSTM autoencoder detector implementation exists; MLP autoencoder is reported separately as `autoencoder`.
+5,threshold_baseline,chatgpt,False,False,False,True,No pre-existing heldout synthetic evaluation artifact found.
+5,transformer,chatgpt,False,False,False,True,No pre-existing heldout synthetic evaluation artifact found.
+5,ttm_extension,chatgpt,False,False,False,True,No pre-existing heldout TTM evaluation artifact was found.
+10,arima,chatgpt,False,False,False,True,ARIMA detector is not implemented in the repository.
+10,autoencoder,chatgpt,False,False,False,True,No pre-existing heldout synthetic evaluation artifact found.
+10,gru,chatgpt,False,False,False,True,No pre-existing heldout synthetic evaluation artifact found.
+10,isolation_forest,chatgpt,False,False,False,True,No pre-existing heldout synthetic evaluation artifact found.
+10,lstm,chatgpt,False,False,False,True,No pre-existing heldout synthetic evaluation artifact found.
+10,lstm_ae,chatgpt,False,False,False,True,No LSTM autoencoder detector implementation exists; MLP autoencoder is reported separately as `autoencoder`.
+10,threshold_baseline,chatgpt,True,True,True,False,Existing improved frozen-candidate replay artifact.
+10,transformer,chatgpt,False,False,False,True,No pre-existing heldout synthetic evaluation artifact found.
+10,ttm_extension,chatgpt,False,False,False,True,No pre-existing heldout TTM evaluation artifact was found.
+60,arima,chatgpt,False,False,False,True,ARIMA detector is not implemented in the repository.
+60,autoencoder,chatgpt,False,False,False,True,No pre-existing heldout synthetic evaluation artifact found.
+60,gru,chatgpt,False,False,False,True,No pre-existing heldout synthetic evaluation artifact found.
+60,isolation_forest,chatgpt,False,False,False,True,No pre-existing heldout synthetic evaluation artifact found.
+60,lstm,chatgpt,False,False,False,True,No pre-existing heldout synthetic evaluation artifact found.
+60,lstm_ae,chatgpt,False,False,False,True,No LSTM autoencoder detector implementation exists; MLP autoencoder is reported separately as `autoencoder`.
+60,threshold_baseline,chatgpt,False,False,False,True,No pre-existing heldout synthetic evaluation artifact found.
+60,transformer,chatgpt,True,True,True,False,Existing improved frozen-candidate replay artifact.
+60,ttm_extension,chatgpt,False,False,False,True,No pre-existing heldout TTM evaluation artifact was found.
+300,arima,chatgpt,False,False,False,True,ARIMA detector is not implemented in the repository.
+300,autoencoder,chatgpt,False,False,False,True,No pre-existing heldout synthetic evaluation artifact found.
+300,gru,chatgpt,False,False,False,True,No pre-existing heldout synthetic evaluation artifact found.
+300,isolation_forest,chatgpt,False,False,False,True,No pre-existing heldout synthetic evaluation artifact found.
+300,lstm,chatgpt,True,True,True,False,Existing improved frozen-candidate replay artifact.
+300,lstm_ae,chatgpt,False,False,False,True,No LSTM autoencoder detector implementation exists; MLP autoencoder is reported separately as `autoencoder`.
+300,threshold_baseline,chatgpt,False,False,False,True,No pre-existing heldout synthetic evaluation artifact found.
+300,transformer,chatgpt,False,False,False,True,No pre-existing heldout synthetic evaluation artifact found.
+300,ttm_extension,chatgpt,False,False,False,True,No pre-existing heldout TTM evaluation artifact was found.
+5,arima,claude,False,False,False,True,ARIMA detector is not implemented in the repository.
+5,autoencoder,claude,False,False,False,True,No pre-existing heldout synthetic evaluation artifact found.
+5,gru,claude,False,False,False,True,No pre-existing heldout synthetic evaluation artifact found.
+5,isolation_forest,claude,False,False,False,True,No pre-existing heldout synthetic evaluation artifact found.
+5,lstm,claude,False,False,False,True,No pre-existing heldout synthetic evaluation artifact found.
+5,lstm_ae,claude,False,False,False,True,No LSTM autoencoder detector implementation exists; MLP autoencoder is reported separately as `autoencoder`.
+5,threshold_baseline,claude,False,False,False,True,No pre-existing heldout synthetic evaluation artifact found.
+5,transformer,claude,False,False,False,True,No pre-existing heldout synthetic evaluation artifact found.
+5,ttm_extension,claude,False,False,False,True,No pre-existing heldout TTM evaluation artifact was found.
+10,arima,claude,False,False,False,True,ARIMA detector is not implemented in the repository.
+10,autoencoder,claude,False,False,False,True,No pre-existing heldout synthetic evaluation artifact found.
+10,gru,claude,False,False,False,True,No pre-existing heldout synthetic evaluation artifact found.
+10,isolation_forest,claude,False,False,False,True,No pre-existing heldout synthetic evaluation artifact found.
+10,lstm,claude,False,False,False,True,No pre-existing heldout synthetic evaluation artifact found.
+10,lstm_ae,claude,False,False,False,True,No LSTM autoencoder detector implementation exists; MLP autoencoder is reported separately as `autoencoder`.
+10,threshold_baseline,claude,True,True,True,False,Existing improved frozen-candidate replay artifact.
+10,transformer,claude,False,False,False,True,No pre-existing heldout synthetic evaluation artifact found.
+10,ttm_extension,claude,False,False,False,True,No pre-existing heldout TTM evaluation artifact was found.
+60,arima,claude,False,False,False,True,ARIMA detector is not implemented in the repository.
+60,autoencoder,claude,False,False,False,True,No pre-existing heldout synthetic evaluation artifact found.
+60,gru,claude,False,False,False,True,No pre-existing heldout synthetic evaluation artifact found.
+60,isolation_forest,claude,False,False,False,True,No pre-existing heldout synthetic evaluation artifact found.
+60,lstm,claude,False,False,False,True,No pre-existing heldout synthetic evaluation artifact found.
+60,lstm_ae,claude,False,False,False,True,No LSTM autoencoder detector implementation exists; MLP autoencoder is reported separately as `autoencoder`.
+60,threshold_baseline,claude,False,False,False,True,No pre-existing heldout synthetic evaluation artifact found.
+60,transformer,claude,True,True,True,False,Existing improved frozen-candidate replay artifact.
+60,ttm_extension,claude,False,False,False,True,No pre-existing heldout TTM evaluation artifact was found.
+300,arima,claude,False,False,False,True,ARIMA detector is not implemented in the repository.
+300,autoencoder,claude,False,False,False,True,No pre-existing heldout synthetic evaluation artifact found.
+300,gru,claude,False,False,False,True,No pre-existing heldout synthetic evaluation artifact found.
+300,isolation_forest,claude,False,False,False,True,No pre-existing heldout synthetic evaluation artifact found.
+300,lstm,claude,True,True,True,False,Existing improved frozen-candidate replay artifact.
+300,lstm_ae,claude,False,False,False,True,No LSTM autoencoder detector implementation exists; MLP autoencoder is reported separately as `autoencoder`.
+300,threshold_baseline,claude,False,False,False,True,No pre-existing heldout synthetic evaluation artifact found.
+300,transformer,claude,False,False,False,True,No pre-existing heldout synthetic evaluation artifact found.
+300,ttm_extension,claude,False,False,False,True,No pre-existing heldout TTM evaluation artifact was found.
+5,arima,gemini,False,False,False,True,ARIMA detector is not implemented in the repository.
+5,autoencoder,gemini,False,False,False,True,No pre-existing heldout synthetic evaluation artifact found.
+5,gru,gemini,False,False,False,True,No pre-existing heldout synthetic evaluation artifact found.
+5,isolation_forest,gemini,False,False,False,True,No pre-existing heldout synthetic evaluation artifact found.
+5,lstm,gemini,False,False,False,True,No pre-existing heldout synthetic evaluation artifact found.
+5,lstm_ae,gemini,False,False,False,True,No LSTM autoencoder detector implementation exists; MLP autoencoder is reported separately as `autoencoder`.
+5,threshold_baseline,gemini,False,False,False,True,No pre-existing heldout synthetic evaluation artifact found.
+5,transformer,gemini,False,False,False,True,No pre-existing heldout synthetic evaluation artifact found.
+5,ttm_extension,gemini,False,False,False,True,No pre-existing heldout TTM evaluation artifact was found.
+10,arima,gemini,False,False,False,True,ARIMA detector is not implemented in the repository.
+10,autoencoder,gemini,False,False,False,True,No pre-existing heldout synthetic evaluation artifact found.
+10,gru,gemini,False,False,False,True,No pre-existing heldout synthetic evaluation artifact found.
+10,isolation_forest,gemini,False,False,False,True,No pre-existing heldout synthetic evaluation artifact found.
+10,lstm,gemini,False,False,False,True,No pre-existing heldout synthetic evaluation artifact found.
+10,lstm_ae,gemini,False,False,False,True,No LSTM autoencoder detector implementation exists; MLP autoencoder is reported separately as `autoencoder`.
+10,threshold_baseline,gemini,True,True,True,False,Existing improved frozen-candidate replay artifact.
+10,transformer,gemini,False,False,False,True,No pre-existing heldout synthetic evaluation artifact found.
+10,ttm_extension,gemini,False,False,False,True,No pre-existing heldout TTM evaluation artifact was found.
+60,arima,gemini,False,False,False,True,ARIMA detector is not implemented in the repository.
+60,autoencoder,gemini,False,False,False,True,No pre-existing heldout synthetic evaluation artifact found.
+60,gru,gemini,False,False,False,True,No pre-existing heldout synthetic evaluation artifact found.
+60,isolation_forest,gemini,False,False,False,True,No pre-existing heldout synthetic evaluation artifact found.
+60,lstm,gemini,False,False,False,True,No pre-existing heldout synthetic evaluation artifact found.
+60,lstm_ae,gemini,False,False,False,True,No LSTM autoencoder detector implementation exists; MLP autoencoder is reported separately as `autoencoder`.
+60,threshold_baseline,gemini,False,False,False,True,No pre-existing heldout synthetic evaluation artifact found.
+60,transformer,gemini,True,True,True,False,Existing improved frozen-candidate replay artifact.
+60,ttm_extension,gemini,False,False,False,True,No pre-existing heldout TTM evaluation artifact was found.
+300,arima,gemini,False,False,False,True,ARIMA detector is not implemented in the repository.
+300,autoencoder,gemini,False,False,False,True,No pre-existing heldout synthetic evaluation artifact found.
+300,gru,gemini,False,False,False,True,No pre-existing heldout synthetic evaluation artifact found.
+300,isolation_forest,gemini,False,False,False,True,No pre-existing heldout synthetic evaluation artifact found.
+300,lstm,gemini,True,True,True,False,Existing improved frozen-candidate replay artifact.
+300,lstm_ae,gemini,False,False,False,True,No LSTM autoencoder detector implementation exists; MLP autoencoder is reported separately as `autoencoder`.
+300,threshold_baseline,gemini,False,False,False,True,No pre-existing heldout synthetic evaluation artifact found.
+300,transformer,gemini,False,False,False,True,No pre-existing heldout synthetic evaluation artifact found.
+300,ttm_extension,gemini,False,False,False,True,No pre-existing heldout TTM evaluation artifact was found.
+5,arima,grok,False,False,False,True,ARIMA detector is not implemented in the repository.
+5,autoencoder,grok,False,False,False,True,No pre-existing heldout synthetic evaluation artifact found.
+5,gru,grok,False,False,False,True,No pre-existing heldout synthetic evaluation artifact found.
+5,isolation_forest,grok,False,False,False,True,No pre-existing heldout synthetic evaluation artifact found.
+5,lstm,grok,False,False,False,True,No pre-existing heldout synthetic evaluation artifact found.
+5,lstm_ae,grok,False,False,False,True,No LSTM autoencoder detector implementation exists; MLP autoencoder is reported separately as `autoencoder`.
+5,threshold_baseline,grok,False,False,False,True,No pre-existing heldout synthetic evaluation artifact found.
+5,transformer,grok,False,False,False,True,No pre-existing heldout synthetic evaluation artifact found.
+5,ttm_extension,grok,False,False,False,True,No pre-existing heldout TTM evaluation artifact was found.
+10,arima,grok,False,False,False,True,ARIMA detector is not implemented in the repository.
+10,autoencoder,grok,False,False,False,True,No pre-existing heldout synthetic evaluation artifact found.
+10,gru,grok,False,False,False,True,No pre-existing heldout synthetic evaluation artifact found.
+10,isolation_forest,grok,False,False,False,True,No pre-existing heldout synthetic evaluation artifact found.
+10,lstm,grok,False,False,False,True,No pre-existing heldout synthetic evaluation artifact found.
+10,lstm_ae,grok,False,False,False,True,No LSTM autoencoder detector implementation exists; MLP autoencoder is reported separately as `autoencoder`.
+10,threshold_baseline,grok,True,True,True,False,Existing improved frozen-candidate replay artifact.
+10,transformer,grok,False,False,False,True,No pre-existing heldout synthetic evaluation artifact found.
+10,ttm_extension,grok,False,False,False,True,No pre-existing heldout TTM evaluation artifact was found.
+60,arima,grok,False,False,False,True,ARIMA detector is not implemented in the repository.
+60,autoencoder,grok,False,False,False,True,No pre-existing heldout synthetic evaluation artifact found.
+60,gru,grok,False,False,False,True,No pre-existing heldout synthetic evaluation artifact found.
+60,isolation_forest,grok,False,False,False,True,No pre-existing heldout synthetic evaluation artifact found.
+60,lstm,grok,False,False,False,True,No pre-existing heldout synthetic evaluation artifact found.
+60,lstm_ae,grok,False,False,False,True,No LSTM autoencoder detector implementation exists; MLP autoencoder is reported separately as `autoencoder`.
+60,threshold_baseline,grok,False,False,False,True,No pre-existing heldout synthetic evaluation artifact found.
+60,transformer,grok,True,True,True,False,Existing improved frozen-candidate replay artifact.
+60,ttm_extension,grok,False,False,False,True,No pre-existing heldout TTM evaluation artifact was found.
+300,arima,grok,False,False,False,True,ARIMA detector is not implemented in the repository.
+300,autoencoder,grok,False,False,False,True,No pre-existing heldout synthetic evaluation artifact found.
+300,gru,grok,False,False,False,True,No pre-existing heldout synthetic evaluation artifact found.
+300,isolation_forest,grok,False,False,False,True,No pre-existing heldout synthetic evaluation artifact found.
+300,lstm,grok,True,True,True,False,Existing improved frozen-candidate replay artifact.
+300,lstm_ae,grok,False,False,False,True,No LSTM autoencoder detector implementation exists; MLP autoencoder is reported separately as `autoencoder`.
+300,threshold_baseline,grok,False,False,False,True,No pre-existing heldout synthetic evaluation artifact found.
+300,transformer,grok,False,False,False,True,No pre-existing heldout synthetic evaluation artifact found.
+300,ttm_extension,grok,False,False,False,True,No pre-existing heldout TTM evaluation artifact was found.
+5,arima,human_authored,False,False,False,True,ARIMA detector is not implemented in the repository.
+5,autoencoder,human_authored,False,False,False,True,No pre-existing heldout synthetic evaluation artifact found.
+5,gru,human_authored,False,False,False,True,No pre-existing heldout synthetic evaluation artifact found.
+5,isolation_forest,human_authored,False,False,False,True,No pre-existing heldout synthetic evaluation artifact found.
+5,lstm,human_authored,False,False,False,True,No pre-existing heldout synthetic evaluation artifact found.
+5,lstm_ae,human_authored,False,False,False,True,No LSTM autoencoder detector implementation exists; MLP autoencoder is reported separately as `autoencoder`.
+5,threshold_baseline,human_authored,False,False,False,True,No pre-existing heldout synthetic evaluation artifact found.
+5,transformer,human_authored,False,False,False,True,No pre-existing heldout synthetic evaluation artifact found.
+5,ttm_extension,human_authored,False,False,False,True,No pre-existing heldout TTM evaluation artifact was found.
+10,arima,human_authored,False,False,False,True,ARIMA detector is not implemented in the repository.
+10,autoencoder,human_authored,False,False,False,True,No pre-existing heldout synthetic evaluation artifact found.
+10,gru,human_authored,False,False,False,True,No pre-existing heldout synthetic evaluation artifact found.
+10,isolation_forest,human_authored,False,False,False,True,No pre-existing heldout synthetic evaluation artifact found.
+10,lstm,human_authored,False,False,False,True,No pre-existing heldout synthetic evaluation artifact found.
+10,lstm_ae,human_authored,False,False,False,True,No LSTM autoencoder detector implementation exists; MLP autoencoder is reported separately as `autoencoder`.
+10,threshold_baseline,human_authored,True,True,True,False,Existing improved frozen-candidate replay artifact.
+10,transformer,human_authored,False,False,False,True,No pre-existing heldout synthetic evaluation artifact found.
+10,ttm_extension,human_authored,False,False,False,True,No pre-existing heldout TTM evaluation artifact was found.
+60,arima,human_authored,False,False,False,True,ARIMA detector is not implemented in the repository.
+60,autoencoder,human_authored,False,False,False,True,No pre-existing heldout synthetic evaluation artifact found.
+60,gru,human_authored,False,False,False,True,No pre-existing heldout synthetic evaluation artifact found.
+60,isolation_forest,human_authored,False,False,False,True,No pre-existing heldout synthetic evaluation artifact found.
+60,lstm,human_authored,False,False,False,True,No pre-existing heldout synthetic evaluation artifact found.
+60,lstm_ae,human_authored,False,False,False,True,No LSTM autoencoder detector implementation exists; MLP autoencoder is reported separately as `autoencoder`.
+60,threshold_baseline,human_authored,False,False,False,True,No pre-existing heldout synthetic evaluation artifact found.
+60,transformer,human_authored,True,True,True,False,Existing improved frozen-candidate replay artifact.
+60,ttm_extension,human_authored,False,False,False,True,No pre-existing heldout TTM evaluation artifact was found.
+300,arima,human_authored,False,False,False,True,ARIMA detector is not implemented in the repository.
+300,autoencoder,human_authored,False,False,False,True,No pre-existing heldout synthetic evaluation artifact found.
+300,gru,human_authored,False,False,False,True,No pre-existing heldout synthetic evaluation artifact found.
+300,isolation_forest,human_authored,False,False,False,True,No pre-existing heldout synthetic evaluation artifact found.
+300,lstm,human_authored,True,True,True,False,Existing improved frozen-candidate replay artifact.
+300,lstm_ae,human_authored,False,False,False,True,No LSTM autoencoder detector implementation exists; MLP autoencoder is reported separately as `autoencoder`.
+300,threshold_baseline,human_authored,False,False,False,True,No pre-existing heldout synthetic evaluation artifact found.
+300,transformer,human_authored,False,False,False,True,No pre-existing heldout synthetic evaluation artifact found.
+300,ttm_extension,human_authored,False,False,False,True,No pre-existing heldout TTM evaluation artifact was found.

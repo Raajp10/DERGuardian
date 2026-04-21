@@ -1,0 +1,6 @@
+Compile (ieee123_base\IEEE123Master.dss)
+Redirect ..\DER_Assets.dss
+Redirect ..\DER_Controls.dss
+Redirect ..\Monitor_Config.dss
+New EnergyMeter.Feeder Line.L115 1
+Set MaxControlIter=30

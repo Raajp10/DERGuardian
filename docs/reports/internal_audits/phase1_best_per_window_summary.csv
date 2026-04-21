@@ -1,0 +1,5 @@
+window_label,window_seconds,canonical_best_model,canonical_best_precision,canonical_best_recall,canonical_best_f1,best_model_including_extensions,best_f1_including_extensions,best_including_extensions_type
+5s,5,isolation_forest,0.1208164387327331,0.950784207679827,0.214390243902439,isolation_forest,0.214390243902439,canonical
+10s,10,threshold_baseline,0.9669117647058824,0.5686486486486486,0.7161334240980258,threshold_baseline,0.7161334240980258,canonical
+60s,60,transformer,0.6923076923076923,1.0,0.8181818181818182,transformer,0.8181818181818182,canonical
+300s,300,lstm,0.3333333333333333,1.0,0.5,lstm,0.5,canonical

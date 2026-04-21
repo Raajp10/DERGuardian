@@ -1,0 +1,15 @@
+Use the explanation packet and schema below to produce one grounded explanation.
+
+Required behavior:
+- Stay within the closed taxonomy.
+- Use only evidence from the packet.
+- Make the summary readable for an operator.
+- Provide a confidence note.
+- Provide limitations if the packet is weak or ambiguous.
+- Keep operator actions defensive only.
+
+Explanation packet:
+__PACKET_JSON__
+
+Required JSON schema:
+__SCHEMA_JSON__

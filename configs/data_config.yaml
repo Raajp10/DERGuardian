@@ -1,0 +1,32 @@
+source_of_truth:
+  clean_root: outputs/clean/
+  attacked_root: outputs/attacked/
+  windows_root: outputs/window_size_study/
+  canonical_benchmark_csv: outputs/window_size_study/final_window_comparison.csv
+
+clean_artifacts:
+  truth_physical: outputs/clean/truth_physical_timeseries.parquet
+  measured_physical: outputs/clean/measured_physical_timeseries.parquet
+  cyber_events: outputs/clean/cyber_events.parquet
+  environment_timeseries: outputs/clean/input_environment_timeseries.parquet
+  load_schedule: outputs/clean/input_load_schedule.parquet
+  pv_schedule: outputs/clean/input_pv_schedule.parquet
+  bess_schedule: outputs/clean/input_bess_schedule.parquet
+
+attacked_artifacts:
+  truth_physical: outputs/attacked/truth_physical_timeseries.parquet
+  measured_physical: outputs/attacked/measured_physical_timeseries.parquet
+  cyber_events: outputs/attacked/cyber_events.parquet
+  labels: outputs/attacked/attack_labels.parquet
+  scenario_manifest: outputs/attacked/scenario_manifest.json
+
+sample_data:
+  sample_root: data/sample_or_manifest_only/
+  small_sample_windows: data/sample_or_manifest_only/small_sample_windows.parquet
+  sample_readme: data/sample_or_manifest_only/SAMPLE_DATA_README.md
+  note: sample file is for schema inspection only and is not a benchmark dataset
+
+git_policy:
+  commit_full_outputs: false
+  commit_sample_or_manifest_only: true
+  publish_large_outputs_as_release_assets_only_if_allowed: true

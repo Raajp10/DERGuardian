@@ -1,0 +1,62 @@
+# Python
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+
+# Jupyter and editor state
+.ipynb_checkpoints/
+.vscode/
+.idea/
+.claude/
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Local environments
+.venv/
+venv/
+env/
+.env
+
+# Large generated artifacts
+outputs/
+data/raw/
+data/full/
+*.zip
+*.tar
+*.tar.gz
+*.7z
+
+# Model checkpoints and transient runtime products
+*.pt
+*.pth
+*.ckpt
+*.safetensors
+deployment_runtime/
+demo.zip
+/demo/
+/DERGuardian_professor_demo/
+/paper_figures/
+/reports/
+/phase2_llm_benchmark/
+/phase2_llm_benchmark/models/
+
+# Root-level legacy/generated reports and tables are intentionally excluded
+# from public commits. Publication-facing copies live under docs/ and artifacts/.
+/*.csv
+/*.png
+/*.json
+/*.yaml
+/*.sh
+/*.txt
+/*.md
+!/README.md
+!/requirements.txt
+!/FINAL_PUBLISHABLE_REPO_DECISION.md
+!/GITHUB_READY_SUMMARY.md
+!/RELEASE_CHECKLIST.md
+
+# Keep publication mirrors under artifacts/ and docs/ tracked intentionally

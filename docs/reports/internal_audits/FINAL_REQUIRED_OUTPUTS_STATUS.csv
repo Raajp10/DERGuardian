@@ -1,0 +1,64 @@
+artifact_path,exists,nonempty,content_valid,status,notes
+COMPLETE_FILE_TREE_RELEVANT.txt,True,True,True,PASS,chars=106420
+EVIDENCE_INDEX.csv,True,True,True,PASS,"rows=1931, cols=9"
+VERIFICATION_AUDIT_MASTER.csv,True,True,True,PASS,"rows=41, cols=10"
+VERIFICATION_GAPS.md,True,True,True,PASS,chars=293
+PHASE1_DATA_LINEAGE_AUDIT.md,True,True,True,PASS,chars=5491
+phase1_training_input_inventory.csv,True,True,True,PASS,"rows=932, cols=6"
+phase1_canonical_input_summary.md,True,True,True,PASS,chars=2032
+phase1_ttm_extension_config.yaml,True,True,True,PASS,chars=1644
+phase1_ttm_results.csv,True,True,True,PASS,"rows=1, cols=34"
+phase1_ttm_eval_report.md,True,True,True,PASS,chars=4036
+phase1_ttm_vs_all_models.csv,True,True,True,PASS,"rows=13, cols=40"
+phase1_model_comparison_extended.png,True,True,True,PASS,bytes=127484
+phase1_accuracy_latency_tradeoff_extended.png,True,True,True,PASS,bytes=84065
+CANONICAL_ARTIFACT_FREEZE.md,True,True,True,PASS,chars=1350
+phase2_scenario_master_inventory.csv,True,True,True,PASS,"rows=99, cols=34"
+phase2_coverage_summary.md,True,True,True,PASS,chars=6308
+phase2_attack_family_distribution.csv,True,True,True,PASS,"rows=8, cols=8"
+phase2_asset_signal_coverage.csv,True,True,True,PASS,"rows=75, cols=8"
+phase2_difficulty_calibration.csv,True,True,True,PASS,"rows=99, cols=23"
+phase2_diversity_and_quality_report.md,True,True,True,PASS,chars=2429
+phase2_family_distribution.png,True,True,True,PASS,bytes=128028
+phase2_asset_coverage_heatmap.png,True,True,True,PASS,bytes=113781
+phase2_signal_coverage_heatmap.png,True,True,True,PASS,bytes=209206
+phase2_difficulty_distribution.png,True,True,True,PASS,bytes=39681
+phase2_generator_coverage_comparison.png,True,True,True,PASS,bytes=146322
+phase3_lora_dataset_manifest.json,True,True,True,PASS,chars=2033
+phase3_lora_training_config.yaml,True,True,True,PASS,chars=552
+phase3_lora_results.csv,True,True,True,PASS,"rows=6, cols=13"
+phase3_lora_eval_report.md,True,True,True,PASS,chars=2874
+phase3_lora_model_card.md,True,True,True,PASS,chars=1036
+phase3_lora_run_log.txt,True,True,True,PASS,chars=2471
+phase3_lora_evidence_checklist.md,True,True,True,PASS,chars=1428
+phase3_lora_family_accuracy.png,True,True,True,PASS,bytes=46555
+phase3_lora_asset_accuracy.png,True,True,True,PASS,bytes=46595
+phase3_lora_grounding_comparison.png,True,True,True,PASS,bytes=47605
+phase3_lora_latency_vs_quality.png,True,True,True,PASS,bytes=75523
+xai_case_level_audit.csv,True,True,True,PASS,"rows=155, cols=26"
+xai_error_taxonomy.md,True,True,True,PASS,chars=2196
+xai_qualitative_examples.md,True,True,True,PASS,chars=3824
+xai_final_validation_report.md,True,True,True,PASS,chars=1716
+xai_safe_claims_patch.md,True,True,True,PASS,chars=986
+xai_family_vs_asset_accuracy.png,True,True,True,PASS,bytes=46978
+xai_error_taxonomy_breakdown.png,True,True,True,PASS,bytes=66157
+xai_grounding_vs_family_accuracy.png,True,True,True,PASS,bytes=68608
+deployment_benchmark_results.csv,True,True,True,PASS,"rows=6, cols=22"
+deployment_benchmark_report.md,True,True,True,PASS,chars=17174
+deployment_readiness_summary.md,True,True,True,PASS,chars=751
+deployment_environment_manifest.md,True,True,True,PASS,chars=1132
+deployment_repro_command.sh,True,True,True,PASS,chars=158
+deployment_latency_by_model.png,True,True,True,PASS,bytes=74052
+deployment_memory_by_model.png,True,True,True,PASS,bytes=73103
+deployment_throughput_by_model.png,True,True,True,PASS,bytes=79606
+deployment_accuracy_latency_tradeoff.png,True,True,True,PASS,bytes=65642
+FINAL_DIAGRAM_ALIGNMENT.md,True,True,True,PASS,chars=11091
+DIAGRAM_SAFE_LABELS.md,True,True,True,PASS,chars=5564
+diagram_box_audit.csv,True,True,True,PASS,"rows=22, cols=7"
+COMPLETE_PROJECT_STATUS.md,True,True,True,PASS,chars=1615
+COMPLETE_RESULTS_AND_DISCUSSION.md,True,True,True,PASS,chars=5397
+COMPLETE_PUBLICATION_SAFE_CLAIMS.md,True,True,True,PASS,chars=1636
+FINAL_PROJECT_DECISION.md,True,True,True,PASS,chars=1626
+FINAL_EXECUTIVE_VERIFICATION_SUMMARY.md,True,True,True,PASS,chars=2565
+FINAL_MISSING_OR_PARTIAL_ITEMS.md,True,True,True,PASS,chars=412
+FINAL_RERUN_COMMANDS.sh,True,True,True,PASS,chars=403

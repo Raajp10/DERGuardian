@@ -1,0 +1,7 @@
+! Optional OpenDSS monitors retained for traceability and offline exports.
+New Monitor.Mon_Feeder element=Line.L115 terminal=1 mode=1 ppolar=no
+New Monitor.Mon_PV35 element=PVSystem.pv35 terminal=1 mode=1 ppolar=no
+New Monitor.Mon_PV60 element=PVSystem.pv60 terminal=1 mode=1 ppolar=no
+New Monitor.Mon_PV83 element=PVSystem.pv83 terminal=1 mode=1 ppolar=no
+New Monitor.Mon_BESS48 element=Storage.bess48 terminal=1 mode=1 ppolar=no
+New Monitor.Mon_BESS108 element=Storage.bess108 terminal=1 mode=1 ppolar=no

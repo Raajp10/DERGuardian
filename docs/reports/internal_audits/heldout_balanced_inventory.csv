@@ -1,0 +1,5 @@
+generator_source,original_submitted,original_accepted,repaired_accepted,final_used_for_balanced_eval
+chatgpt,10,8,10,10
+claude,10,7,10,10
+gemini,10,5,10,10
+grok,10,9,10,10

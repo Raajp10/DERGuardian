@@ -1,0 +1,94 @@
+DERGuardian publication-oriented repository tree
+
+Root files kept for GitHub front door:
+- README.md
+- LICENSE
+- .gitignore
+- requirements.txt
+- environment.yml
+- RELEASE_CHECKLIST.md
+- FINAL_PUBLISHABLE_REPO_DECISION.md
+- GITHUB_READY_SUMMARY.md
+
+Primary directories:
+- configs/
+- data/sample_or_manifest_only/
+- scripts/
+- src/
+- common/
+- opendss/
+- phase1/
+- phase1_models/
+- phase2/
+- phase3/
+- phase3_explanations/
+- artifacts/
+- docs/
+- tests/
+
+Publication reports and methodology:
+- docs/methodology/FINAL_PHASE123_BOX_TEXT.csv
+- docs/methodology/FINAL_PHASE123_DIAGRAM_SPEC.md
+- docs/methodology/FINAL_PHASE123_OVERCLAIM_PATCHES.md
+- docs/methodology/FINAL_PHASE123_SLIDE_TEXT.md
+- docs/methodology/METHODOLOGY_OVERVIEW.md
+- docs/reports/ARTIFACT_REPRODUCIBILITY_GUIDE.md
+- docs/reports/CANONICAL_VS_REPLAY_VS_ZERO_DAY.md
+- docs/reports/deployment_benchmark_report.md
+- docs/reports/EXTENSION_BRANCHES.md
+- docs/reports/FINAL_MODEL_CONTEXT_COMPARISON.md
+- docs/reports/LLM_USAGE_CLARITY.md
+- docs/reports/phase1_ttm_eval_report.md
+- docs/reports/phase1_window_model_comparison_full.md
+- docs/reports/phase3_lora_eval_report.md
+- docs/reports/PROFESSOR_READY_METHOD_SUMMARY.md
+- docs/reports/PUBLICATION_SAFE_CLAIMS.md
+- docs/reports/xai_final_validation_report.md
+- docs/reports/zero_day_model_window_results_full.md
+
+Evidence mirrors:
+- artifacts/benchmark/
+  - artifacts/benchmark/MANIFEST.md
+  - artifacts/benchmark/phase1_window_model_comparison_full.csv
+- artifacts/replay/
+  - artifacts/replay/benchmark_vs_replay_metrics.csv
+  - artifacts/replay/MANIFEST.md
+  - artifacts/replay/multi_model_heldout_metrics.csv
+- artifacts/zero_day_like/
+  - artifacts/zero_day_like/FINAL_MODEL_CONTEXT_COMPARISON.csv
+  - artifacts/zero_day_like/MANIFEST.md
+  - artifacts/zero_day_like/zero_day_model_window_results_full.csv
+- artifacts/extensions/
+  - artifacts/extensions/MANIFEST.md
+  - artifacts/extensions/phase1_ttm_results.csv
+  - artifacts/extensions/phase3_lora_results.csv
+- artifacts/xai/
+  - artifacts/xai/MANIFEST.md
+  - artifacts/xai/xai_case_level_audit.csv
+- artifacts/deployment/
+  - artifacts/deployment/deployment_benchmark_results.csv
+  - artifacts/deployment/MANIFEST.md
+
+Internal audit archive (kept out of root; selected final audit artifacts):
+- docs/reports/internal_audits/ROOT_CLEANUP_PLAN.md
+- docs/reports/internal_audits/NEW_REPO_TREE.txt
+- docs/reports/internal_audits/CONFIG_SYSTEM_DOCUMENTATION.md
+- docs/reports/internal_audits/RUN_PIPELINE_GUIDE.md
+- docs/reports/internal_audits/PATH_CLEANUP_LOG.csv
+- docs/reports/internal_audits/FINAL_DIAGRAM_ALIGNMENT_V2.md
+- docs/reports/internal_audits/FINAL_PERFECTION_CHECKLIST.md
+- docs/reports/internal_audits/FINAL_PERFECTION_STATUS.csv
+- docs/reports/internal_audits/MASTER_PROJECT_UNDERSTANDING_REPORT.md
+- docs/reports/internal_audits/MASTER_PROJECT_FILE_AUDIT.csv
+- docs/reports/internal_audits/PROFESSOR_READING_GUIDE.md
+- docs/reports/internal_audits/CLAIM_SAFETY_FINAL_AUDIT.md
+
+Large/local generated directories retained locally but ignored for public Git commits:
+- outputs/
+- deployment_runtime/
+- demo/
+- DERGuardian_professor_demo/
+- paper_figures/
+- reports/
+- phase2_llm_benchmark/
+- .claude/

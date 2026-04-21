@@ -1,0 +1,21 @@
+numpy
+pandas
+pyarrow
+matplotlib
+scikit-learn
+torch
+PyYAML
+jsonschema
+opendssdirect.py
+psutil
+pytest
+tqdm
+transformers
+peft
+accelerate
+datasets
+safetensors
+sentencepiece
+
+# Optional for TTM extension if available in your environment:
+# IBM Granite TSFM package exposing tsfm_public

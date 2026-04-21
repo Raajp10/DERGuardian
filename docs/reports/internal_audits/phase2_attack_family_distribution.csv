@@ -1,0 +1,9 @@
+attack_family,all_scenarios,validated_scenarios,rejected_scenarios,repair_rows,generator_coverage_validated,source_bundle_coverage_validated,replay_evaluated_validated
+false_data_injection,27,25,2,2,6,10,25
+unauthorized_command,17,16,1,1,6,10,16
+command_delay,17,13,4,4,6,9,13
+degradation,15,13,2,2,6,9,13
+command_suppression,10,10,0,0,6,10,10
+coordinated_campaign,11,9,2,2,6,8,9
+replay,1,1,0,0,1,1,1
+telemetry_corruption,1,1,0,0,1,1,1

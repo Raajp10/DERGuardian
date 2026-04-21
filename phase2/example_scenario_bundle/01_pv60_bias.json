@@ -1,0 +1,20 @@
+{
+  "scenario_id": "scn_fdi_pv60_voltage_bias",
+  "scenario_name": "PV60 Telemetry Bias",
+  "category": "false_data_injection",
+  "description": "Stealthy positive bias on PV60 terminal-voltage telemetry without changing the physical state.",
+  "target_component": "measured_layer",
+  "target_asset": "pv60",
+  "target_signal": "terminal_v_pu",
+  "start_time_utc": "2025-06-01T01:00:00Z",
+  "duration_seconds": 300,
+  "injection_type": "bias",
+  "magnitude_value": 0.025,
+  "magnitude_units": "pu",
+  "temporal_pattern": "step",
+  "expected_effect": "The control room sees an apparent PV over-voltage while the true physical state remains nominal.",
+  "observable_signals": ["pv_pv60_terminal_v_pu", "feeder_p_kw_total"],
+  "severity": "medium",
+  "protocol": "modbus",
+  "notes": "Representative stealth telemetry corruption."
+}

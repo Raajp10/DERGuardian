@@ -1,0 +1,9 @@
+# Final Phase 1-2-3 Overclaim Patches
+
+| original_phrase                        | replacement                                               | reason                                                          |
+|:---------------------------------------|:----------------------------------------------------------|:----------------------------------------------------------------|
+| LLM learns normal behavior             | Context artifacts and tokenized baseline support analysis | No large LLM is the main detector learning normal behavior.     |
+| Human-like root-cause analysis         | Grounded post-alert operator-facing explanation support   | XAI metrics do not support human-like RCA.                      |
+| Edge deployment                        | Offline lightweight deployment benchmark                  | No edge hardware was used.                                      |
+| AOI detector metric                    | Detector metrics plus separate XAI grounding metrics      | AOI is not implemented as a detector metric.                    |
+| Tiny LLM (LoRA) in main model training | LoRA explanation/classification extension branch          | LoRA is experimental and weak, not canonical detector evidence. |

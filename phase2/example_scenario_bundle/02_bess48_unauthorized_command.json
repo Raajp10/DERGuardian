@@ -1,0 +1,20 @@
+{
+  "scenario_id": "scn_unauth_bess48_discharge",
+  "scenario_name": "Unauthorized BESS48 Discharge",
+  "category": "unauthorized_command",
+  "description": "Unauthorized command overrides BESS48 dispatch to force a high discharge period.",
+  "target_component": "bess",
+  "target_asset": "bess48",
+  "target_signal": "target_kw",
+  "start_time_utc": "2025-06-01T02:00:00Z",
+  "duration_seconds": 600,
+  "injection_type": "command_override",
+  "magnitude_value": 420.0,
+  "magnitude_units": "kW",
+  "temporal_pattern": "step",
+  "expected_effect": "Feeder-head active power decreases and BESS48 SOC drops faster than baseline.",
+  "observable_signals": ["bess_bess48_p_kw", "bess_bess48_soc", "feeder_p_kw_total"],
+  "severity": "high",
+  "protocol": "modbus",
+  "notes": "Physical effect should be visible in the truth and measured layers."
+}

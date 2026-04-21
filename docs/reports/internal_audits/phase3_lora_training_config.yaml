@@ -1,0 +1,25 @@
+branch_role: experimental_extension_only
+base_model: google/flan-t5-small
+task: grounded_explanation_json
+tokenizer_max_input_length: 512
+tokenizer_max_target_length: 128
+lora:
+  task_type: SEQ_2_SEQ_LM
+  rank: 8
+  alpha: 16
+  dropout: 0.05
+  target_modules:
+    - q
+    - v
+training:
+  epochs: 5
+  train_batch_size: 4
+  gradient_accumulation_steps: 2
+  learning_rate: 0.0008
+  weight_decay: 0.01
+  seed: 42
+splits:
+  train_generators: ['chatgpt', 'claude']
+  validation_generator: gemini
+  test_generator: grok
+  auxiliary_in_domain_holdout_ratio: 0.2

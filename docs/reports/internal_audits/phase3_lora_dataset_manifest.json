@@ -1,0 +1,90 @@
+{
+  "branch_role": "experimental_extension_only",
+  "base_model": "google/flan-t5-small",
+  "training_generators": [
+    "chatgpt",
+    "claude"
+  ],
+  "validation_generator": "gemini",
+  "test_generator": "grok",
+  "auxiliary_in_domain_holdout": {
+    "enabled": true,
+    "holdout_ratio": 0.2,
+    "note": "Holdout is done at generator+scenario granularity inside the training generators to provide an in-domain explanation test set."
+  },
+  "total_examples": 155,
+  "split_counts": [
+    {
+      "split": "aux_in_domain_holdout",
+      "examples": 16,
+      "scenarios": 3,
+      "generators": [
+        "chatgpt",
+        "claude"
+      ],
+      "detectors": [
+        "autoencoder",
+        "gru",
+        "isolation_forest",
+        "lstm",
+        "threshold_baseline",
+        "transformer"
+      ]
+    },
+    {
+      "split": "test_generator_heldout",
+      "examples": 47,
+      "scenarios": 9,
+      "generators": [
+        "grok"
+      ],
+      "detectors": [
+        "autoencoder",
+        "gru",
+        "isolation_forest",
+        "lstm",
+        "threshold_baseline",
+        "transformer"
+      ]
+    },
+    {
+      "split": "train",
+      "examples": 63,
+      "scenarios": 12,
+      "generators": [
+        "chatgpt",
+        "claude"
+      ],
+      "detectors": [
+        "autoencoder",
+        "gru",
+        "isolation_forest",
+        "lstm",
+        "threshold_baseline",
+        "transformer"
+      ]
+    },
+    {
+      "split": "validation_generator_heldout",
+      "examples": 29,
+      "scenarios": 5,
+      "generators": [
+        "gemini"
+      ],
+      "detectors": [
+        "autoencoder",
+        "gru",
+        "isolation_forest",
+        "lstm",
+        "threshold_baseline",
+        "transformer"
+      ]
+    }
+  ],
+  "excluded_sources": [
+    {
+      "generator_source": "human_authored",
+      "reason": "No aligned xai_v4 case packet set existed for the human-authored bundle, so it was excluded from supervised LoRA training and evaluation to avoid fabricating explanation labels."
+    }
+  ]
+}

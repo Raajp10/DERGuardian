@@ -1,0 +1,93 @@
+{
+  "incident_id": "incident-threshold_baseline-20250601T131001Z",
+  "summary": "threshold_baseline raised incident incident-threshold_baseline-20250601T131001Z because the anomaly score 1.0000 exceeded the threshold 0.0219. The strongest structured evidence points to creg4a, pv83, bus83, and the current best closed-set classification is `coordinated_campaign`.",
+  "suspected_attack_family": "coordinated_campaign",
+  "family_confidence": {
+    "level": "high",
+    "score": 1.0
+  },
+  "why_flagged": [
+    "The detector score exceeded threshold by 0.9781.",
+    "Top discriminative window features were bus 83 angle deg phase a / mean, bus 83 angle deg phase a / last, bus 83 angle deg phase a / min.",
+    "Physical evidence showed bus_83_angle_deg_phase_a moving decrease versus the clean matched window.",
+    "Cyber evidence included attack_event activity on Precursor to scn_coordinated_pv83_reg4a_disturbance."
+  ],
+  "physical_evidence_used": [
+    {
+      "asset": "bus83",
+      "signal": "bus_83_angle_deg_phase_a",
+      "category": "voltage_angle_shift",
+      "aggregation": "mean",
+      "observed_value": -1.434485,
+      "baseline_value": -0.958981,
+      "delta": -0.475504,
+      "relative_change": -0.331481,
+      "direction": "decrease",
+      "source_feature": "delta__bus_83_angle_deg_phase_a__mean"
+    },
+    {
+      "asset": "bus83",
+      "signal": "bus_83_angle_deg_phase_a",
+      "category": "voltage_angle_shift",
+      "aggregation": "last",
+      "observed_value": -1.483254,
+      "baseline_value": -1.019199,
+      "delta": -0.464056,
+      "relative_change": -0.312863,
+      "direction": "decrease",
+      "source_feature": "delta__bus_83_angle_deg_phase_a__last"
+    },
+    {
+      "asset": "bus83",
+      "signal": "bus_83_angle_deg_phase_a",
+      "category": "voltage_angle_shift",
+      "aggregation": "min",
+      "observed_value": -1.508723,
+      "baseline_value": -1.080683,
+      "delta": -0.428039,
+      "relative_change": -0.28371,
+      "direction": "decrease",
+      "source_feature": "delta__bus_83_angle_deg_phase_a__min"
+    }
+  ],
+  "cyber_evidence_used": [
+    {
+      "kind": "attack_event",
+      "timestamp_utc": "2025-06-01T12:59:45Z",
+      "family": null,
+      "actor": "intruder",
+      "protocol": "tls",
+      "resource": null,
+      "campaign_id": null,
+      "detail": "Precursor to scn_coordinated_pv83_reg4a_disturbance"
+    },
+    {
+      "kind": "attack_event",
+      "timestamp_utc": "2025-06-01T13:00:00Z",
+      "family": "coordinated_campaign",
+      "actor": "intruder",
+      "protocol": "mqtt",
+      "resource": "curtailment_frac",
+      "campaign_id": "campaign-scn_coordinated_pv83_reg4a_disturbance",
+      "detail": "PV output drops while downstream voltage profile and regulator activity depart materially from baseline."
+    },
+    {
+      "kind": "auth_failure",
+      "timestamp_utc": "2025-06-01T12:59:45Z",
+      "actor": "intruder",
+      "protocol": "tls",
+      "detail": "Precursor to scn_coordinated_pv83_reg4a_disturbance"
+    }
+  ],
+  "operator_actions": [
+    "Inspect command logs for creg4a and verify that recent issued setpoints match the approved schedule.",
+    "Compare operator-facing telemetry against local device logs or historian data for the same window.",
+    "Review authentication, protocol source, and actor identity for suspicious writes or campaign-tagged events.",
+    "Verify DER dispatch policy, curtailment policy, or charge-discharge schedule against expected operating conditions.",
+    "Escalate the event as a potentially coordinated anomaly because multiple assets show concurrent disturbance evidence."
+  ],
+  "confidence_note": "Confidence is higher because both cyber and physical evidence point in the same direction.",
+  "limitations": [
+    "Scenario metadata, when present, is for offline evaluation only and should not be treated as live operational truth."
+  ]
+}

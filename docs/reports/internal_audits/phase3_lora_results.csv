@@ -1,0 +1,7 @@
+model_variant,split,example_count,family_accuracy,asset_accuracy,evidence_grounding_quality,confidence_accuracy,parse_rate,mean_latency_ms,median_latency_ms,p95_latency_ms,adapter_size_mb,model_memory_footprint_mb
+base_zero_shot,aux_in_domain_holdout,16,0.0,0.0,0.0,0.0,1.0,506.1549250000894,486.14420000012615,726.6859249998561,,293.58
+base_zero_shot,validation_generator_heldout,29,0.0,0.0,0.0,0.0,1.0,557.5066482759777,583.6798000000272,617.0643600002222,,293.58
+base_zero_shot,test_generator_heldout,47,0.0,0.0,0.0,0.0,1.0,592.2875723404201,585.559000000103,635.4217099998095,,293.58
+lora_finetuned,aux_in_domain_holdout,16,0.5625,0.0,0.0,0.25,1.0,3401.7723124998724,3430.612099999962,3833.820899999864,1.33,294.9
+lora_finetuned,validation_generator_heldout,29,0.0,0.0,0.08045977011494251,0.1724137931034483,1.0,3507.0784275862457,3538.297000000057,3730.8865400002105,1.33,294.9
+lora_finetuned,test_generator_heldout,47,0.23404255319148937,0.0,0.0,0.425531914893617,1.0,3507.0338659575395,3551.445699999931,3779.755920000116,1.33,294.9
